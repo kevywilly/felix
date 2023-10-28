@@ -1,0 +1,2 @@
+Invoking command in '/felix/build/felix': PYTHONPATH=/felix/build/felix/prefix_override:/felix/install/felix/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /felix/build/felix/build --no-deps install_data
+Invoked command in '/felix/build/felix' returned '0': PYTHONPATH=/felix/build/felix/prefix_override:/felix/install/felix/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /felix/build/felix/build --no-deps install_data

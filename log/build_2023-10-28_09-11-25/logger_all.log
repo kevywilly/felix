@@ -1,0 +1,304 @@
+[2.039s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install']
+[2.040s] DEBUG:colcon:Parsed command line arguments: Namespace(ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f7fc023c8>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=4, paths=None, symlink_install=True, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f7fc023c8>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f7facde80>)
+[2.152s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[2.152s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[2.153s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[2.153s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[2.153s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[2.154s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[2.155s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/felix'
+[2.155s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[2.156s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[2.156s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[2.157s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[2.157s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[2.157s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[2.158s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[2.158s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[2.158s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[2.359s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[2.360s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[2.360s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[2.361s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[2.361s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[2.361s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extensions ['ignore', 'ignore_ament_install']
+[2.362s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extension 'ignore'
+[2.362s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extension 'ignore_ament_install'
+[2.363s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extensions ['colcon_pkg']
+[2.363s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extension 'colcon_pkg'
+[2.363s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extensions ['colcon_meta']
+[2.363s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extension 'colcon_meta'
+[2.364s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extensions ['ros']
+[2.364s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extension 'ros'
+[2.364s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extensions ['cmake', 'python']
+[2.364s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extension 'cmake'
+[2.365s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extension 'python'
+[2.365s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extensions ['python_setup_py']
+[2.365s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib) by extension 'python_setup_py'
+[2.366s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extensions ['ignore', 'ignore_ament_install']
+[2.366s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extension 'ignore'
+[2.366s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extension 'ignore_ament_install'
+[2.367s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extensions ['colcon_pkg']
+[2.367s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extension 'colcon_pkg'
+[2.367s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extensions ['colcon_meta']
+[2.367s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extension 'colcon_meta'
+[2.368s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extensions ['ros']
+[2.368s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extension 'ros'
+[2.368s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extensions ['cmake', 'python']
+[2.369s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extension 'cmake'
+[2.369s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extension 'python'
+[2.369s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extensions ['python_setup_py']
+[2.369s] Level 1:colcon.colcon_core.package_identification:_identify(Rosmaster_Lib/__pycache__) by extension 'python_setup_py'
+[2.370s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[2.370s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[2.371s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[2.372s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extensions ['ignore', 'ignore_ament_install']
+[2.373s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extension 'ignore'
+[2.373s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extension 'ignore_ament_install'
+[2.373s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extensions ['colcon_pkg']
+[2.374s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extension 'colcon_pkg'
+[2.374s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extensions ['colcon_meta']
+[2.374s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extension 'colcon_meta'
+[2.374s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extensions ['ros']
+[2.375s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extension 'ros'
+[2.375s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extensions ['cmake', 'python']
+[2.375s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extension 'cmake'
+[2.376s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extension 'python'
+[2.376s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extensions ['python_setup_py']
+[2.376s] Level 1:colcon.colcon_core.package_identification:_identify(data) by extension 'python_setup_py'
+[2.376s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extensions ['ignore', 'ignore_ament_install']
+[2.377s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extension 'ignore'
+[2.377s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extension 'ignore_ament_install'
+[2.378s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extensions ['colcon_pkg']
+[2.378s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extension 'colcon_pkg'
+[2.378s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extensions ['colcon_meta']
+[2.378s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extension 'colcon_meta'
+[2.378s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extensions ['ros']
+[2.379s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extension 'ros'
+[2.379s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extensions ['cmake', 'python']
+[2.379s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extension 'cmake'
+[2.380s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extension 'python'
+[2.380s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extensions ['python_setup_py']
+[2.380s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies) by extension 'python_setup_py'
+[2.381s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extensions ['ignore', 'ignore_ament_install']
+[2.381s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extension 'ignore'
+[2.381s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extension 'ignore_ament_install'
+[2.382s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extensions ['colcon_pkg']
+[2.382s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extension 'colcon_pkg'
+[2.382s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extensions ['colcon_meta']
+[2.382s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extension 'colcon_meta'
+[2.383s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extensions ['ros']
+[2.383s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extension 'ros'
+[2.383s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extensions ['cmake', 'python']
+[2.384s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extension 'cmake'
+[2.384s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extension 'python'
+[2.384s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extensions ['python_setup_py']
+[2.384s] Level 1:colcon.colcon_core.package_identification:_identify(dependencies/rosmaster) by extension 'python_setup_py'
+[3.886s] DEBUG:colcon.colcon_core.package_identification:Package 'dependencies/rosmaster' with type 'python' and name 'Rosmaster_Lib'
+[3.887s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[3.887s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[3.888s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[3.888s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[3.889s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[3.889s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[3.889s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[3.890s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[3.890s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[3.891s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[3.891s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[3.891s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[3.891s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[3.892s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[3.892s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[3.892s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[3.893s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[3.893s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[3.893s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[3.893s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[3.894s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extensions ['ignore', 'ignore_ament_install']
+[3.894s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extension 'ignore'
+[3.895s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extension 'ignore_ament_install'
+[3.895s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extensions ['colcon_pkg']
+[3.895s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extension 'colcon_pkg'
+[3.895s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extensions ['colcon_meta']
+[3.896s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extension 'colcon_meta'
+[3.896s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extensions ['ros']
+[3.896s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extension 'ros'
+[3.897s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extensions ['cmake', 'python']
+[3.897s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extension 'cmake'
+[3.897s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extension 'python'
+[3.897s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extensions ['python_setup_py']
+[3.898s] Level 1:colcon.colcon_core.package_identification:_identify(src/__pycache__) by extension 'python_setup_py'
+[3.898s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix) by extensions ['ignore', 'ignore_ament_install']
+[3.899s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix) by extension 'ignore'
+[3.899s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix) by extension 'ignore_ament_install'
+[3.899s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix) by extensions ['colcon_pkg']
+[3.899s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix) by extension 'colcon_pkg'
+[3.900s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix) by extensions ['colcon_meta']
+[3.900s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix) by extension 'colcon_meta'
+[3.900s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix) by extensions ['ros']
+[3.900s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix) by extension 'ros'
+[3.922s] DEBUG:colcon.colcon_core.package_identification:Package 'src/felix' with type 'ros.ament_python' and name 'felix'
+[3.923s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix_camera) by extensions ['ignore', 'ignore_ament_install']
+[3.924s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix_camera) by extension 'ignore'
+[3.924s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix_camera) by extension 'ignore_ament_install'
+[3.924s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix_camera) by extensions ['colcon_pkg']
+[3.925s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix_camera) by extension 'colcon_pkg'
+[3.925s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix_camera) by extensions ['colcon_meta']
+[3.925s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix_camera) by extension 'colcon_meta'
+[3.925s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix_camera) by extensions ['ros']
+[3.926s] Level 1:colcon.colcon_core.package_identification:_identify(src/felix_camera) by extension 'ros'
+[3.929s] DEBUG:colcon.colcon_core.package_identification:Package 'src/felix_camera' with type 'ros.ament_python' and name 'felix_camera'
+[3.930s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[3.931s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[3.931s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[3.932s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[3.932s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[4.045s] Level 5:colcon.colcon_core.verb:set package 'Rosmaster_Lib' build argument 'cmake_args' from command line to 'None'
+[4.045s] Level 5:colcon.colcon_core.verb:set package 'Rosmaster_Lib' build argument 'cmake_target' from command line to 'None'
+[4.046s] Level 5:colcon.colcon_core.verb:set package 'Rosmaster_Lib' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[4.046s] Level 5:colcon.colcon_core.verb:set package 'Rosmaster_Lib' build argument 'cmake_clean_cache' from command line to 'False'
+[4.046s] Level 5:colcon.colcon_core.verb:set package 'Rosmaster_Lib' build argument 'cmake_clean_first' from command line to 'False'
+[4.046s] Level 5:colcon.colcon_core.verb:set package 'Rosmaster_Lib' build argument 'cmake_force_configure' from command line to 'False'
+[4.046s] Level 5:colcon.colcon_core.verb:set package 'Rosmaster_Lib' build argument 'ament_cmake_args' from command line to 'None'
+[4.047s] Level 5:colcon.colcon_core.verb:set package 'Rosmaster_Lib' build argument 'catkin_cmake_args' from command line to 'None'
+[4.047s] Level 5:colcon.colcon_core.verb:set package 'Rosmaster_Lib' build argument 'catkin_skip_building_tests' from command line to 'False'
+[4.047s] DEBUG:colcon.colcon_core.verb:Building package 'Rosmaster_Lib' with the following arguments: {'ament_cmake_args': None, 'build_base': '/felix/build/Rosmaster_Lib', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/felix/install/Rosmaster_Lib', 'merge_install': False, 'path': '/felix/dependencies/rosmaster', 'symlink_install': True, 'test_result_base': None}
+[4.050s] Level 5:colcon.colcon_core.verb:set package 'felix' build argument 'cmake_args' from command line to 'None'
+[4.050s] Level 5:colcon.colcon_core.verb:set package 'felix' build argument 'cmake_target' from command line to 'None'
+[4.050s] Level 5:colcon.colcon_core.verb:set package 'felix' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[4.050s] Level 5:colcon.colcon_core.verb:set package 'felix' build argument 'cmake_clean_cache' from command line to 'False'
+[4.051s] Level 5:colcon.colcon_core.verb:set package 'felix' build argument 'cmake_clean_first' from command line to 'False'
+[4.051s] Level 5:colcon.colcon_core.verb:set package 'felix' build argument 'cmake_force_configure' from command line to 'False'
+[4.051s] Level 5:colcon.colcon_core.verb:set package 'felix' build argument 'ament_cmake_args' from command line to 'None'
+[4.051s] Level 5:colcon.colcon_core.verb:set package 'felix' build argument 'catkin_cmake_args' from command line to 'None'
+[4.051s] Level 5:colcon.colcon_core.verb:set package 'felix' build argument 'catkin_skip_building_tests' from command line to 'False'
+[4.051s] DEBUG:colcon.colcon_core.verb:Building package 'felix' with the following arguments: {'ament_cmake_args': None, 'build_base': '/felix/build/felix', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/felix/install/felix', 'merge_install': False, 'path': '/felix/src/felix', 'symlink_install': True, 'test_result_base': None}
+[4.055s] Level 5:colcon.colcon_core.verb:set package 'felix_camera' build argument 'cmake_args' from command line to 'None'
+[4.055s] Level 5:colcon.colcon_core.verb:set package 'felix_camera' build argument 'cmake_target' from command line to 'None'
+[4.055s] Level 5:colcon.colcon_core.verb:set package 'felix_camera' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[4.055s] Level 5:colcon.colcon_core.verb:set package 'felix_camera' build argument 'cmake_clean_cache' from command line to 'False'
+[4.055s] Level 5:colcon.colcon_core.verb:set package 'felix_camera' build argument 'cmake_clean_first' from command line to 'False'
+[4.055s] Level 5:colcon.colcon_core.verb:set package 'felix_camera' build argument 'cmake_force_configure' from command line to 'False'
+[4.056s] Level 5:colcon.colcon_core.verb:set package 'felix_camera' build argument 'ament_cmake_args' from command line to 'None'
+[4.056s] Level 5:colcon.colcon_core.verb:set package 'felix_camera' build argument 'catkin_cmake_args' from command line to 'None'
+[4.056s] Level 5:colcon.colcon_core.verb:set package 'felix_camera' build argument 'catkin_skip_building_tests' from command line to 'False'
+[4.056s] DEBUG:colcon.colcon_core.verb:Building package 'felix_camera' with the following arguments: {'ament_cmake_args': None, 'build_base': '/felix/build/felix_camera', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/felix/install/felix_camera', 'merge_install': False, 'path': '/felix/src/felix_camera', 'symlink_install': True, 'test_result_base': None}
+[4.057s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[4.064s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[4.066s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/felix/dependencies/rosmaster'
+[4.085s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[4.086s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[4.087s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[4.146s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/felix/src/felix' with build type 'ament_python'
+[4.148s] Level 1:colcon.colcon_core.shell:create_environment_hook('felix', 'ament_prefix_path')
+[4.150s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/install/felix/share/felix/hook/ament_prefix_path.ps1'
+[4.155s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/felix/install/felix/share/felix/hook/ament_prefix_path.dsv'
+[4.158s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/install/felix/share/felix/hook/ament_prefix_path.sh'
+[4.165s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[4.166s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[4.213s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/felix/src/felix_camera' with build type 'ament_python'
+[4.215s] Level 1:colcon.colcon_core.shell:create_environment_hook('felix_camera', 'ament_prefix_path')
+[4.218s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/install/felix_camera/share/felix_camera/hook/ament_prefix_path.ps1'
+[4.220s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/felix/install/felix_camera/share/felix_camera/hook/ament_prefix_path.dsv'
+[4.222s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/install/felix_camera/share/felix_camera/hook/ament_prefix_path.sh'
+[4.225s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[4.226s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[7.445s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/felix/src/felix'
+[7.448s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[7.448s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[9.150s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/felix/src/felix_camera'
+[9.152s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[9.153s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[9.211s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/felix/build/Rosmaster_Lib': PYTHONPATH=/felix/build/Rosmaster_Lib/prefix_override:/felix/install/Rosmaster_Lib/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /felix/build/Rosmaster_Lib/build --no-deps
+[11.637s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/felix/build/felix': PYTHONPATH=/felix/build/felix/prefix_override:/felix/install/felix/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /felix/build/felix/build --no-deps install_data
+[11.654s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/felix/build/felix_camera': PYTHONPATH=/felix/build/felix_camera/prefix_override:/felix/install/felix_camera/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /felix/build/felix_camera/build --no-deps install_data
+[12.173s] Level 1:colcon.colcon_core.shell:create_environment_hook('Rosmaster_Lib', 'pythonpath_develop')
+[12.177s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/build/Rosmaster_Lib/share/Rosmaster_Lib/hook/pythonpath_develop.ps1'
+[12.178s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/felix/build/Rosmaster_Lib' returned '0': PYTHONPATH=/felix/build/Rosmaster_Lib/prefix_override:/felix/install/Rosmaster_Lib/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /felix/build/Rosmaster_Lib/build --no-deps
+[12.180s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/felix/build/Rosmaster_Lib/share/Rosmaster_Lib/hook/pythonpath_develop.dsv'
+[12.182s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/build/Rosmaster_Lib/share/Rosmaster_Lib/hook/pythonpath_develop.sh'
+[12.212s] Level 1:colcon.colcon_core.environment:checking '/felix/install/Rosmaster_Lib' for CMake module files
+[12.215s] Level 1:colcon.colcon_core.environment:checking '/felix/install/Rosmaster_Lib' for CMake config files
+[12.220s] Level 1:colcon.colcon_core.environment:checking '/felix/install/Rosmaster_Lib/lib'
+[12.221s] Level 1:colcon.colcon_core.environment:checking '/felix/install/Rosmaster_Lib/bin'
+[12.221s] Level 1:colcon.colcon_core.environment:checking '/felix/install/Rosmaster_Lib/lib/pkgconfig/Rosmaster_Lib.pc'
+[12.222s] Level 1:colcon.colcon_core.environment:checking '/felix/install/Rosmaster_Lib/lib/python3.6/site-packages'
+[12.223s] Level 1:colcon.colcon_core.shell:create_environment_hook('Rosmaster_Lib', 'pythonpath')
+[12.225s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/install/Rosmaster_Lib/share/Rosmaster_Lib/hook/pythonpath.ps1'
+[12.227s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/felix/install/Rosmaster_Lib/share/Rosmaster_Lib/hook/pythonpath.dsv'
+[12.228s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/install/Rosmaster_Lib/share/Rosmaster_Lib/hook/pythonpath.sh'
+[12.231s] Level 1:colcon.colcon_core.environment:checking '/felix/install/Rosmaster_Lib/bin'
+[12.231s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(Rosmaster_Lib)
+[12.234s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/Rosmaster_Lib/share/Rosmaster_Lib/package.ps1'
+[12.239s] INFO:colcon.colcon_core.shell:Creating package descriptor '/felix/install/Rosmaster_Lib/share/Rosmaster_Lib/package.dsv'
+[12.244s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/Rosmaster_Lib/share/Rosmaster_Lib/package.sh'
+[12.250s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/Rosmaster_Lib/share/Rosmaster_Lib/package.bash'
+[12.261s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/Rosmaster_Lib/share/Rosmaster_Lib/package.zsh'
+[12.267s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/felix/install/Rosmaster_Lib/share/colcon-core/packages/Rosmaster_Lib)
+[14.424s] Level 1:colcon.colcon_core.shell:create_environment_hook('felix', 'pythonpath_develop')
+[14.426s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/build/felix/share/felix/hook/pythonpath_develop.ps1'
+[14.429s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/felix/build/felix/share/felix/hook/pythonpath_develop.dsv'
+[14.430s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/build/felix/share/felix/hook/pythonpath_develop.sh'
+[14.434s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix' for CMake module files
+[14.437s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix' for CMake config files
+[14.439s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/felix/build/felix' returned '0': PYTHONPATH=/felix/build/felix/prefix_override:/felix/install/felix/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /felix/build/felix/build --no-deps install_data
+[14.443s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix/lib'
+[14.443s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix/bin'
+[14.444s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix/lib/pkgconfig/felix.pc'
+[14.445s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix/lib/python3.6/site-packages'
+[14.445s] Level 1:colcon.colcon_core.shell:create_environment_hook('felix', 'pythonpath')
+[14.447s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/install/felix/share/felix/hook/pythonpath.ps1'
+[14.449s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/felix/install/felix/share/felix/hook/pythonpath.dsv'
+[14.451s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/install/felix/share/felix/hook/pythonpath.sh'
+[14.454s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix/bin'
+[14.454s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(felix)
+[14.457s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/felix/share/felix/package.ps1'
+[14.461s] INFO:colcon.colcon_core.shell:Creating package descriptor '/felix/install/felix/share/felix/package.dsv'
+[14.463s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/felix/share/felix/package.sh'
+[14.466s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/felix/share/felix/package.bash'
+[14.468s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/felix/share/felix/package.zsh'
+[14.470s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/felix/install/felix/share/colcon-core/packages/felix)
+[14.475s] Level 1:colcon.colcon_core.shell:create_environment_hook('felix_camera', 'pythonpath_develop')
+[14.477s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/build/felix_camera/share/felix_camera/hook/pythonpath_develop.ps1'
+[14.479s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/felix/build/felix_camera' returned '0': PYTHONPATH=/felix/build/felix_camera/prefix_override:/felix/install/felix_camera/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /felix/build/felix_camera/build --no-deps install_data
+[14.481s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/felix/build/felix_camera/share/felix_camera/hook/pythonpath_develop.dsv'
+[14.483s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/build/felix_camera/share/felix_camera/hook/pythonpath_develop.sh'
+[14.486s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix_camera' for CMake module files
+[14.488s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix_camera' for CMake config files
+[14.492s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix_camera/lib'
+[14.492s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix_camera/bin'
+[14.492s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix_camera/lib/pkgconfig/felix_camera.pc'
+[14.493s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix_camera/lib/python3.6/site-packages'
+[14.494s] Level 1:colcon.colcon_core.shell:create_environment_hook('felix_camera', 'pythonpath')
+[14.495s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/install/felix_camera/share/felix_camera/hook/pythonpath.ps1'
+[14.497s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/felix/install/felix_camera/share/felix_camera/hook/pythonpath.dsv'
+[14.498s] INFO:colcon.colcon_core.shell:Creating environment hook '/felix/install/felix_camera/share/felix_camera/hook/pythonpath.sh'
+[14.500s] Level 1:colcon.colcon_core.environment:checking '/felix/install/felix_camera/bin'
+[14.501s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(felix_camera)
+[14.504s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/felix_camera/share/felix_camera/package.ps1'
+[14.507s] INFO:colcon.colcon_core.shell:Creating package descriptor '/felix/install/felix_camera/share/felix_camera/package.dsv'
+[14.509s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/felix_camera/share/felix_camera/package.sh'
+[14.512s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/felix_camera/share/felix_camera/package.bash'
+[14.513s] INFO:colcon.colcon_core.shell:Creating package script '/felix/install/felix_camera/share/felix_camera/package.zsh'
+[14.514s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/felix/install/felix_camera/share/colcon-core/packages/felix_camera)
+[14.516s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[14.518s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[14.518s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[14.519s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[14.581s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[14.582s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[14.582s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[14.582s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[14.582s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.NotSupported: Unable to autolaunch a dbus-daemon without a $DISPLAY for X11
+[14.583s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[14.585s] INFO:colcon.colcon_core.shell:Creating prefix script '/felix/install/local_setup.ps1'
+[14.591s] INFO:colcon.colcon_core.shell:Creating prefix util module '/felix/install/_local_setup_util_ps1.py'
+[14.602s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/felix/install/setup.ps1'
+[14.609s] INFO:colcon.colcon_core.shell:Creating prefix script '/felix/install/local_setup.sh'
+[14.613s] INFO:colcon.colcon_core.shell:Creating prefix util module '/felix/install/_local_setup_util_sh.py'
+[14.615s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/felix/install/setup.sh'
+[14.623s] INFO:colcon.colcon_core.shell:Creating prefix script '/felix/install/local_setup.bash'
+[14.627s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/felix/install/setup.bash'
+[14.633s] INFO:colcon.colcon_core.shell:Creating prefix script '/felix/install/local_setup.zsh'
+[14.638s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/felix/install/setup.zsh'

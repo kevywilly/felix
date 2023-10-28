@@ -1,0 +1,205 @@
+[0.000000] (-) TimerEvent: {}
+[0.001656] (Rosmaster_Lib) JobQueued: {'identifier': 'Rosmaster_Lib', 'dependencies': OrderedDict()}
+[0.004028] (felix) JobQueued: {'identifier': 'felix', 'dependencies': OrderedDict()}
+[0.005956] (felix_camera) JobQueued: {'identifier': 'felix_camera', 'dependencies': OrderedDict()}
+[0.006543] (Rosmaster_Lib) JobStarted: {'identifier': 'Rosmaster_Lib'}
+[0.080310] (felix) JobStarted: {'identifier': 'felix'}
+[0.099514] (-) TimerEvent: {}
+[0.149831] (felix_camera) JobStarted: {'identifier': 'felix_camera'}
+[0.199732] (-) TimerEvent: {}
+[0.301111] (-) TimerEvent: {}
+[0.402920] (-) TimerEvent: {}
+[0.504265] (-) TimerEvent: {}
+[0.605586] (-) TimerEvent: {}
+[0.709391] (-) TimerEvent: {}
+[0.814434] (-) TimerEvent: {}
+[0.917209] (-) TimerEvent: {}
+[1.019479] (-) TimerEvent: {}
+[1.121599] (-) TimerEvent: {}
+[1.224557] (-) TimerEvent: {}
+[1.326398] (-) TimerEvent: {}
+[1.428727] (-) TimerEvent: {}
+[1.530237] (-) TimerEvent: {}
+[1.633271] (-) TimerEvent: {}
+[1.735453] (-) TimerEvent: {}
+[1.836849] (-) TimerEvent: {}
+[1.938982] (-) TimerEvent: {}
+[2.042360] (-) TimerEvent: {}
+[2.144881] (-) TimerEvent: {}
+[2.248331] (-) TimerEvent: {}
+[2.351674] (-) TimerEvent: {}
+[2.453956] (-) TimerEvent: {}
+[2.556082] (-) TimerEvent: {}
+[2.658609] (-) TimerEvent: {}
+[2.759684] (-) TimerEvent: {}
+[2.863262] (-) TimerEvent: {}
+[2.966207] (-) TimerEvent: {}
+[3.068386] (-) TimerEvent: {}
+[3.170309] (-) TimerEvent: {}
+[3.271483] (-) TimerEvent: {}
+[3.372755] (-) TimerEvent: {}
+[3.473929] (-) TimerEvent: {}
+[3.577126] (-) TimerEvent: {}
+[3.678392] (-) TimerEvent: {}
+[3.780371] (-) TimerEvent: {}
+[3.882977] (-) TimerEvent: {}
+[3.986899] (-) TimerEvent: {}
+[4.092461] (-) TimerEvent: {}
+[4.195778] (-) TimerEvent: {}
+[4.298781] (-) TimerEvent: {}
+[4.402892] (-) TimerEvent: {}
+[4.505258] (-) TimerEvent: {}
+[4.607888] (-) TimerEvent: {}
+[4.711601] (-) TimerEvent: {}
+[4.815344] (-) TimerEvent: {}
+[4.917600] (-) TimerEvent: {}
+[5.020281] (-) TimerEvent: {}
+[5.122133] (-) TimerEvent: {}
+[5.224979] (-) TimerEvent: {}
+[5.327326] (-) TimerEvent: {}
+[5.431306] (-) TimerEvent: {}
+[5.532864] (-) TimerEvent: {}
+[5.634044] (-) TimerEvent: {}
+[5.736205] (-) TimerEvent: {}
+[5.837101] (-) TimerEvent: {}
+[5.938693] (-) TimerEvent: {}
+[6.039926] (-) TimerEvent: {}
+[6.141334] (-) TimerEvent: {}
+[6.242731] (-) TimerEvent: {}
+[6.343674] (-) TimerEvent: {}
+[6.452247] (-) TimerEvent: {}
+[6.510059] (Rosmaster_Lib) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'develop', '--editable', '--build-directory', '/home/nano/projects/felix/build/Rosmaster_Lib/build', '--no-deps'], 'cwd': '/home/nano/projects/felix/build/Rosmaster_Lib', 'env': {'OPENBLAS_CORETYPE': 'ARMV8', 'PYTHONIOENCODING': 'utf-8', 'HOSTNAME': 'nano1', 'LD_LIBRARY_PATH': '/opt/ros/humble/install/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib:', 'SHLVL': '1', 'OLDPWD': '/', 'HOME': '/root', 'ROS_PYTHON_VERSION': '3', 'COLCON_PREFIX_PATH': '/opt/ros/humble/install', 'TORCH_HOME': '/data/models/torch', 'ROS_DISTRO': 'humble', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'NVIDIA_DRIVER_CAPABILITIES': 'all', 'PKG_CONFIG_PATH': '/opt/ros/humble/install/lib/aarch64-linux-gnu/pkgconfig:/opt/ros/humble/install/lib/pkgconfig', 'TERM': 'xterm', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/install/bin:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LANG': 'en_US.UTF-8', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_ROOT': '/opt/ros/humble', 'AMENT_PREFIX_PATH': '/opt/ros/humble/install', 'DEBIAN_FRONTEND': 'noninteractive', 'SHELL': '/bin/bash', 'PWD': '/home/nano/projects/felix/build/Rosmaster_Lib', 'PYTHONPATH': '/home/nano/projects/felix/build/Rosmaster_Lib/prefix_override:/home/nano/projects/felix/install/Rosmaster_Lib/lib/python3.6/site-packages:/opt/ros/humble/install/lib/python3.6/site-packages', 'NVIDIA_VISIBLE_DEVICES': 'all', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/opt/ros/humble/install'}, 'shell': False}
+[6.556625] (-) TimerEvent: {}
+[6.658201] (-) TimerEvent: {}
+[6.759638] (-) TimerEvent: {}
+[6.861923] (-) TimerEvent: {}
+[6.963555] (-) TimerEvent: {}
+[7.066178] (-) TimerEvent: {}
+[7.168499] (-) TimerEvent: {}
+[7.269368] (-) TimerEvent: {}
+[7.371372] (-) TimerEvent: {}
+[7.473479] (-) TimerEvent: {}
+[7.576480] (-) TimerEvent: {}
+[7.678684] (-) TimerEvent: {}
+[7.780879] (-) TimerEvent: {}
+[7.883206] (-) TimerEvent: {}
+[7.984040] (-) TimerEvent: {}
+[8.092975] (-) TimerEvent: {}
+[8.195767] (-) TimerEvent: {}
+[8.298036] (-) TimerEvent: {}
+[8.400936] (-) TimerEvent: {}
+[8.503222] (-) TimerEvent: {}
+[8.605523] (-) TimerEvent: {}
+[8.708489] (-) TimerEvent: {}
+[8.811743] (-) TimerEvent: {}
+[8.914324] (-) TimerEvent: {}
+[8.942971] (Rosmaster_Lib) StdoutLine: {'line': b'running develop\n'}
+[8.948747] (Rosmaster_Lib) StderrLine: {'line': b'/usr/local/lib/python3.6/dist-packages/setuptools/command/easy_install.py:159: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.\n'}
+[8.949651] (Rosmaster_Lib) StderrLine: {'line': b'  EasyInstallDeprecationWarning,\n'}
+[8.951850] (Rosmaster_Lib) StderrLine: {'line': b'/usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.\n'}
+[8.953120] (Rosmaster_Lib) StderrLine: {'line': b'  setuptools.SetuptoolsDeprecationWarning,\n'}
+[9.014541] (-) TimerEvent: {}
+[9.116949] (-) TimerEvent: {}
+[9.218361] (-) TimerEvent: {}
+[9.319303] (-) TimerEvent: {}
+[9.420505] (-) TimerEvent: {}
+[9.524589] (-) TimerEvent: {}
+[9.632721] (-) TimerEvent: {}
+[9.734525] (-) TimerEvent: {}
+[9.837783] (-) TimerEvent: {}
+[9.859680] (felix_camera) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'develop', '--editable', '--build-directory', '/home/nano/projects/felix/build/felix_camera/build', '--no-deps', 'install_data'], 'cwd': '/home/nano/projects/felix/build/felix_camera', 'env': {'OPENBLAS_CORETYPE': 'ARMV8', 'PYTHONIOENCODING': 'utf-8', 'HOSTNAME': 'nano1', 'LD_LIBRARY_PATH': '/opt/ros/humble/install/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib:', 'SHLVL': '1', 'OLDPWD': '/', 'HOME': '/root', 'ROS_PYTHON_VERSION': '3', 'COLCON_PREFIX_PATH': '/opt/ros/humble/install', 'TORCH_HOME': '/data/models/torch', 'ROS_DISTRO': 'humble', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'NVIDIA_DRIVER_CAPABILITIES': 'all', 'PKG_CONFIG_PATH': '/opt/ros/humble/install/lib/aarch64-linux-gnu/pkgconfig:/opt/ros/humble/install/lib/pkgconfig', 'TERM': 'xterm', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/install/bin:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LANG': 'en_US.UTF-8', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_ROOT': '/opt/ros/humble', 'AMENT_PREFIX_PATH': '/opt/ros/humble/install', 'DEBIAN_FRONTEND': 'noninteractive', 'SHELL': '/bin/bash', 'PWD': '/home/nano/projects/felix/build/felix_camera', 'PYTHONPATH': '/home/nano/projects/felix/build/felix_camera/prefix_override:/home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages:/opt/ros/humble/install/lib/python3.6/site-packages', 'NVIDIA_VISIBLE_DEVICES': 'all', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/opt/ros/humble/install'}, 'shell': False}
+[9.938217] (-) TimerEvent: {}
+[9.976146] (felix) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'develop', '--editable', '--build-directory', '/home/nano/projects/felix/build/felix/build', '--no-deps', 'install_data'], 'cwd': '/home/nano/projects/felix/build/felix', 'env': {'OPENBLAS_CORETYPE': 'ARMV8', 'PYTHONIOENCODING': 'utf-8', 'HOSTNAME': 'nano1', 'LD_LIBRARY_PATH': '/opt/ros/humble/install/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib:', 'SHLVL': '1', 'OLDPWD': '/', 'HOME': '/root', 'ROS_PYTHON_VERSION': '3', 'COLCON_PREFIX_PATH': '/opt/ros/humble/install', 'TORCH_HOME': '/data/models/torch', 'ROS_DISTRO': 'humble', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'NVIDIA_DRIVER_CAPABILITIES': 'all', 'PKG_CONFIG_PATH': '/opt/ros/humble/install/lib/aarch64-linux-gnu/pkgconfig:/opt/ros/humble/install/lib/pkgconfig', 'TERM': 'xterm', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/install/bin:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LANG': 'en_US.UTF-8', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_ROOT': '/opt/ros/humble', 'AMENT_PREFIX_PATH': '/opt/ros/humble/install', 'DEBIAN_FRONTEND': 'noninteractive', 'SHELL': '/bin/bash', 'PWD': '/home/nano/projects/felix/build/felix', 'PYTHONPATH': '/home/nano/projects/felix/build/felix/prefix_override:/home/nano/projects/felix/install/felix/lib/python3.6/site-packages:/opt/ros/humble/install/lib/python3.6/site-packages', 'NVIDIA_VISIBLE_DEVICES': 'all', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/opt/ros/humble/install'}, 'shell': False}
+[10.038397] (-) TimerEvent: {}
+[10.144950] (-) TimerEvent: {}
+[10.245776] (-) TimerEvent: {}
+[10.349162] (-) TimerEvent: {}
+[10.451616] (-) TimerEvent: {}
+[10.489082] (Rosmaster_Lib) StdoutLine: {'line': b'running egg_info\n'}
+[10.490703] (Rosmaster_Lib) StdoutLine: {'line': b'writing Rosmaster_Lib.egg-info/PKG-INFO\n'}
+[10.493060] (Rosmaster_Lib) StdoutLine: {'line': b'writing dependency_links to Rosmaster_Lib.egg-info/dependency_links.txt\n'}
+[10.494063] (Rosmaster_Lib) StdoutLine: {'line': b'writing top-level names to Rosmaster_Lib.egg-info/top_level.txt\n'}
+[10.498876] (Rosmaster_Lib) StdoutLine: {'line': b"reading manifest file 'Rosmaster_Lib.egg-info/SOURCES.txt'\n"}
+[10.505429] (Rosmaster_Lib) StdoutLine: {'line': b"writing manifest file 'Rosmaster_Lib.egg-info/SOURCES.txt'\n"}
+[10.551791] (-) TimerEvent: {}
+[10.652648] (-) TimerEvent: {}
+[10.754304] (-) TimerEvent: {}
+[10.843898] (Rosmaster_Lib) StdoutLine: {'line': b'running build_ext\n'}
+[10.850339] (Rosmaster_Lib) StdoutLine: {'line': b'Creating /home/nano/projects/felix/install/Rosmaster_Lib/lib/python3.6/site-packages/Rosmaster-Lib.egg-link (link to .)\n'}
+[10.854482] (-) TimerEvent: {}
+[10.857441] (Rosmaster_Lib) StdoutLine: {'line': b'\n'}
+[10.858223] (Rosmaster_Lib) StdoutLine: {'line': b'Installed /home/nano/projects/felix/build/Rosmaster_Lib\n'}
+[10.954668] (-) TimerEvent: {}
+[11.013481] (Rosmaster_Lib) CommandEnded: {'returncode': 0}
+[11.055672] (-) TimerEvent: {}
+[11.163247] (-) TimerEvent: {}
+[11.215930] (Rosmaster_Lib) JobEnded: {'identifier': 'Rosmaster_Lib', 'rc': 0}
+[11.263417] (-) TimerEvent: {}
+[11.365722] (-) TimerEvent: {}
+[11.467854] (-) TimerEvent: {}
+[11.568735] (-) TimerEvent: {}
+[11.670670] (-) TimerEvent: {}
+[11.771461] (-) TimerEvent: {}
+[11.873132] (-) TimerEvent: {}
+[11.974485] (-) TimerEvent: {}
+[12.076794] (-) TimerEvent: {}
+[12.105587] (felix) StdoutLine: {'line': b'running develop\n'}
+[12.108868] (felix) StderrLine: {'line': b'/usr/local/lib/python3.6/dist-packages/setuptools/command/easy_install.py:159: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.\n'}
+[12.110802] (felix) StderrLine: {'line': b'  EasyInstallDeprecationWarning,\n'}
+[12.113824] (felix) StderrLine: {'line': b'/usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.\n'}
+[12.115800] (felix) StderrLine: {'line': b'  setuptools.SetuptoolsDeprecationWarning,\n'}
+[12.176976] (-) TimerEvent: {}
+[12.279436] (felix_camera) StdoutLine: {'line': b'running develop\n'}
+[12.280315] (-) TimerEvent: {}
+[12.282307] (felix_camera) StderrLine: {'line': b'/usr/local/lib/python3.6/dist-packages/setuptools/command/easy_install.py:159: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.\n'}
+[12.283129] (felix_camera) StderrLine: {'line': b'  EasyInstallDeprecationWarning,\n'}
+[12.289074] (felix_camera) StderrLine: {'line': b'/usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.\n'}
+[12.289848] (felix_camera) StderrLine: {'line': b'  setuptools.SetuptoolsDeprecationWarning,\n'}
+[12.380586] (-) TimerEvent: {}
+[12.482865] (-) TimerEvent: {}
+[12.584015] (-) TimerEvent: {}
+[12.685273] (-) TimerEvent: {}
+[12.786404] (-) TimerEvent: {}
+[12.888170] (-) TimerEvent: {}
+[12.989506] (-) TimerEvent: {}
+[13.074098] (felix) StdoutLine: {'line': b'running egg_info\n'}
+[13.076313] (felix) StdoutLine: {'line': b'writing felix.egg-info/PKG-INFO\n'}
+[13.078059] (felix) StdoutLine: {'line': b'writing dependency_links to felix.egg-info/dependency_links.txt\n'}
+[13.081758] (felix) StdoutLine: {'line': b'writing entry points to felix.egg-info/entry_points.txt\n'}
+[13.083568] (felix) StdoutLine: {'line': b'writing requirements to felix.egg-info/requires.txt\n'}
+[13.086737] (felix) StdoutLine: {'line': b'writing top-level names to felix.egg-info/top_level.txt\n'}
+[13.089264] (felix) StdoutLine: {'line': b"reading manifest file 'felix.egg-info/SOURCES.txt'\n"}
+[13.090042] (-) TimerEvent: {}
+[13.095416] (felix) StdoutLine: {'line': b"writing manifest file 'felix.egg-info/SOURCES.txt'\n"}
+[13.190231] (-) TimerEvent: {}
+[13.263975] (felix_camera) StdoutLine: {'line': b'running egg_info\n'}
+[13.266321] (felix_camera) StdoutLine: {'line': b'writing felix_camera.egg-info/PKG-INFO\n'}
+[13.270668] (felix_camera) StdoutLine: {'line': b'writing dependency_links to felix_camera.egg-info/dependency_links.txt\n'}
+[13.273104] (felix_camera) StdoutLine: {'line': b'writing entry points to felix_camera.egg-info/entry_points.txt\n'}
+[13.274971] (felix_camera) StdoutLine: {'line': b'writing requirements to felix_camera.egg-info/requires.txt\n'}
+[13.276980] (felix_camera) StdoutLine: {'line': b'writing top-level names to felix_camera.egg-info/top_level.txt\n'}
+[13.278916] (felix_camera) StdoutLine: {'line': b"reading manifest file 'felix_camera.egg-info/SOURCES.txt'\n"}
+[13.285224] (felix_camera) StdoutLine: {'line': b"writing manifest file 'felix_camera.egg-info/SOURCES.txt'\n"}
+[13.290489] (-) TimerEvent: {}
+[13.386441] (felix) StdoutLine: {'line': b'running build_ext\n'}
+[13.388850] (felix) StdoutLine: {'line': b'Creating /home/nano/projects/felix/install/felix/lib/python3.6/site-packages/felix.egg-link (link to .)\n'}
+[13.390885] (-) TimerEvent: {}
+[13.393381] (felix) StdoutLine: {'line': b'Installing app script to /home/nano/projects/felix/install/felix/lib/felix\n'}
+[13.399190] (felix) StdoutLine: {'line': b'\n'}
+[13.405104] (felix) StdoutLine: {'line': b'Installed /home/nano/projects/felix/build/felix\n'}
+[13.410249] (felix) StdoutLine: {'line': b'running install_data\n'}
+[13.491242] (-) TimerEvent: {}
+[13.550404] (felix) CommandEnded: {'returncode': 0}
+[13.591404] (-) TimerEvent: {}
+[13.613458] (felix) JobEnded: {'identifier': 'felix', 'rc': 0}
+[13.619621] (felix_camera) StdoutLine: {'line': b'running build_ext\n'}
+[13.622367] (felix_camera) StdoutLine: {'line': b'Creating /home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages/felix-camera.egg-link (link to .)\n'}
+[13.626425] (felix_camera) StdoutLine: {'line': b'Installing camera_node script to /home/nano/projects/felix/install/felix_camera/lib/felix_camera\n'}
+[13.628890] (felix_camera) StdoutLine: {'line': b'\n'}
+[13.630147] (felix_camera) StdoutLine: {'line': b'Installed /home/nano/projects/felix/build/felix_camera\n'}
+[13.630900] (felix_camera) StdoutLine: {'line': b'running install_data\n'}
+[13.691605] (-) TimerEvent: {}
+[13.776485] (felix_camera) CommandEnded: {'returncode': 0}
+[13.791876] (-) TimerEvent: {}
+[13.831507] (felix_camera) JobEnded: {'identifier': 'felix_camera', 'rc': 0}
+[13.839195] (-) EventReactorShutdown: {}

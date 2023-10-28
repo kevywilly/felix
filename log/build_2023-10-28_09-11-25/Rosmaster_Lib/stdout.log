@@ -1,0 +1,11 @@
+running develop
+running egg_info
+writing Rosmaster_Lib.egg-info/PKG-INFO
+writing dependency_links to Rosmaster_Lib.egg-info/dependency_links.txt
+writing top-level names to Rosmaster_Lib.egg-info/top_level.txt
+reading manifest file 'Rosmaster_Lib.egg-info/SOURCES.txt'
+writing manifest file 'Rosmaster_Lib.egg-info/SOURCES.txt'
+running build_ext
+Creating /felix/install/Rosmaster_Lib/lib/python3.6/site-packages/Rosmaster-Lib.egg-link (link to .)
+
+Installed /felix/build/Rosmaster_Lib

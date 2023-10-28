@@ -1,0 +1,21 @@
+[7.837s] Invoking command in '/home/nano/projects/felix/build/felix_camera': PYTHONPATH=/home/nano/projects/felix/build/felix_camera/prefix_override:/home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/nano/projects/felix/build/felix_camera/build --no-deps install_data
+[9.544s] running develop
+[9.547s] /usr/local/lib/python3.6/dist-packages/setuptools/command/easy_install.py:159: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+[9.549s]   EasyInstallDeprecationWarning,
+[9.553s] /usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[9.554s]   setuptools.SetuptoolsDeprecationWarning,
+[10.376s] running egg_info
+[10.383s] writing felix_camera.egg-info/PKG-INFO
+[10.383s] writing dependency_links to felix_camera.egg-info/dependency_links.txt
+[10.384s] writing entry points to felix_camera.egg-info/entry_points.txt
+[10.384s] writing requirements to felix_camera.egg-info/requires.txt
+[10.385s] writing top-level names to felix_camera.egg-info/top_level.txt
+[10.386s] reading manifest file 'felix_camera.egg-info/SOURCES.txt'
+[10.394s] writing manifest file 'felix_camera.egg-info/SOURCES.txt'
+[10.671s] running build_ext
+[10.672s] Creating /home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages/felix-camera.egg-link (link to .)
+[10.679s] Installing camera_node script to /home/nano/projects/felix/install/felix_camera/lib/felix_camera
+[10.682s] 
+[10.687s] Installed /home/nano/projects/felix/build/felix_camera
+[10.689s] running install_data
+[10.830s] Invoked command in '/home/nano/projects/felix/build/felix_camera' returned '0': PYTHONPATH=/home/nano/projects/felix/build/felix_camera/prefix_override:/home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/nano/projects/felix/build/felix_camera/build --no-deps install_data

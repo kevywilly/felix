@@ -1,0 +1,17 @@
+[6.506s] Invoking command in '/home/nano/projects/felix/build/Rosmaster_Lib': PYTHONPATH=/home/nano/projects/felix/build/Rosmaster_Lib/prefix_override:/home/nano/projects/felix/install/Rosmaster_Lib/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/nano/projects/felix/build/Rosmaster_Lib/build --no-deps
+[8.937s] running develop
+[8.942s] /usr/local/lib/python3.6/dist-packages/setuptools/command/easy_install.py:159: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+[8.943s]   EasyInstallDeprecationWarning,
+[8.946s] /usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[8.947s]   setuptools.SetuptoolsDeprecationWarning,
+[10.483s] running egg_info
+[10.484s] writing Rosmaster_Lib.egg-info/PKG-INFO
+[10.487s] writing dependency_links to Rosmaster_Lib.egg-info/dependency_links.txt
+[10.488s] writing top-level names to Rosmaster_Lib.egg-info/top_level.txt
+[10.492s] reading manifest file 'Rosmaster_Lib.egg-info/SOURCES.txt'
+[10.499s] writing manifest file 'Rosmaster_Lib.egg-info/SOURCES.txt'
+[10.838s] running build_ext
+[10.844s] Creating /home/nano/projects/felix/install/Rosmaster_Lib/lib/python3.6/site-packages/Rosmaster-Lib.egg-link (link to .)
+[10.851s] 
+[10.852s] Installed /home/nano/projects/felix/build/Rosmaster_Lib
+[11.008s] Invoked command in '/home/nano/projects/felix/build/Rosmaster_Lib' returned '0': PYTHONPATH=/home/nano/projects/felix/build/Rosmaster_Lib/prefix_override:/home/nano/projects/felix/install/Rosmaster_Lib/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/nano/projects/felix/build/Rosmaster_Lib/build --no-deps

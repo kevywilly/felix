@@ -1,0 +1,154 @@
+[0.000000] (-) TimerEvent: {}
+[0.000792] (Rosmaster_Lib) JobQueued: {'identifier': 'Rosmaster_Lib', 'dependencies': OrderedDict()}
+[0.001457] (felix_camera) JobQueued: {'identifier': 'felix_camera', 'dependencies': OrderedDict()}
+[0.002699] (Rosmaster_Lib) JobStarted: {'identifier': 'Rosmaster_Lib'}
+[0.076152] (felix_camera) JobStarted: {'identifier': 'felix_camera'}
+[0.099464] (-) TimerEvent: {}
+[0.200450] (-) TimerEvent: {}
+[0.301430] (-) TimerEvent: {}
+[0.402214] (-) TimerEvent: {}
+[0.502948] (-) TimerEvent: {}
+[0.603672] (-) TimerEvent: {}
+[0.704581] (-) TimerEvent: {}
+[0.805380] (-) TimerEvent: {}
+[0.906225] (-) TimerEvent: {}
+[1.006935] (-) TimerEvent: {}
+[1.107642] (-) TimerEvent: {}
+[1.208342] (-) TimerEvent: {}
+[1.309037] (-) TimerEvent: {}
+[1.409716] (-) TimerEvent: {}
+[1.510420] (-) TimerEvent: {}
+[1.611157] (-) TimerEvent: {}
+[1.712070] (-) TimerEvent: {}
+[1.813066] (-) TimerEvent: {}
+[1.914103] (-) TimerEvent: {}
+[2.014862] (-) TimerEvent: {}
+[2.115635] (-) TimerEvent: {}
+[2.216393] (-) TimerEvent: {}
+[2.317141] (-) TimerEvent: {}
+[2.417907] (-) TimerEvent: {}
+[2.518637] (-) TimerEvent: {}
+[2.619359] (-) TimerEvent: {}
+[2.720076] (-) TimerEvent: {}
+[2.820812] (-) TimerEvent: {}
+[2.921548] (-) TimerEvent: {}
+[3.022336] (-) TimerEvent: {}
+[3.123090] (-) TimerEvent: {}
+[3.223846] (-) TimerEvent: {}
+[3.324576] (-) TimerEvent: {}
+[3.425452] (-) TimerEvent: {}
+[3.526546] (-) TimerEvent: {}
+[3.627288] (-) TimerEvent: {}
+[3.728045] (-) TimerEvent: {}
+[3.828828] (-) TimerEvent: {}
+[3.929559] (-) TimerEvent: {}
+[4.031680] (-) TimerEvent: {}
+[4.133119] (-) TimerEvent: {}
+[4.235221] (-) TimerEvent: {}
+[4.252066] (Rosmaster_Lib) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'egg_info', '--egg-base', '../../build/Rosmaster_Lib', 'build', '--build-base', '/home/nano/projects/felix/build/Rosmaster_Lib/build', 'install', '--record', '/home/nano/projects/felix/build/Rosmaster_Lib/install.log', '--single-version-externally-managed'], 'cwd': '/home/nano/projects/felix/dependencies/rosmaster', 'env': {'OPENBLAS_CORETYPE': 'ARMV8', 'PYTHONIOENCODING': 'utf-8', 'HOSTNAME': 'nano1', 'GIT_ASKPASS': '/root/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/askpass.sh', 'LD_LIBRARY_PATH': '/opt/ros/humble/install/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib:', 'BROWSER': '/root/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/bin/helpers/browser.sh', 'SHLVL': '2', 'HOME': '/root', 'OLDPWD': '/home/nano/projects/felix/src', 'TERM_PROGRAM_VERSION': '1.83.1', 'VSCODE_IPC_HOOK_CLI': '/tmp/vscode-ipc-288e5f26-2224-4dff-9c67-e87330c10744.sock', 'VSCODE_GIT_ASKPASS_MAIN': '/root/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/askpass-main.js', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_NODE': '/root/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/node', 'REMOTE_CONTAINERS': 'true', 'COLORTERM': 'truecolor', 'COLCON_PREFIX_PATH': '/opt/ros/humble/install', 'TORCH_HOME': '/data/models/torch', 'ROS_DISTRO': 'humble', 'REMOTE_CONTAINERS_IPC': '/tmp/vscode-remote-containers-ipc-ee4dfc35-a883-4c2d-aeaf-96dfee449bf1.sock', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'NVIDIA_DRIVER_CAPABILITIES': 'all', 'PKG_CONFIG_PATH': '/opt/ros/humble/install/lib/aarch64-linux-gnu/pkgconfig:/opt/ros/humble/install/lib/pkgconfig', 'TERM': 'xterm-256color', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/install/bin:/root/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/bin/remote-cli:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': ':1', 'REMOTE_CONTAINERS_SOCKETS': '["/tmp/vscode-ssh-auth-ee4dfc35-a883-4c2d-aeaf-96dfee449bf1.sock","/tmp/.X11-unix/X1","/root/.gnupg/S.gpg-agent"]', 'LANG': 'en_US.UTF-8', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'TERM_PROGRAM': 'vscode', 'ROS_ROOT': '/opt/ros/humble', 'VSCODE_GIT_IPC_HANDLE': '/tmp/vscode-git-39158ba2c7.sock', 'AMENT_PREFIX_PATH': '/opt/ros/humble/install', 'SSH_AUTH_SOCK': '/tmp/vscode-ssh-auth-ee4dfc35-a883-4c2d-aeaf-96dfee449bf1.sock', 'REMOTE_CONTAINERS_DISPLAY_SOCK': '/tmp/.X11-unix/X1', 'DEBIAN_FRONTEND': 'noninteractive', 'SHELL': '/bin/bash', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/nano/projects/felix/build/Rosmaster_Lib', 'PYTHONPATH': '/home/nano/projects/felix/build/Rosmaster_Lib/prefix_override:/home/nano/projects/felix/install/Rosmaster_Lib/lib/python3.6/site-packages:/opt/ros/humble/install/lib/python3.6/site-packages', 'NVIDIA_VISIBLE_DEVICES': 'all', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/opt/ros/humble/install'}, 'shell': False}
+[4.337835] (-) TimerEvent: {}
+[4.441761] (-) TimerEvent: {}
+[4.545742] (-) TimerEvent: {}
+[4.646539] (-) TimerEvent: {}
+[4.753743] (-) TimerEvent: {}
+[4.858085] (-) TimerEvent: {}
+[4.958924] (-) TimerEvent: {}
+[5.059758] (-) TimerEvent: {}
+[5.160562] (-) TimerEvent: {}
+[5.261412] (-) TimerEvent: {}
+[5.363447] (-) TimerEvent: {}
+[5.465744] (-) TimerEvent: {}
+[5.566557] (-) TimerEvent: {}
+[5.668020] (-) TimerEvent: {}
+[5.771331] (-) TimerEvent: {}
+[5.885383] (-) TimerEvent: {}
+[5.986230] (-) TimerEvent: {}
+[6.089777] (-) TimerEvent: {}
+[6.190825] (-) TimerEvent: {}
+[6.291723] (-) TimerEvent: {}
+[6.393154] (-) TimerEvent: {}
+[6.494690] (-) TimerEvent: {}
+[6.596932] (-) TimerEvent: {}
+[6.670267] (felix_camera) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'egg_info', '--egg-base', '../../build/felix_camera', 'build', '--build-base', '/home/nano/projects/felix/build/felix_camera/build', 'install', '--record', '/home/nano/projects/felix/build/felix_camera/install.log', '--single-version-externally-managed'], 'cwd': '/home/nano/projects/felix/src/felix_camera', 'env': {'OPENBLAS_CORETYPE': 'ARMV8', 'PYTHONIOENCODING': 'utf-8', 'HOSTNAME': 'nano1', 'GIT_ASKPASS': '/root/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/askpass.sh', 'LD_LIBRARY_PATH': '/opt/ros/humble/install/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib:', 'BROWSER': '/root/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/bin/helpers/browser.sh', 'SHLVL': '2', 'HOME': '/root', 'OLDPWD': '/home/nano/projects/felix/src', 'TERM_PROGRAM_VERSION': '1.83.1', 'VSCODE_IPC_HOOK_CLI': '/tmp/vscode-ipc-288e5f26-2224-4dff-9c67-e87330c10744.sock', 'VSCODE_GIT_ASKPASS_MAIN': '/root/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/askpass-main.js', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_NODE': '/root/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/node', 'REMOTE_CONTAINERS': 'true', 'COLORTERM': 'truecolor', 'COLCON_PREFIX_PATH': '/opt/ros/humble/install', 'TORCH_HOME': '/data/models/torch', 'ROS_DISTRO': 'humble', 'REMOTE_CONTAINERS_IPC': '/tmp/vscode-remote-containers-ipc-ee4dfc35-a883-4c2d-aeaf-96dfee449bf1.sock', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'NVIDIA_DRIVER_CAPABILITIES': 'all', 'PKG_CONFIG_PATH': '/opt/ros/humble/install/lib/aarch64-linux-gnu/pkgconfig:/opt/ros/humble/install/lib/pkgconfig', 'TERM': 'xterm-256color', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/install/bin:/root/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/bin/remote-cli:/usr/local/cuda-10.2/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': ':1', 'REMOTE_CONTAINERS_SOCKETS': '["/tmp/vscode-ssh-auth-ee4dfc35-a883-4c2d-aeaf-96dfee449bf1.sock","/tmp/.X11-unix/X1","/root/.gnupg/S.gpg-agent"]', 'LANG': 'en_US.UTF-8', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'TERM_PROGRAM': 'vscode', 'ROS_ROOT': '/opt/ros/humble', 'VSCODE_GIT_IPC_HANDLE': '/tmp/vscode-git-39158ba2c7.sock', 'AMENT_PREFIX_PATH': '/opt/ros/humble/install', 'SSH_AUTH_SOCK': '/tmp/vscode-ssh-auth-ee4dfc35-a883-4c2d-aeaf-96dfee449bf1.sock', 'REMOTE_CONTAINERS_DISPLAY_SOCK': '/tmp/.X11-unix/X1', 'DEBIAN_FRONTEND': 'noninteractive', 'SHELL': '/bin/bash', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/home/nano/projects/felix/build/felix_camera', 'PYTHONPATH': '/home/nano/projects/felix/build/felix_camera/prefix_override:/home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages:/opt/ros/humble/install/lib/python3.6/site-packages', 'NVIDIA_VISIBLE_DEVICES': 'all', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/opt/ros/humble/install'}, 'shell': False}
+[6.698064] (-) TimerEvent: {}
+[6.799168] (-) TimerEvent: {}
+[6.900771] (-) TimerEvent: {}
+[7.001613] (-) TimerEvent: {}
+[7.010483] (Rosmaster_Lib) StdoutLine: {'line': b'running egg_info\n'}
+[7.014101] (Rosmaster_Lib) StdoutLine: {'line': b'creating ../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info\n'}
+[7.015708] (Rosmaster_Lib) StdoutLine: {'line': b'writing ../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info/PKG-INFO\n'}
+[7.017661] (Rosmaster_Lib) StdoutLine: {'line': b'writing dependency_links to ../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info/dependency_links.txt\n'}
+[7.019727] (Rosmaster_Lib) StdoutLine: {'line': b'writing top-level names to ../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info/top_level.txt\n'}
+[7.021813] (Rosmaster_Lib) StdoutLine: {'line': b"writing manifest file '../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info/SOURCES.txt'\n"}
+[7.025262] (Rosmaster_Lib) StdoutLine: {'line': b"reading manifest file '../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info/SOURCES.txt'\n"}
+[7.034499] (Rosmaster_Lib) StdoutLine: {'line': b"writing manifest file '../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info/SOURCES.txt'\n"}
+[7.038504] (Rosmaster_Lib) StdoutLine: {'line': b'running build\n'}
+[7.039334] (Rosmaster_Lib) StdoutLine: {'line': b'running install\n'}
+[7.041753] (Rosmaster_Lib) StderrLine: {'line': b'/usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.\n'}
+[7.046203] (Rosmaster_Lib) StdoutLine: {'line': b'running install_egg_info\n'}
+[7.047248] (Rosmaster_Lib) StderrLine: {'line': b'  setuptools.SetuptoolsDeprecationWarning,\n'}
+[7.062315] (Rosmaster_Lib) StdoutLine: {'line': b'Copying ../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info to /home/nano/projects/felix/install/Rosmaster_Lib/lib/python3.6/site-packages/Rosmaster_Lib-1.7.3-py3.6.egg-info\n'}
+[7.067010] (Rosmaster_Lib) StdoutLine: {'line': b'running install_scripts\n'}
+[7.109769] (-) TimerEvent: {}
+[7.210826] (-) TimerEvent: {}
+[7.222089] (Rosmaster_Lib) StdoutLine: {'line': b"writing list of installed files to '/home/nano/projects/felix/build/Rosmaster_Lib/install.log'\n"}
+[7.311030] (-) TimerEvent: {}
+[7.362049] (Rosmaster_Lib) CommandEnded: {'returncode': 0}
+[7.411235] (-) TimerEvent: {}
+[7.513744] (-) TimerEvent: {}
+[7.588410] (Rosmaster_Lib) JobEnded: {'identifier': 'Rosmaster_Lib', 'rc': 0}
+[7.616601] (-) TimerEvent: {}
+[7.718501] (-) TimerEvent: {}
+[7.821652] (-) TimerEvent: {}
+[7.922437] (-) TimerEvent: {}
+[8.023807] (-) TimerEvent: {}
+[8.125743] (-) TimerEvent: {}
+[8.228751] (-) TimerEvent: {}
+[8.329617] (-) TimerEvent: {}
+[8.431712] (-) TimerEvent: {}
+[8.533611] (-) TimerEvent: {}
+[8.637755] (-) TimerEvent: {}
+[8.738547] (-) TimerEvent: {}
+[8.751390] (felix_camera) StdoutLine: {'line': b'running egg_info\n'}
+[8.754953] (felix_camera) StdoutLine: {'line': b'creating ../../build/felix_camera/felix_camera.egg-info\n'}
+[8.755963] (felix_camera) StdoutLine: {'line': b'writing ../../build/felix_camera/felix_camera.egg-info/PKG-INFO\n'}
+[8.756942] (felix_camera) StdoutLine: {'line': b'writing dependency_links to ../../build/felix_camera/felix_camera.egg-info/dependency_links.txt\n'}
+[8.758656] (felix_camera) StdoutLine: {'line': b'writing entry points to ../../build/felix_camera/felix_camera.egg-info/entry_points.txt\n'}
+[8.761352] (felix_camera) StdoutLine: {'line': b'writing requirements to ../../build/felix_camera/felix_camera.egg-info/requires.txt\n'}
+[8.762328] (felix_camera) StdoutLine: {'line': b'writing top-level names to ../../build/felix_camera/felix_camera.egg-info/top_level.txt\n'}
+[8.762965] (felix_camera) StdoutLine: {'line': b"writing manifest file '../../build/felix_camera/felix_camera.egg-info/SOURCES.txt'\n"}
+[8.770647] (felix_camera) StdoutLine: {'line': b"reading manifest file '../../build/felix_camera/felix_camera.egg-info/SOURCES.txt'\n"}
+[8.777306] (felix_camera) StdoutLine: {'line': b"writing manifest file '../../build/felix_camera/felix_camera.egg-info/SOURCES.txt'\n"}
+[8.778477] (felix_camera) StdoutLine: {'line': b'running build\n'}
+[8.779154] (felix_camera) StdoutLine: {'line': b'running build_py\n'}
+[8.780317] (felix_camera) StdoutLine: {'line': b'creating /home/nano/projects/felix/build/felix_camera/build\n'}
+[8.782967] (felix_camera) StdoutLine: {'line': b'creating /home/nano/projects/felix/build/felix_camera/build/lib\n'}
+[8.783704] (felix_camera) StdoutLine: {'line': b'creating /home/nano/projects/felix/build/felix_camera/build/lib/felix_camera\n'}
+[8.784379] (felix_camera) StdoutLine: {'line': b'copying felix_camera/__init__.py -> /home/nano/projects/felix/build/felix_camera/build/lib/felix_camera\n'}
+[8.793252] (felix_camera) StdoutLine: {'line': b'copying felix_camera/camera_node.py -> /home/nano/projects/felix/build/felix_camera/build/lib/felix_camera\n'}
+[8.794062] (felix_camera) StderrLine: {'line': b'/usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.\n'}
+[8.794799] (felix_camera) StderrLine: {'line': b'  setuptools.SetuptoolsDeprecationWarning,\n'}
+[8.795430] (felix_camera) StdoutLine: {'line': b'running install\n'}
+[8.796131] (felix_camera) StdoutLine: {'line': b'running install_lib\n'}
+[8.796793] (felix_camera) StdoutLine: {'line': b'creating /home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages/felix_camera\n'}
+[8.797409] (felix_camera) StdoutLine: {'line': b'copying /home/nano/projects/felix/build/felix_camera/build/lib/felix_camera/__init__.py -> /home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages/felix_camera\n'}
+[8.802327] (felix_camera) StdoutLine: {'line': b'copying /home/nano/projects/felix/build/felix_camera/build/lib/felix_camera/camera_node.py -> /home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages/felix_camera\n'}
+[8.803083] (felix_camera) StdoutLine: {'line': b'byte-compiling /home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages/felix_camera/__init__.py to __init__.cpython-36.pyc\n'}
+[8.803674] (felix_camera) StdoutLine: {'line': b'byte-compiling /home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages/felix_camera/camera_node.py to camera_node.cpython-36.pyc\n'}
+[8.804241] (felix_camera) StdoutLine: {'line': b'running install_data\n'}
+[8.804792] (felix_camera) StdoutLine: {'line': b'creating /home/nano/projects/felix/install/felix_camera/share/ament_index\n'}
+[8.805312] (felix_camera) StdoutLine: {'line': b'creating /home/nano/projects/felix/install/felix_camera/share/ament_index/resource_index\n'}
+[8.805974] (felix_camera) StdoutLine: {'line': b'creating /home/nano/projects/felix/install/felix_camera/share/ament_index/resource_index/packages\n'}
+[8.806623] (felix_camera) StdoutLine: {'line': b'copying resource/felix_camera -> /home/nano/projects/felix/install/felix_camera/share/ament_index/resource_index/packages\n'}
+[8.807263] (felix_camera) StdoutLine: {'line': b'copying package.xml -> /home/nano/projects/felix/install/felix_camera/share/felix_camera\n'}
+[8.813475] (felix_camera) StdoutLine: {'line': b'running install_egg_info\n'}
+[8.814343] (felix_camera) StdoutLine: {'line': b'Copying ../../build/felix_camera/felix_camera.egg-info to /home/nano/projects/felix/install/felix_camera/lib/python3.6/site-packages/felix_camera-0.0.0-py3.6.egg-info\n'}
+[8.817932] (felix_camera) StdoutLine: {'line': b'running install_scripts\n'}
+[8.838819] (-) TimerEvent: {}
+[8.912897] (felix_camera) StdoutLine: {'line': b'Installing camera_node script to /home/nano/projects/felix/install/felix_camera/lib/felix_camera\n'}
+[8.916283] (felix_camera) StdoutLine: {'line': b"writing list of installed files to '/home/nano/projects/felix/build/felix_camera/install.log'\n"}
+[8.939034] (-) TimerEvent: {}
+[9.048580] (felix_camera) CommandEnded: {'returncode': 0}
+[9.051477] (-) TimerEvent: {}
+[9.089351] (felix_camera) JobEnded: {'identifier': 'felix_camera', 'rc': 0}
+[9.094156] (-) EventReactorShutdown: {}

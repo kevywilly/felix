@@ -1,0 +1,21 @@
+[9.897s] Invoking command in '/home/nano/projects/felix/build/felix': PYTHONPATH=/home/nano/projects/felix/build/felix/prefix_override:/home/nano/projects/felix/install/felix/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/nano/projects/felix/build/felix/build --no-deps install_data
+[12.026s] running develop
+[12.028s] /usr/local/lib/python3.6/dist-packages/setuptools/command/easy_install.py:159: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+[12.030s]   EasyInstallDeprecationWarning,
+[12.033s] /usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[12.035s]   setuptools.SetuptoolsDeprecationWarning,
+[12.993s] running egg_info
+[12.996s] writing felix.egg-info/PKG-INFO
+[12.997s] writing dependency_links to felix.egg-info/dependency_links.txt
+[13.001s] writing entry points to felix.egg-info/entry_points.txt
+[13.004s] writing requirements to felix.egg-info/requires.txt
+[13.006s] writing top-level names to felix.egg-info/top_level.txt
+[13.008s] reading manifest file 'felix.egg-info/SOURCES.txt'
+[13.014s] writing manifest file 'felix.egg-info/SOURCES.txt'
+[13.306s] running build_ext
+[13.308s] Creating /home/nano/projects/felix/install/felix/lib/python3.6/site-packages/felix.egg-link (link to .)
+[13.316s] Installing app script to /home/nano/projects/felix/install/felix/lib/felix
+[13.322s] 
+[13.327s] Installed /home/nano/projects/felix/build/felix
+[13.333s] running install_data
+[13.470s] Invoked command in '/home/nano/projects/felix/build/felix' returned '0': PYTHONPATH=/home/nano/projects/felix/build/felix/prefix_override:/home/nano/projects/felix/install/felix/lib/python3.6/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/nano/projects/felix/build/felix/build --no-deps install_data

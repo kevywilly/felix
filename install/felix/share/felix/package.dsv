@@ -1,0 +1,9 @@
+source;share/felix/hook/pythonpath.ps1
+source;share/felix/hook/pythonpath.dsv
+source;share/felix/hook/pythonpath.sh
+source;share/felix/hook/ament_prefix_path.ps1
+source;share/felix/hook/ament_prefix_path.dsv
+source;share/felix/hook/ament_prefix_path.sh
+source;../../build/felix/share/felix/hook/pythonpath_develop.ps1
+source;../../build/felix/share/felix/hook/pythonpath_develop.dsv
+source;../../build/felix/share/felix/hook/pythonpath_develop.sh

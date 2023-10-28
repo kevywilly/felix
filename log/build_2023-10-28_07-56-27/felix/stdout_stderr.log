@@ -1,0 +1,26 @@
+running develop
+/usr/local/lib/python3.6/dist-packages/setuptools/command/easy_install.py:159: EasyInstallDeprecationWarning: easy_install command is deprecated. Use build and pip and other standards-based tools.
+  EasyInstallDeprecationWarning,
+/usr/local/lib/python3.6/dist-packages/setuptools/command/install.py:37: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  setuptools.SetuptoolsDeprecationWarning,
+running egg_info
+creating felix.egg-info
+writing felix.egg-info/PKG-INFO
+writing dependency_links to felix.egg-info/dependency_links.txt
+writing entry points to felix.egg-info/entry_points.txt
+writing requirements to felix.egg-info/requires.txt
+writing top-level names to felix.egg-info/top_level.txt
+writing manifest file 'felix.egg-info/SOURCES.txt'
+reading manifest file 'felix.egg-info/SOURCES.txt'
+writing manifest file 'felix.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/nano/projects/felix/install/felix/lib/python3.6/site-packages/felix.egg-link (link to .)
+Installing app script to /home/nano/projects/felix/install/felix/lib/felix
+
+Installed /home/nano/projects/felix/build/felix
+running install_data
+creating /home/nano/projects/felix/install/felix/share/ament_index
+creating /home/nano/projects/felix/install/felix/share/ament_index/resource_index
+creating /home/nano/projects/felix/install/felix/share/ament_index/resource_index/packages
+copying resource/felix -> /home/nano/projects/felix/install/felix/share/ament_index/resource_index/packages
+copying package.xml -> /home/nano/projects/felix/install/felix/share/felix
