@@ -1,3 +1,0 @@
-[console_scripts]
-camera_node = felix_camera.camera_node:main
-

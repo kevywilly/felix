@@ -1,10 +1,9 @@
-from pydantic import BaseModel
 from typing import List, Optional, Any
 import torchvision
 import os
 
-
 class CameraConfig:
+
     def __init__(self, 
         width: int = 1280, 
         height: int = 720, 
@@ -20,7 +19,7 @@ class CameraConfig:
         self.capture_height = capture_height
         self.stereo = stereo
 
-class TrainingConfig:
+class TrainingProfile:
 
     def __init__(self, data_root: str, name: str, classifier: str, categories: List[str], epochs: int = 30, learning_rate: float = 0.001, momentum: float = 0.9):
         self.name = name
@@ -42,36 +41,35 @@ class TrainingConfig:
             return torchvision.models.resnet18(*args, **kwargs)
         else:
             raise "Invalid model specified, please use 'alexnet' or 'resnet18"
-        
+
+      
 class AppSettings:
 
-    i2c_port: int = 7
-    # Drivetrain Settings
-    motor_1_alpha: float = 1.0
-    motor_2_alpha: float = 1.0
-    motor_3_alpha: float = 1.0
-    motor_4_alpha: float = 1.0
-    motor_max_rpm: float = 100
+    class Topics:
+        raw_video: str = "/video_source/raw"
+        
+    class Robot:
+        wheel_radius: float = 95.00
+        wheel_base: float = 150.00
+        wheel_x_offset: float = 145.00
+        body_length: float = 144.00
+        body_width: float = 126.00
 
-    wheel_radius_meters: float = 65/2.0/1000
-    wheel_base_meters: float = 175/1000.0
+    class Motion:
+        linear_velocity_multiple: float = 0.2
+        angular_velocity_multiple: float = 0.4
 
-    robot_drive_speed: float = 0.50
-    robot_turn_speed: float = 0.50
+    Training: TrainingProfile = TrainingProfile(
+            data_root="/felix/data",
+            name="obstacle3d",
+            classifier="alexnet",
+            categories=["forward", "left", "right"]
+        )   
+    
 
-    # Training Settings
-
-    training_config: TrainingConfig = TrainingConfig(
-        data_root="/felix/data",
-        name="obstacle3d",
-        classifier="alexnet",
-        categories=["forward", "left", "right"]
-    )
-
-    camera_config: CameraConfig = CameraConfig(
+    Camera: CameraConfig = CameraConfig(
         width = 1280, height=720, fps=30, capture_width=1280, capture_height=720, stereo=False
     )
-    # Input Settings
 
     debug: bool = False
 

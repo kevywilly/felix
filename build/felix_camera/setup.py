@@ -1,1 +1,0 @@
-/felix/src/felix_camera/setup.py

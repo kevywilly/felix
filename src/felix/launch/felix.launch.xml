@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="felix_camera" exec="camera_node" output="screen"/>
+    <node pkg="felix" exec="app" output="screen"/>
+</launch>

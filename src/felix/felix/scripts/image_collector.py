@@ -2,17 +2,16 @@ import os
 import time
 from pathlib import Path
 import cv2
-from felix.scripts.settings import settings, TrainingConfig
+from felix.scripts.settings import settings
 
 class ImageCollector:
     def __init__(self):
         self.counts = {}
-        self.config: TrainingConfig = settings.training_config
         self._make_folders()
         self._generate_counts()
 
     def category_path(self, category: str) -> str:
-        return os.path.join(self.config.training_data_path, category.replace(" ", "_"))
+        return os.path.join(settings.Training.training_data_path, category.replace(" ", "_"))
 
     def get_count(self, category: str) -> int:
         value = len(os.listdir(self.category_path(category)))
@@ -20,11 +19,11 @@ class ImageCollector:
         return value
 
     def _generate_counts(self):
-        for category in self.config.categories:
+        for category in settings.Training.categories:
             self.get_count(category)
 
     def _make_folders(self):
-        for category in self.config.categories:
+        for category in settings.Training.categories:
             try:
                 os.makedirs(self.category_path(category))
             except FileExistsError:
@@ -39,7 +38,7 @@ class ImageCollector:
     def collect(self, category: str, image) -> int:
         print(f"collecting image for {category}")
         
-        if category in self.config.categories:
+        if category in settings.Training.categories:
             name = str(time.time()) + ".jpg"
             
             pth = os.path.join(

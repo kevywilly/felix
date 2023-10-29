@@ -1,9 +1,0 @@
-setup.py
-../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info/PKG-INFO
-../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info/SOURCES.txt
-../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info/dependency_links.txt
-../../build/Rosmaster_Lib/Rosmaster_Lib.egg-info/top_level.txt
-Rosmaster_Lib.egg-info/PKG-INFO
-Rosmaster_Lib.egg-info/SOURCES.txt
-Rosmaster_Lib.egg-info/dependency_links.txt
-Rosmaster_Lib.egg-info/top_level.txt

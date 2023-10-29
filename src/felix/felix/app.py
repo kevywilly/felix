@@ -7,11 +7,13 @@ from flask import Flask, Response, jsonify, request
 import cv2
 from rclpy.node import Node
 from sensor_msgs.msg import Image
-#from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist
 #from oribot_interfaces.srv import Toggle
 from felix.scripts.image_collector import ImageCollector
 #import oribot.scripts.cmd_utils as cmd_utils
 import felix.scripts.image_utils as image_utils
+from felix.scripts.rosmaster import Rosmaster
+from felix.scripts.settings import settings
 
 class Api(Node):
     def __init__(self):
@@ -19,7 +21,9 @@ class Api(Node):
         self.image: Image = None
         self.jpeg_bytes: bytes = None
         self.collector = ImageCollector()
-        self.create_subscription(Image, "/video_source/raw", self.image_callback, 10)
+        self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 10)
+        self.bot = Rosmaster()
+        self.bot.set_car_type(2)
        
     def log(self, txt: str):
         self.get_logger().info(f"{txt}")
@@ -34,6 +38,26 @@ class Api(Node):
     
     def get_jpeg(self):
         return self.jpeg_image_bytes
+
+    def collect_image(self, category):
+        try:
+            self.get_logger().info(f"received collect image request {category}")
+            img = self.get_jpeg()
+            return self.collector.collect(category, img)
+        
+        except Exception as ex:
+            self.get_logger().error(str(ex))
+
+    def twist(self, twist: Twist):
+
+        twist.linear.x = twist.linear.x * settings.Motion.linear_velocity_multiple
+        twist.linear.y = twist.linear.y * settings.Motion.linear_velocity_multiple
+        twist.angular.z = twist.angular.z * settings.Motion.angular_velocity_multiple
+        
+        app_node.bot.set_car_motion(twist.linear.x,twist.linear.y, twist.angular.z)
+        app_node.get_logger().info(f"move: ((twist.linear.x,twist.linear.y, twist.angular.z))")
+
+        return twist
             
 
 def ros2_thread(node: Api):
@@ -91,6 +115,65 @@ def hello():
 @app.route('/api/stream')
 def stream():
     return Response(_get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/api/categories/<category>/collect')
+def collect(category: str):
+    try:
+        resp = app_node.collect_image(category)
+        return {'count': resp}
+    except Exception as ex:
+        return {'count': -1, 'error': str(ex)}
+
+@app.get('/api/categories/counts')
+def category_counts():
+    results = app_node.collector.get_categories()
+    return jsonify(results)
+
+@app.get('/api/categories/<category>/images')
+def category_images(category: str):
+    return {"images": app_node.collector.get_images(category)}
+
+
+@app.get('/api/categories/<category>/images/<name>')
+def get_image(category, name):
+    bytes_str = app_node.collector.load_image(category, name)
+    response = flask.make_response(bytes_str)
+    response.headers.set('Content-Type', 'image/jpeg')
+    return response
+
+@app.get('/api/categories/<category>/images/<name>/<cam_index>')
+def get_image2(category, name, cam_index):
+    bytes_str = app_node.collector.load_image(category, name)
+    response = flask.make_response(bytes_str)
+    response.headers.set('Content-Type', 'image/jpeg')
+    return response
+
+@app.delete('/api/categories/<category>/images/<name>')
+def delete_image(category, name):
+    resp = app_node.collector.delete_image(category, name)
+    return {"status": resp}
+
+def _parse_twist(json) -> Twist:
+    twist = Twist()
+    twist.linear.x = float(json['linear']['x'])
+    twist.linear.y = float(json['linear']['y'])
+    twist.linear.z = float(json['linear']['z'])
+    twist.angular.x = float(json['angular']['x'])
+    twist.angular.y = float(json['angular']['y'])
+    twist.angular.z = float(json['angular']['z'])
+    return twist
+
+def _twist_to_json(twist):
+    return {
+            "linear": {"x": twist.linear.x, "y": twist.linear.y, "z": twist.linear.z},
+            "angular": {"x": twist.angular.x, "y": twist.angular.y, "z": twist.angular.z},
+        }
+    
+
+@app.post('/api/twist')
+def apply_twist():
+    return _twist_to_json(app_node.twist(_parse_twist(request.get_json())))
+
 
 def main(args=None):
     threading.Thread(target=ros2_thread, args=[app_node]).start()

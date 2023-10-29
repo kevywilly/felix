@@ -59,7 +59,7 @@ if [ $ARCH = "aarch64" ]; then
 		--device /dev/snd \
 		--device /dev/bus/usb \
 		$DATA_VOLUME $DISPLAY_DEVICE $V4L2_DEVICES \
-		"felix:1.0"
+		"felix:1.1"
 
 elif [ $ARCH = "x86_64" ]; then
 
