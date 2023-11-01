@@ -4,33 +4,29 @@ import threading
 import flask
 from flask_cors import CORS
 from flask import Flask, Response, jsonify, request
-import cv2
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
-#from oribot_interfaces.srv import Toggle
-from felix.scripts.image_collector import ImageCollector
-#import oribot.scripts.cmd_utils as cmd_utils
 import felix.scripts.image_utils as image_utils
-from felix.scripts.rosmaster import Rosmaster
+from felix.scripts.image_collector import ImageCollector
 from felix.scripts.settings import settings
+from typing import Optional
+
 
 class Api(Node):
-    def __init__(self):
-        super().__init__('api_node')
-        self.image: Image = None
-        self.jpeg_bytes: bytes = None
+    def __init__(self, *args):
+        super().__init__(node_name='app', parameter_overrides=[])
+        self.image: Optional[Image] = None
+        self.jpeg_bytes: Optional[bytes] = None
         self.collector = ImageCollector()
+        self.motion_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 10)
-        self.bot = Rosmaster()
-        self.bot.set_car_type(2)
-       
+        
     def log(self, txt: str):
         self.get_logger().info(f"{txt}")
 
     def image_callback(self, msg: Image):
         self.image = msg
-        # self.get_logger().info(msg)
         self.jpeg_image_bytes = image_utils.sensor_image_to_jpeg_bytes(msg)
 
     def get_image(self):
@@ -49,14 +45,7 @@ class Api(Node):
             self.get_logger().error(str(ex))
 
     def twist(self, twist: Twist):
-
-        twist.linear.x = twist.linear.x * settings.Motion.linear_velocity_multiple
-        twist.linear.y = twist.linear.y * settings.Motion.linear_velocity_multiple
-        twist.angular.z = twist.angular.z * settings.Motion.angular_velocity_multiple
-        
-        app_node.bot.set_car_motion(twist.linear.x,twist.linear.y, twist.angular.z)
-        app_node.get_logger().info(f"move: ((twist.linear.x,twist.linear.y, twist.angular.z))")
-
+        self.motion_publisher.publish(twist)
         return twist
             
 

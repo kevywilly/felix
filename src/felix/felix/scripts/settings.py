@@ -59,6 +59,9 @@ class AppSettings:
         linear_velocity_multiple: float = 0.2
         angular_velocity_multiple: float = 0.4
 
+    class Db:
+        path: str = "/felix/data/db/felix_db.sqlite"
+
     Training: TrainingProfile = TrainingProfile(
             data_root="/felix/data",
             name="obstacle3d",

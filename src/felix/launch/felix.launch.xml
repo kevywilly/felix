@@ -1,4 +1,6 @@
 <launch>
+    <node pkg="felix_db" exec="db_node" output="screen"/>
     <node pkg="felix_camera" exec="camera_node" output="screen"/>
+    <node pkg="felix_motion" exec="motion_node" output="screen"/>
     <node pkg="felix" exec="app" output="screen"/>
 </launch>

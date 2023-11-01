@@ -1,0 +1,47 @@
+version: '3.4'
+services:
+  nginx:
+    container_name: "nginx"
+    image: felix.nginx:latest
+    ports:
+      - 80:80    
+  novnc:
+    image: felix.novnc:latest
+    container_name: "novnc"
+    environment:
+      - DISPLAY_WIDTH=1440
+      - DISPLAY_HEIGHT=900
+    ports:
+      - "8080:8080"
+    networks:
+      - x11
+  felix:
+    image: felix:latest
+    container_name: "felix"
+    command: tail -f /dev/null 
+    privileged: true
+    volumes:
+      - /tmp/argus_socket:/tmp/argus_socket
+      - /etc/enctune.conf:/etc/enctune.conf
+      - /etc/nv_tegra_release:/etc/nv_tegra_release
+      - /tmp/nv_jetson_model:/tmp/nv_jetson_model
+      - /home/nano/projects/felix:/felix
+      - /home/nano/yaboom:/home/nano/yaboom
+      - /home/nano/projects/felix/data:/data
+      #- /usr/src/jetson_multimedia_api:/usr/src/jetson_multimedia_api
+    devices:
+      - /dev/myserial
+      - /dev/snd 
+      - /dev/bus/usb 
+      - /dev/video0
+      - /dev/ttyUSB0
+    environment:
+      - DISPLAY=novnc:0.0
+    ports:
+      - "5000:5000"
+    networks:
+      - x11 
+networks:
+  x11:
+
+

@@ -1,4 +1,27 @@
-FROM humble:r32.7.4
+FROM humble:r32.7.4 as stage1
+
+WORKDIR /
+
+ENV ROS_ROOT=/opt/ros/humble
+ENV ROS_DISTRO=humble
+
+WORKDIR /
+
+#COPY dependencies/rosmaster /rosmaster
+COPY ./felix.sh /
+
+#WORKDIR /rosmaster
+
+#RUN python3 setup.py install
+#RUN cd ../ && rm -rf /rosmaster
+
+RUN python3 -m pip install --upgrade pip
+RUN pip3 install --no-cache-dir --verbose \ 
+  pyserial \
+  flask \
+  flask_cors
+
+FROM stage1 AS stage2
 
 ENV ROS_ROOT=/opt/ros/humble
 ENV ROS_DISTRO=humble
@@ -39,4 +62,11 @@ RUN rm -Rf /var/lib/apt/lists/* && apt-get clean
 #&& rm -rf /var/lib/apt/lists/* \
 #&& apt-get clean
 
+
+FROM stage1
+
 RUN echo "source /ros_entrypoint.sh" >> /root/.bashrc
+RUN echo "source /felix/install/setup.bash" >> /root/.bashrc
+
+# DOCKER_BUILDKIT=1 docker build -f Dockerfile -t felix:latest .
+# https://www.ros.org/reps/rep-2001.html#id25
