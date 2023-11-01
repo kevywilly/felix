@@ -15,6 +15,9 @@ COPY ./felix.sh /
 #RUN python3 setup.py install
 #RUN cd ../ && rm -rf /rosmaster
 
+RUN apt-get update && apt-get -y install sqlite3 \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN python3 -m pip install --upgrade pip
 RUN pip3 install --no-cache-dir --verbose \ 
   pyserial \

@@ -1,5 +1,5 @@
 import rclpy
-from felix_motion.scripts.rosmaster import Rosmaster
+from felix.common.rosmaster import Rosmaster
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Image
 from rclpy.node import Node
@@ -12,6 +12,8 @@ import time
 import atexit
 
 import numpy as np
+
+TWIST_ZERO = Twist()
 
 class MotionNode(Node):
     def __init__(self):
@@ -88,16 +90,13 @@ class MotionNode(Node):
         self.bot.set_car_motion(twist.linear.x, twist.linear.y, twist.angular.z)
 
         if self.prev_twist and self.image:
-            if self.prev_twist != self.twist:
-                m = MotionData()
-                m.v0 = self.prev_twist
-                m.v1 = self.twist
-                m.image = self.image
-                self.motion_publisher.publish(m)
+            if self.prev_twist != self.twist and self.twist != TWIST_ZERO:
+                    m = MotionData()
+                    m.v0 = self.prev_twist
+                    m.v1 = self.twist
+                    m.image = self.image
+                    self.motion_publisher.publish(m)
         
-
-        #self.get_logger().debog(f"set_motion: {(twist.linear.x,twist.linear.y, twist.angular.z)}")
-
 
 def main(args=None):
     rclpy.init(args=args)
