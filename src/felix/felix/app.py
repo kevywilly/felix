@@ -8,9 +8,9 @@ from rclpy.node import Node
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
 from std_srvs.srv import SetBool
-import felix.scripts.image_utils as image_utils
-from felix.scripts.image_collector import ImageCollector
-from felix.scripts.settings import settings
+import felix.common.image_utils as image_utils
+from felix.common.image_collector import ImageCollector
+from felix.common.settings import settings
 from typing import Optional
 
 

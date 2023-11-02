@@ -23,7 +23,8 @@ RUN pip3 install --no-cache-dir --verbose \
   pyserial \
   flask \
   flask_cors \
-  pandas
+  pandas \
+  setuptools==58.2.0
 
 FROM stage1 AS stage2
 

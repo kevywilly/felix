@@ -2,9 +2,9 @@ import sqlite3
 
 import rclpy
 from rclpy.node import Node
-from felix.scripts.database import Database, Motion
+from felix.common.database import Database, Motion
 from felix_interfaces.msg import MotionData
-import felix.scripts.image_utils as image_utils
+import felix.common.image_utils as image_utils
 from json import JSONEncoder
 import json
 import numpy as np

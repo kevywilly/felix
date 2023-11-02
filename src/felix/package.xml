@@ -3,7 +3,7 @@
 <package format="3">
   <name>felix</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Felix Robot Operating System</description>
   <maintainer email="kevywilly@gmail.com">root</maintainer>
   <license>TODO: License declaration</license>
 
@@ -13,7 +13,7 @@
   <depend>geometry_msgs</depend>
   <depend>std_srvs</depend>
   <depend>std_msgs</depend>
-  <exec_depends>felix_interfaces</exec_depends>
+  <exec_depend>felix_interfaces</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

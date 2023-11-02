@@ -27,7 +27,7 @@ setup(
             'autodrive_node = felix.autodrive_node:main',
             'camera_node = felix.camera_node:main',
             'db_node = felix.db_node:main',
-            'motion_node = felix_motion.motion_node:main',
+            'motion_node = felix.motion_node:main',
             'trainer_node = felix.trainer_node:main'
         ],
     },

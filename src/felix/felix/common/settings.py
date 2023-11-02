@@ -60,13 +60,24 @@ class AppSettings:
         raw_video: str = "/video_source/raw"
         
     class Robot:
-        wheel_radius: float = 95.00
-        wheel_base: float = 150.00
-        wheel_x_offset: float = 145.00
-        body_length: float = 144.00
-        body_width: float = 126.00
+        wheel_radius: float = 95.00/1000
+        wheel_base: float = 150.00/1000
+        wheel_x_offset: float = 145.00/1000
+        body_length: float = 144.00/1000
+        body_width: float = 126.00/1000
 
     class Motion:
+        """see calibrate_speed.py"""
+        rpm_min: float = 39.62530590948937
+        rpm_max: float = 167.99055771455662 
+        vx_min: float = 0.06274006769002484
+        vx_max: float = 0.26598504971471465
+        vx_adjustment_factor = 0.8026262003551254
+
+        vz_min: float = 0.16783391474098044
+        vz_max: float = 3.4576749528923187
+        vz_adjustment_factor = 0.2836544062795753
+      
         linear_velocity_multiple: float = 0.2
         angular_velocity_multiple: float = 0.4
         autodrive_speed: float = 0.35

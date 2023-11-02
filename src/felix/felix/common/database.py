@@ -1,10 +1,9 @@
-from felix.scripts.settings import settings
+
 import sqlite3
 from sqlite3 import Error
 import atexit
 import time
-from typing import Optional
-import pandas as pd
+from felix.common.settings import settings
 
 MOTION_TABLE = "motion"
 MOTION_DDL = f"""CREATE TABLE IF NOT EXISTS {MOTION_TABLE}(

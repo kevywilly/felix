@@ -6,7 +6,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
-from felix.scripts.settings import settings
+from felix.common.settings import settings
 import torchvision.models as models
 import os
 

@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from std_msgs.msg import Header
-from felix.scripts.camera import Camera
+from felix.common.camera import Camera
 import cv2
 from cv_bridge import CvBridge, CvBridgeError
 

@@ -9,8 +9,8 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Image
 from std_srvs.srv import SetBool
 
-from felix.scripts.settings import settings
-import felix.scripts.image_utils as image_utils
+from felix.common.settings import settings
+import felix.common.image_utils as image_utils
 import os
 import numpy as np
 import torch

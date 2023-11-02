@@ -2,7 +2,7 @@ import os
 import time
 from pathlib import Path
 import cv2
-from felix.scripts.settings import settings
+from felix.common.settings import settings
 
 class ImageCollector:
     def __init__(self):

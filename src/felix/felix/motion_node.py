@@ -3,9 +3,8 @@ from felix.common.rosmaster import Rosmaster
 from geometry_msgs.msg import Twist, Vector3
 from sensor_msgs.msg import Image
 from rclpy.node import Node
-from felix.scripts.settings import settings
+from felix.common.settings import settings
 from felix_interfaces.msg import MotionData
-import felix.scripts.image_utils as image_utils
 from typing import Optional
 
 import time
@@ -94,13 +93,13 @@ class MotionNode(Node):
     def handle_cmd_vel(self, msg: Twist):
         
         twist = Twist()
-        twist.linear.x = msg.linear.x * settings.Motion.linear_velocity_multiple
-        twist.linear.y = msg.linear.y * settings.Motion.linear_velocity_multiple
-        twist.angular.z = msg.angular.z * settings.Motion.angular_velocity_multiple
+        twist.linear.x = msg.linear.x * settings.Motion.vx_max
+        twist.linear.y = msg.linear.y * settings.Motion.vx_max
+        twist.angular.z = msg.angular.z * settings.Motion.vz_max
 
         self.prev_twist = self.twist
         self.twist = twist
-        self.bot.set_car_motion(twist.linear.x, twist.linear.y, twist.angular.z)
+        self.bot.set_car_motion(twist.linear.x * settings.Motion.vx_adjustment_factor, twist.linear.y * settings.Motion.vx_adjustment_factor, twist.angular.z * settings.Motion.vz_adjustment_factor )
         
         if self.image:
             v0 = self.twist_to_vector3(self.prev_twist)
