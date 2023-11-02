@@ -1,4 +1,4 @@
-from typing import List, Optional, Any
+from typing import List, Optional, Any, Dict
 import torchvision
 import os
 
@@ -21,11 +21,22 @@ class CameraConfig:
 
 class TrainingProfile:
 
-    def __init__(self, data_root: str, name: str, classifier: str, categories: List[str], epochs: int = 30, learning_rate: float = 0.001, momentum: float = 0.9):
+    def __init__(
+        self, 
+        data_root: str, 
+        name: str, 
+        classifier: str, 
+        categories: List[str], 
+        velocity_map: Dict,
+        epochs: int = 30, 
+        learning_rate: float = 0.001, 
+        momentum: float = 0.9
+        ):
         self.name = name
         self.filename = name.lower().replace(" ","_")
         self.classifier = classifier
         self.categories = categories
+        self.velocity_map = velocity_map
         self.data_root = data_root
         self.model_root = os.path.join(data_root,"models")
         self.best_model_folder = os.path.join(self.model_root,"best")
@@ -58,6 +69,7 @@ class AppSettings:
     class Motion:
         linear_velocity_multiple: float = 0.2
         angular_velocity_multiple: float = 0.4
+        autodrive_speed: float = 0.35
 
     class Db:
         path: str = "/felix/data/db/felix_db.sqlite"
@@ -66,7 +78,8 @@ class AppSettings:
             data_root="/felix/data",
             name="obstacle3d",
             classifier="alexnet",
-            categories=["forward", "left", "right"]
+            categories=["forward", "left", "right"],
+            velocity_map={"forward": (1.0,0,0), "left": (0,0,1.0), "right": (0,0,-1.0)}
         )   
     
 

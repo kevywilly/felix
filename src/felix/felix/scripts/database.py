@@ -4,6 +4,7 @@ from sqlite3 import Error
 import atexit
 import time
 from typing import Optional
+import pandas as pd
 
 MOTION_TABLE = "motion"
 MOTION_DDL = f"""CREATE TABLE IF NOT EXISTS {MOTION_TABLE}(
@@ -14,12 +15,12 @@ MOTION_DDL = f"""CREATE TABLE IF NOT EXISTS {MOTION_TABLE}(
     rx FLOAT NOT NULL,
     ry FLOAT NOT NULL,
     rz FLOAT NOT NULL,
-    image TEXT,
+    image BLOB,
     ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );"""
 
 class Motion:
-    def __init__(self, vx: float, vy: float, vz: float, rx: float, ry: float, rz: float, image: Optional[str] = None, ts = time.time()):
+    def __init__(self, vx: float, vy: float, vz: float, rx: float, ry: float, rz: float, image, ts = time.time()):
         self.vx = vx
         self.vy = vy
         self.vz = vz
@@ -29,15 +30,12 @@ class Motion:
         self.image = image
         self.ts = ts if ts else time.time()
     
-    def image_for_db():
-        f"'{self.image}'" if self.image else 'NULL'
-    
 
     def for_insert(self):
-        return f"({self.vx}, {self.vy}, {self.vz}, {self.rx}, {self.ry}, {self.rz}, '{self.image}')"
+        return (self.vx, self.vy, self.vz, self.rx, self.ry, self.rz, sqlite3.Binary(self.image))
 
     def __repr__(self):
-        return f"{self.vx}, {self.vy}, {self.vz}, {self.rx}, {self.ry}, {self.rz}, '{self.image}', {self.ts}"
+        return f"{self.vx}, {self.vy}, {self.vz}, {self.rx}, {self.ry}, {self.rz}, {self.ts}"
         
 
 class Database:
@@ -68,18 +66,17 @@ class Database:
         self.cursor().execute(MOTION_DDL)
 
     def insert_motion(self, m: Motion):
-        
+        # https://www.geeksforgeeks.org/storing-opencv-image-in-sqlite3-with-python/
         try:
             self.cursor().execute(
-                f"""
-                insert into motion (vx,vy,vz,rx,ry,rz,image) VALUES {m.for_insert()};
-                """
+                "insert into motion (vx,vy,vz,rx,ry,rz,image) VALUES (?,?,?,?,?,?,?);",
+                m.for_insert()
             )
             self.conn.commit()
             return True
         except Exception as ex:
             print(ex)
-            return False;
+            raise ex
         
 
     def parse_motion(self, row):

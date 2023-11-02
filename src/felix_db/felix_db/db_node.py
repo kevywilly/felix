@@ -26,27 +26,34 @@ class DbNode(Node):
 
     def got_motion_data(self, msg: MotionData):
         
-        img = image_utils.sensor_image_to_cv2(msg.image)
-        img = cv.resize(img, (240,240), interpolation = cv.INTER_AREA)
-        j = {"image": img}
-        encoded = json.dumps(j, cls=NumpyArrayEncoder)
+        #img = image_utils.sensor_image_to_cv2(msg.image)
+        #img = cv.resize(img, (240,240), interpolation = cv.INTER_AREA)
+        #j = {"image": img}
+        #encoded = json.dumps(j, cls=NumpyArrayEncoder)
+
+        image = image_utils.sensor_image_to_jpeg_bytes(msg.image)
+
+
         #m.image = encoded
         
         m = Motion(
-            vx=msg.v0.linear.x, 
-            vy=msg.v0.linear.y,
-            vz=msg.v0.angular.z,
-            rx=msg.v1.linear.x,
-            ry=msg.v1.linear.y,
-            rz=msg.v1.angular.z,
-            image=encoded
+            vx=msg.v0.x, 
+            vy=msg.v0.y,
+            vz=msg.v0.z,
+            rx=msg.v1.x,
+            ry=msg.v1.y,
+            rz=msg.v1.z,
+            image=image
         )
         
         self.save_data(m)
 
     def save_data(self, m: Motion):
-        self.get_logger().info(f"saving motion")
-        self.db.insert_motion(m)
+        self.get_logger().info(f"saving motion: {m}")
+        try: 
+            self.db.insert_motion(m)
+        except Exception as ex:
+            self.get_logger().error(ex.__str__())
 
 def main(args=None):
     rclpy.init(args=args)

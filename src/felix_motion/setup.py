@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'motion_node = felix_motion.motion_node:main'
+            'motion_node = felix_motion.motion_node:main',
+            'autodrive_node = felix_motion.autodrive_node:main'
         ],
     },
 )

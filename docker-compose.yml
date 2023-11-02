@@ -18,7 +18,7 @@ services:
   felix:
     image: felix:latest
     container_name: "felix"
-    command: tail -f /dev/null 
+    command: tail -f /dev/null
     privileged: true
     volumes:
       - /tmp/argus_socket:/tmp/argus_socket

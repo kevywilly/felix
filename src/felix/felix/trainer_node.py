@@ -19,7 +19,7 @@ class TrainerNode(Node):
 
     def __init__(self):
 
-        super().__init__("trainer_node")
+        super().__init__("trainer_node", parameter_overrides=[])
         
         try:
             os.makedirs(settings.Training.best_model_folder)
@@ -29,7 +29,7 @@ class TrainerNode(Node):
             print(ex)
             raise ex
             
-        self.log(f"Trainer loaded for: {self.config.name}")
+        self.log(f"Trainer loaded for: {settings.Training.name}")
         
 
     def train(self):

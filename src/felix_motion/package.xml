@@ -10,6 +10,7 @@
   <depend>rclpy</depend>
   <depend>geometry_msgs</depend>
   <depend>sensor_msgs</depend>
+  <depend>std_srvs</depend>
   <exec_depend>felix_interfaces</exec_depend>
 
   <test_depend>ament_copyright</test_depend>

@@ -7,6 +7,7 @@ from flask import Flask, Response, jsonify, request
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
+from std_srvs.srv import SetBool
 import felix.scripts.image_utils as image_utils
 from felix.scripts.image_collector import ImageCollector
 from felix.scripts.settings import settings
@@ -16,11 +17,17 @@ from typing import Optional
 class Api(Node):
     def __init__(self, *args):
         super().__init__(node_name='app', parameter_overrides=[])
+        self.autodrive_on = False
+
         self.image: Optional[Image] = None
         self.jpeg_bytes: Optional[bytes] = None
         self.collector = ImageCollector()
         self.motion_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
         self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 10)
+        self.autodrive_client = self.create_client(SetBool, "set_autodrive_state")
+
+        #while not self.autodrive_client.wait_for_service(timeout_sec=1.0):
+        #    self.get_logger().info('autodrive service not available, waiting again...')
         
     def log(self, txt: str):
         self.get_logger().info(f"{txt}")
@@ -47,6 +54,21 @@ class Api(Node):
     def twist(self, twist: Twist):
         self.motion_publisher.publish(twist)
         return twist
+    
+    def toggle_autodrive(self):
+        req = SetBool.Request()
+        status = not self.autodrive_on
+        req.data = status
+        response: SetBool.Response = self.autodrive_client.call(req)
+        
+        if not response:
+            self.get_logger().error(f"Autodrive request timed out.")
+        else:
+            self.autodrive_on = status
+            self.get_logger().info(f"{response}")
+
+        
+        return self.autodrive_on
             
 
 def ros2_thread(node: Api):
@@ -100,6 +122,14 @@ def _get_stream():
 @app.route('/')
 def hello():
     return "hello"
+
+
+@app.route('/api/autodrive')
+def toggle_autodrive():
+    try:
+        return {"status" : app_node.toggle_autodrive()}
+    except:
+        return {"status" : False}
 
 @app.route('/api/stream')
 def stream():
