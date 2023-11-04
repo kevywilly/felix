@@ -18,6 +18,7 @@ services:
   felix:
     image: felix:latest
     container_name: "felix"
+    #command: /felix.sh
     command: tail -f /dev/null
     privileged: true
     volumes:

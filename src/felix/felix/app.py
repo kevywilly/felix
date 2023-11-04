@@ -1,3 +1,4 @@
+# public imports
 import rclpy
 import signal
 import threading
@@ -5,39 +6,53 @@ import flask
 from flask_cors import CORS
 from flask import Flask, Response, jsonify, request
 from rclpy.node import Node
+from typing import Optional
+
+# ros imports
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
 from std_srvs.srv import SetBool
 import felix.common.image_utils as image_utils
-from felix.common.image_collector import ImageCollector
 from felix.common.settings import settings
-from typing import Optional
+from felix.common.image_collector import ImageCollector
+
 
 
 class Api(Node):
     def __init__(self, *args):
-        super().__init__(node_name='app', parameter_overrides=[])
-        self.autodrive_on = False
 
+        super().__init__(node_name='app', parameter_overrides=[])
+
+        # properties
+        self.autodrive_on = False
         self.image: Optional[Image] = None
         self.jpeg_bytes: Optional[bytes] = None
         self.collector = ImageCollector()
+
+        # publishers
         self.motion_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
+
+        # subscibers
         self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 10)
+
+        # clients
         self.autodrive_client = self.create_client(SetBool, "set_autodrive_state")
 
+        # wait for client to be ready
         #while not self.autodrive_client.wait_for_service(timeout_sec=1.0):
         #    self.get_logger().info('autodrive service not available, waiting again...')
         
-    def log(self, txt: str):
-        self.get_logger().info(f"{txt}")
+    # callbacks
 
     def image_callback(self, msg: Image):
         self.image = msg
         self.jpeg_image_bytes = image_utils.sensor_image_to_jpeg_bytes(msg)
 
-    def get_image(self):
-        return self.image
+    # publishers
+
+    def twist(self, twist: Twist):
+        self.motion_publisher.publish(twist)
+        return twist
     
     def get_jpeg(self):
         return self.jpeg_image_bytes
@@ -47,13 +62,8 @@ class Api(Node):
             self.get_logger().info(f"received collect image request {category}")
             img = self.get_jpeg()
             return self.collector.collect(category, img)
-        
         except Exception as ex:
             self.get_logger().error(str(ex))
-
-    def twist(self, twist: Twist):
-        self.motion_publisher.publish(twist)
-        return twist
     
     def toggle_autodrive(self):
         req = SetBool.Request()
@@ -91,7 +101,7 @@ def sigint_handler(signal, frame):
     
     rclpy.shutdown()
     if prev_sigint_handler is not None:
-        prev_sigint_handler(signal)
+        prev_sigint_handler(signal) # type: ignore
 
 
 rclpy.init(args=None)
@@ -107,7 +117,7 @@ cors = CORS(app, resource={
 
 prev_sigint_handler = signal.signal(signal.SIGINT, sigint_handler)
 
-
+# API Methods
 def _get_stream():
     while True:
         # ret, buffer = cv2.imencode('.jpg', frame)

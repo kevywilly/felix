@@ -30,16 +30,16 @@ def calibrate_linear():
     min_rpm = 1000.0
     max_vel = 0.0
     min_vel = 1.0
-    for j in range(5,25):
+    for j in range(5,25, 1):
         speed = j/100.0
         for i in range(5):
-            bot.set_car_motion(0,0.0,speed)
+            bot.set_car_motion(speed,0.0,0.0)
             t0 = time.time()
             tl0,tr0 = get_ticks()
             time.sleep(1)
             tl1,tr1 = get_ticks()
             elapsed_time = time.time() - t0
-            rpm = calc_rpm(tl1-tl0, elapsed_time, 720)
+            rpm = calc_rpm(tl1-tl0, elapsed_time, 360)
             rps = rpm/60.0
             vx,vy,vz = calc_velocity(rps,rps, settings.Robot.wheel_base, settings.Robot.wheel_radius)
             adj_factor = speed/vx if speed > 0 else 0
@@ -49,7 +49,7 @@ def calibrate_linear():
                 max_rpm = rpm if rpm > max_rpm else max_rpm
                 min_rpm = rpm if rpm < min_rpm else min_rpm
                 avg_adj_factor = ((avg_adj_factor*count)+adj_factor)/(count+1)
-                print(f"rpm: {int(rpm)}, rps: {rps}, speed: {speed}, vx: {vx}, ratio: {adj_factor}, adj: {adj_factor}")
+                #print(f"ticks: {tl1-tl0}, rpm: {int(rpm)}, rps: {rps}, speed: {speed}, vx: {vx}, ratio: {adj_factor}, adj: {adj_factor}")
             
             count = count + 1
 
@@ -73,8 +73,8 @@ def calibrate_angular():
             time.sleep(1)
             tl1,tr1 = get_ticks()
             elapsed_time = time.time() - t0
-            rpmL = calc_rpm(tl1-tl0, elapsed_time, 720)
-            rpmR = calc_rpm(tr1-tr0, elapsed_time, 720)
+            rpmL = calc_rpm(tl1-tl0, elapsed_time)
+            rpmR = calc_rpm(tr1-tr0, elapsed_time)
             rpsR = rpmR/60.0
             rpsL = rpmL/60.0
 
@@ -88,11 +88,25 @@ def calibrate_angular():
                 max_rpm = rpmL if rpmL > max_rpm else max_rpm
                 min_rpm = rpmL if rpmL < min_rpm else min_rpm
                 avg_adj_factor = ((avg_adj_factor*count)+adj_factor)/(count+1)
-                print(f"rpm: {int(rpmL)}, rps: {rpsL}, speed: {speed}, vz: {vz}, ratio: {adj_factor}, adj: {adj_factor}")
+                # print(f"rpm: {int(rpmL)}, rps: {rpsL}, speed: {speed}, vz: {vz}, ratio: {adj_factor}, adj: {adj_factor}")
             
             count = count + 1
 
     print(f"\n---------\nrpm_min_max: {min_rpm},{max_rpm}, vel_min_max: {min_vel},{max_vel}, avg_adj_factor: {avg_adj_factor}")
 
+def test_rpm():
+    
+    bot.set_motor(100,0,0,0)
+    time.sleep(2)
+ 
+    t = time.time()
+    ticks1, _,_,_ = bot.get_motor_encoder()
+    time.sleep(0.1)
+    ticks2, _,_,_ = bot.get_motor_encoder()
 
+    print(ticks1,ticks2)
+
+#calibrate_linear()
 calibrate_angular()
+
+#test_rpm()

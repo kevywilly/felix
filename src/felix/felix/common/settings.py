@@ -66,17 +66,27 @@ class AppSettings:
         body_length: float = 144.00/1000
         body_width: float = 126.00/1000
 
-    class Motion:
-        """see calibrate_speed.py"""
-        rpm_min: float = 39.62530590948937
-        rpm_max: float = 167.99055771455662 
-        vx_min: float = 0.06274006769002484
-        vx_max: float = 0.26598504971471465
-        vx_adjustment_factor = 0.8026262003551254
 
-        vz_min: float = 0.16783391474098044
-        vz_max: float = 3.4576749528923187
-        vz_adjustment_factor = 0.2836544062795753
+    class Motion:
+        """
+        calibrating linear velocity
+        rpm_min_max: 80.24951177174123,333.69585487749697, vel_min_max: 0.1270617269719236,0.5283517702227035, avg_adj_factor: 0.40684325290805
+
+        angular
+        rpm_min_max: -321.83081750356047,0.0, vel_min_max: 0.16695583936676953,3.4243431655481014, avg_adj_factor: 0.283714400265866
+
+        see calibrate_speed.py
+        """ 
+
+        rpm_min: float = 80.25
+        rpm_max: float = 333.7
+        vx_min: float = 0.127
+        vx_max: float = 0.528
+        vx_adjustment_factor = 0.41
+
+        vz_min: float = 0.167
+        vz_max: float = 3.424
+        vz_adjustment_factor = 0.284
       
         linear_velocity_multiple: float = 0.2
         angular_velocity_multiple: float = 0.4
@@ -101,3 +111,4 @@ class AppSettings:
     debug: bool = False
 
 settings = AppSettings
+
