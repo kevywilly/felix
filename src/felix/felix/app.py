@@ -33,10 +33,10 @@ class Api(Node):
         self.motion_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
 
         # subscibers
-        self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 10)
+        self.create_subscription(Image, "video_source/raw", self.image_callback, 5)
 
         # clients
-        self.autodrive_client = self.create_client(SetBool, "set_autodrive_state")
+        #self.autodrive_client = self.create_client(SetBool, "set_autodrive_state")
 
         # wait for client to be ready
         #while not self.autodrive_client.wait_for_service(timeout_sec=1.0):
@@ -66,18 +66,21 @@ class Api(Node):
             self.get_logger().error(str(ex))
     
     def toggle_autodrive(self):
-        req = SetBool.Request()
-        status = not self.autodrive_on
-        req.data = status
-        response: SetBool.Response = self.autodrive_client.call(req)
-        
-        if not response:
-            self.get_logger().error(f"Autodrive request timed out.")
-        else:
-            self.autodrive_on = status
-            self.get_logger().info(f"{response}")
+        """
+            req = SetBool.Request()
+            status = not self.autodrive_on
+            req.data = status
+            response: SetBool.Response = self.autodrive_client.call(req)
+            
+            if not response:
+                self.get_logger().error(f"Autodrive request timed out.")
+            else:
+                self.autodrive_on = status
+                self.get_logger().info(f"{response}")
 
-        
+            
+            return self.autodrive_on
+        """
         return self.autodrive_on
             
 

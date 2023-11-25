@@ -1,34 +1,47 @@
 version: '3.4'
 services:
   nginx:
+    build: "./docker-nginx/"
     container_name: "nginx"
     image: felix.nginx:latest
     ports:
       - 80:80    
-  novnc:
-    image: felix.novnc:latest
-    container_name: "novnc"
-    environment:
-      - DISPLAY_WIDTH=1440
-      - DISPLAY_HEIGHT=900
-    ports:
-      - "8080:8080"
-    networks:
-      - x11
+  #novnc:
+  #  image: felix.novnc:latest
+  #  container_name: "novnc"
+  #  environment:
+  #    - DISPLAY_WIDTH=1440
+  #    - DISPLAY_HEIGHT=900
+  #  ports:
+  #    - "8080:8080"
+  #  networks:
+  #    - x11
   felix:
     image: felix:latest
+    build: "./docker"
     container_name: "felix"
     #command: /felix.sh
     command: tail -f /dev/null
     privileged: true
+    network_mode: host
     volumes:
       - /tmp/argus_socket:/tmp/argus_socket
+      - /etc/localtime:/etc/localtime:ro
+      - /usr/bin/tegrastats:/usr/bin/tegrastats
       - /etc/enctune.conf:/etc/enctune.conf
       - /etc/nv_tegra_release:/etc/nv_tegra_release
-      - /tmp/nv_jetson_model:/tmp/nv_jetson_model
+      #- /tmp/nv_jetson_model:/tmp/nv_jetson_model
       - /home/nano/projects/felix:/felix
       - /home/nano/yaboom:/home/nano/yaboom
       - /home/nano/projects/felix/data:/data
+      - /home/nano/jetson-utils:/jetson-utils
+      - /tmp/.X11-unix/:/tmp/.X11-unix
+      - /usr/src/jetson_multimedia_api:/usr/src/jetson_multimedia_api
+      #- /opt/nvidia/nsight-systems-cli:/opt/nvidia/nsight-systems-cli
+      - /opt/nvidia/vpi1:/opt/nvidia/vpi1
+      - /usr/share/vpi1:/usr/share/vpi1
+      - /home/nano/.Xauthority:/home/root/.Xauthority:rw
+
       #- /usr/src/jetson_multimedia_api:/usr/src/jetson_multimedia_api
     devices:
       - /dev/myserial
@@ -37,12 +50,18 @@ services:
       - /dev/video0
       - /dev/ttyUSB0
     environment:
-      - DISPLAY=novnc:0.0
+      - DISPLAY
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - FASTRTPS_DEFAULT_PROFILES_FILE=/usr/local/share/middleware_profiles/rtps_udp_profile.xml
+      - ROS_DOMAIN_ID
+      - --pid=host
+
     ports:
       - "5000:5000"
-    networks:
-      - x11 
-networks:
-  x11:
+    #networks:
+    #  - x11 
+#networks:
+#  x11:
 
 

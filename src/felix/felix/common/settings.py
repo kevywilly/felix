@@ -81,12 +81,12 @@ class AppSettings:
         rpm_min: float = 80.25
         rpm_max: float = 333.7
         vx_min: float = 0.127
-        vx_max: float = 0.528
-        vx_adjustment_factor = 0.41
+        vx_max: float = 0.29
+        vx_adjustment_factor = 0.68
 
         vz_min: float = 0.167
-        vz_max: float = 3.424
-        vz_adjustment_factor = 0.284
+        vz_max: float = 1.8
+        vz_adjustment_factor = 0.68
       
         linear_velocity_multiple: float = 0.2
         angular_velocity_multiple: float = 0.4
@@ -97,9 +97,9 @@ class AppSettings:
 
     Training: TrainingProfile = TrainingProfile(
             data_root="/felix/data",
-            name="obstacle3d",
+            name="obstacle",
             classifier="alexnet",
-            categories=["forward", "left", "right"],
+            categories=["free","blocked"],
             velocity_map={"forward": (1.0,0,0), "left": (0,0,1.0), "right": (0,0,-1.0)}
         )   
     
