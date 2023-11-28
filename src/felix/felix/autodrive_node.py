@@ -7,7 +7,7 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Image
-from std_srvs.srv import SetBool
+from std_msgs.msg import Bool
 
 from felix.common.settings import settings
 import felix.common.image_utils as image_utils
@@ -30,76 +30,55 @@ class AutoDriveNode(Node):
     def __init__(self):
         super().__init__("autodrive_node", parameter_overrides=[])
 
-        self.log("Started autodrive node.")
+        self.get_logger().info("Started autodrive node.")
         self.drive_state = DriveState.STOPPED
         self.mean = 255.0 * np.array([0.485, 0.456, 0.406])
         self.stdev = 255.0 * np.array([0.229, 0.224, 0.225])
         self.normalize = torchvision.transforms.Normalize(self.mean, self.stdev)
         self._load_model()
         self.running = False
-        
-
+        self.create_subscription(Bool, "autodrive", self.set_run_state, 10)
         # publishers
         self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
-        self.log("Created Drivetrain Publisher")
-
-        # subscriptions
-        self.image_subscription = self.create_subscription(Image, "/video_source/raw", self.autodrive, 10)
-        self.log("Subscribed to Image Topic")
-
-        # service
-        self.srv = self.create_service(SetBool, "set_autodrive_state", self.set_run_state)
+        self.image_subscription = self.create_subscription(Image, settings.Topics.raw_video, self.autodrive, 10)
         
-        self.log("Initialized autodrive node.")
+        self.get_logger().info("Initialized autodrive node.")
         
 
-    def set_run_state(self, request: SetBool.Request, response: SetBool.Response) -> SetBool.Response:
-        if self.running == request.data:
-            response.message = "Autodrive already in requested state."
-            response.success = False
+    def set_run_state(self, msg: Bool):
+        self.running = msg.data
+        if msg.data:
+            self.stop()
         else:
-            response.message = f"Setting autodrive state to {'on' if request.data else 'off'}"
-            response.success = True
-            self.start() if request.data == True else self.stop()
+            self.start()
         
-        self.get_logger().info(response.message)
-        
-        return response
-    def toggle_status(self, request, response):
-        self.log(f"Setting autodrive running state to {request.on}")
-        self.start() if request.on else self.stop()
-        response.status = self.running
-        return response
-
-    def log(self, txt: str):
-        self.get_logger().info(txt)
+        self.get_logger().info(f"Set autodrive state to: {'on' if msg.data else 'off'}")
 
 
     def stop_drivetrain(self):
         msg = Twist()
-        self.drivetrain_publisher.publish(msg)
+        self.cmd_vel_publisher.publish(msg)
         self.drive_state = DriveState.STOPPED
 
     def start(self):
         self.running = True
         self.drive_state = DriveState.STOPPED
 
-
     def stop(self):
         self.running = False
 
     def _load_model(self):
-        self.log("Preparing model...")
+        self.get_logger().info("Preparing model...")
         
         model_file = settings.Training.best_model_file  
 
-        self.log(f"Looking for saved model {model_file}")  
+        self.get_logger().info(f"Looking for saved model {model_file}")  
         has_model = os.path.isfile(model_file)
 
         if has_model: 
-            self.log(f"Found saved model.") 
+            self.get_logger().info(f"Found saved model.") 
         else:
-            self.log(f"Did not saved model. Proceeding without it.") 
+            self.get_logger().info(f"Did not saved model. Proceeding without it.") 
 
         self.model = settings.Training.load_model(pretrained=(not has_model))
         self.device = torch.device('cuda')
@@ -114,14 +93,14 @@ class AutoDriveNode(Node):
             self.model.eval().half()
 
         if has_model:
-            self.log(f"Loading saved state ... {model_file}")
+            self.get_logger().info(f"Loading saved state ... {model_file}")
             self.model.load_state_dict(torch.load(model_file))
         else:
-            self.log("Skipping saved state load, model does not exist yet.")
+            self.get_logger().info("Skipping saved state load, model does not exist yet.")
 
         self.model = self.model.to(self.device)
 
-        self.log("model ready...")
+        self.get_logger().info("model ready...")
 
     def _preprocess(self, sensor_image):
         cuda_image = image_utils.sensor_image_to_cuda(sensor_image)
@@ -155,17 +134,19 @@ class AutoDriveNode(Node):
 
         predictions = self._assign_predictions(y, settings.Training.categories)
 
-        self.log(f"Prediction: {predictions}")
+        self.get_logger().info(f"Prediction: {predictions}")
 
         k,v = predictions[0]
 
-        new_state = DriveState.DRIVING if k == "forward" else DriveState.AVOIDING
+        new_state = DriveState.DRIVING if k == "free" else DriveState.AVOIDING
         
         if new_state != self.drive_state:
             self.drive_state = new_state
             if not settings.debug:
                 t = Twist()
                 vel_vector = settings.Training.velocity_map.get(k)
+                if not vel_vector:
+                    vel_vector = [0,0,0]
 
                 t.linear.x, t.linear.y, t.angular.z = [v * settings.Motion.autodrive_speed for v in vel_vector]
                 

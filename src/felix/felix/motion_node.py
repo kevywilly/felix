@@ -24,10 +24,10 @@ RIGHT=2
 class MotionNode(Node):
     def __init__(self):
         super().__init__("motion_node", parameter_overrides=[])
-        self.bot = Rosmaster(car_type=0, com="/dev/ttyUSB0")
+        self.bot = Rosmaster(car_type=2, com="/dev/ttyUSB0")
         self.bot.create_receive_threading()
         self.create_subscription(Twist, "/cmd_vel", self.handle_cmd_vel, 10)
-        self.tick_timer = self.create_timer(0.5, self.ticks_callback)
+        # self.tick_timer = self.create_timer(0.5, self.ticks_callback)
         self.wheel_radius = settings.Robot.wheel_radius
         self.wheel_base = settings.Robot.wheel_base
         self.prev_ticks = np.array(self.bot.get_motor_encoder())
@@ -63,12 +63,13 @@ class MotionNode(Node):
 
     def handle_cmd_vel(self, msg: Twist):
         
-        x = msg.linear.x*0.25 #/3.33
-        z = msg.angular.z*0.25 #/2.0/1.685
+        x = msg.linear.x*0.375 #/3.33
+        y = msg.linear.y*0.375 #/3.33
+        z = msg.angular.z*0.6 #/2.0/1.685
 
-        left, right = self.inverse_kinematics(x, z)
+        #left, right = self.inverse_kinematics(x, z)
         #self.bot.set_car_motion(x*3.33,0,z*3.33/2.0)
-        self.bot.set_car_motion(x,0,z)
+        self.bot.set_car_motion(x,y,z)
         self.target_linear_x = x
         self.target_angular_z = z
        

@@ -1,0 +1,3 @@
+[submodule "src/robot_argus_camera"]
+	path = src/robot_argus_camera
+	url = git@github.com:kevywilly/robot_argus_camera.git

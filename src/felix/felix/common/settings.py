@@ -51,13 +51,13 @@ class TrainingProfile:
         elif self.classifier.lower() == "resnet18":
             return torchvision.models.resnet18(*args, **kwargs)
         else:
-            raise "Invalid model specified, please use 'alexnet' or 'resnet18"
+            raise Exception("Invalid model specified, please use 'alexnet' or 'resnet18")
 
       
 class AppSettings:
 
     class Topics:
-        raw_video: str = "/video_source/raw"
+        raw_video: str = "/left/image_raw"
         
     class Robot:
         wheel_radius: float = 95.00/1000
@@ -100,7 +100,7 @@ class AppSettings:
             name="obstacle",
             classifier="alexnet",
             categories=["free","blocked"],
-            velocity_map={"forward": (1.0,0,0), "left": (0,0,1.0), "right": (0,0,-1.0)}
+            velocity_map={"free": (1.0,0,0), "blocked": (0,0,1.0)}
         )   
     
 

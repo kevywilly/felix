@@ -33,7 +33,7 @@ class Api(Node):
         self.motion_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
 
         # subscibers
-        self.create_subscription(Image, "video_source/raw", self.image_callback, 5)
+        self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 5)
 
         # clients
         #self.autodrive_client = self.create_client(SetBool, "set_autodrive_state")
