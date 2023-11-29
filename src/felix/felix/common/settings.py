@@ -60,10 +60,11 @@ class AppSettings:
         raw_video: str = "/left/image_raw"
         
     class Robot:
-        wheel_radius: float = 95.00/1000
-        wheel_base: float = 150.00/1000
-        wheel_x_offset: float = 145.00/1000
-        body_length: float = 144.00/1000
+        wheel_radius: float = 65.00/2000.0
+        wheel_base: float = 140.0/1000.0
+        track_width: float = 130.00/1000
+        wheel_x_offset: float = 71.5/1000
+        body_length: float = 152/1000
         body_width: float = 126.00/1000
 
 

@@ -17,6 +17,9 @@ from felix.common.settings import settings
 from felix.common.image_collector import ImageCollector
 
 
+JOYSTICK_LINEAR_X_SCALE = 1
+JOYSTICK_LINEAR_Y_SCALE = 1
+JOYSTICK_ANGULAR_Z_SCALE = 2.5
 
 class Api(Node):
     def __init__(self, *args):
@@ -51,6 +54,10 @@ class Api(Node):
     # publishers
 
     def twist(self, twist: Twist):
+        twist.linear.x = twist.linear.x * JOYSTICK_LINEAR_X_SCALE
+        twist.linear.y = twist.linear.y * JOYSTICK_LINEAR_Y_SCALE
+        twist.angular.z = twist.angular.z * JOYSTICK_ANGULAR_Z_SCALE
+
         self.motion_publisher.publish(twist)
         return twist
     
