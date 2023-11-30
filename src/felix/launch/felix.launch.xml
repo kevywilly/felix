@@ -1,5 +1,10 @@
 <launch>
-    <node pkg="robot_argus_camera" exec="camera" output="screen"/>
+    <arg name="undistort" default="true"/>
+    <arg name="stereo" default="false"/>
+    <node pkg="robot_argus_camera" exec="camera" output="screen">
+        <param name="undistort" value="$(var undistort)"/>
+         <param name="stereo" value="$(var stereo)"/>
+    </node>
     <node pkg="felix" exec="motion_node" output="screen"/>
     <node pkg="felix" exec="app" />
 </launch>
