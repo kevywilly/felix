@@ -1,0 +1,22 @@
+RUN echo "INSTALL NGINX"
+RUN apt-get update && apt-get install -y nginx ros-humble-xacro libi2c-dev i2c-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY ./config/nginx.conf /etc/nginx/sites-enabled/default
+COPY udev_rules/99-yaboom.rules /etc/udev/rules.d/99-yaboom.rules
+COPY udev_rules/99-rplidar.rules /etc/udev/rules.d/99-rplidar.rules
+COPY udev_rules/90-i2c.rules /etc/udev/rules.d/90-i2c.rulesx
+
+RUN echo "SETTING UP ROS DOMAIN"
+RUN echo 'export ROS_DOMAIN_ID=66' >> /home/admin/.bashrc
+RUN echo 'source /workspaces/isaac_ros-dev/install/setup.bash' >> /home/admin/.bashrc
+RUN echo 'source /workspaces/robot/install/setup.bash' >> /home/admin/.bashrc
+
+RUN echo "INSTALL NANO-CONTROL"
+RUN git clone https://github.com/kevywilly/nano-control -b isaac
+RUN ln -s /nano-control/build /var/www/build
+
+#RUN rm -rf /var/www/build
+#RUN mkdir -p /var/www/build
+#RUN cp -r nano-control/build /var/www/
+#RUN rm -rf nano-control

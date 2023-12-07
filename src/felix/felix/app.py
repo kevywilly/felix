@@ -11,7 +11,7 @@ from typing import Optional
 # ros imports
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
-from std_srvs.srv import SetBool
+from std_msgs.msg import Bool
 import felix.common.image_utils as image_utils
 from felix.common.settings import settings
 from felix.common.image_collector import ImageCollector
@@ -27,15 +27,16 @@ class Api(Node):
         super().__init__(node_name='app', parameter_overrides=[])
 
         # properties
-        self.autodrive_on = False
+        self.autodrive = False
         self.image: Optional[Image] = None
         self.jpeg_bytes: Optional[bytes] = None
         self.collector = ImageCollector()
 
         # publishers
-        self.motion_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.motion_publisher = self.create_publisher(Twist, '/cmd_vel', 1)
+        self.autodrive_publisher = self.create_publisher(Bool, '/autodrive', 1)
 
-        # subscibers
+        # subscribers
         self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 5)
 
         # clients
@@ -73,22 +74,13 @@ class Api(Node):
             self.get_logger().error(str(ex))
     
     def toggle_autodrive(self):
-        """
-            req = SetBool.Request()
-            status = not self.autodrive_on
-            req.data = status
-            response: SetBool.Response = self.autodrive_client.call(req)
-            
-            if not response:
-                self.get_logger().error(f"Autodrive request timed out.")
-            else:
-                self.autodrive_on = status
-                self.get_logger().info(f"{response}")
-
-            
-            return self.autodrive_on
-        """
-        return self.autodrive_on
+        self.autodrive = not self.autodrive
+        self.twist(Twist())
+        msg = Bool()
+        msg.data = self.autodrive
+        self.autodrive_publisher.publish(msg)
+        
+        return self.autodrive
             
 
 def ros2_thread(node: Api):

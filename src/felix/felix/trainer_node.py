@@ -2,16 +2,19 @@ import atexit
 import rclpy
 from rclpy.node import Node
 import torch
-import torch.nn.functional as F
 import torch.optim as optim
+import torch.nn.functional as F
+import torchvision
 import torchvision.datasets as datasets
+import torchvision.models as models
 import torchvision.transforms as transforms
 from felix.common.settings import settings
-import torchvision.models as models
 import os
 
 torch.hub.set_dir(settings.Training.model_root)
 
+
+        
 class TrainerNode(Node):
 
     def log(self, txt: str):
@@ -30,8 +33,7 @@ class TrainerNode(Node):
             raise ex
             
         self.log(f"Trainer loaded for: {settings.Training.name}")
-        
-
+         
     def train(self):
         
         self.log("Starting trainer...")
@@ -44,8 +46,6 @@ class TrainerNode(Node):
         learning_rate: float = 0.001
         momentum: float = 0.9
 
-        self.log("loading model")
-        model = models.alexnet(pretrained=True)
 
         self.log(f"using path {datafolder} for training data.")
 
@@ -67,24 +67,30 @@ class TrainerNode(Node):
         train_dataset, test_dataset = torch.utils.data.random_split(dataset, [train_size,test_size])
 
         train_loader = torch.utils.data.DataLoader(
-        train_dataset,
-        batch_size=8,
-        shuffle=True,
-        num_workers=0
+            train_dataset,
+            batch_size=8,
+            shuffle=True,
+            num_workers=0
         )
 
         test_loader = torch.utils.data.DataLoader(
-        test_dataset,
-        batch_size=8,
-        shuffle=True,
-        num_workers=0
+            test_dataset,
+            batch_size=8,
+            shuffle=True,
+            num_workers=0
         )
 
-        num_cats = 3
-
-        print(f"Categories: {num_cats}")
-
-        model.classifier[6] = torch.nn.Linear(model.classifier[6].in_features, num_cats)
+        self.log("loading model")
+        cat_count = len(settings.Training.categories)
+        if settings.Training.classifier.lower() == "alexnet":
+            model = torchvision.models.alexnet(pretrained=True)
+            model.classifier[6] = torch.nn.Linear(model.classifier[6].in_features, cat_count)
+        else:
+            model = torchvision.models.resnet18(pretrained=True)
+            model.fc = torch.nn.Linear(512, cat_count)
+        
+        device = torch.device('cuda')
+        model = model.to(device)
 
         print("training model...")
 
@@ -95,9 +101,6 @@ class TrainerNode(Node):
         if os.path.isfile(BEST_MODEL_PATH):
             print(f"loading best model from {BEST_MODEL_PATH}")
             model.load_state_dict(torch.load(BEST_MODEL_PATH))
-
-        device = torch.device('cuda')
-        model = model.to(device)
 
         optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
 
@@ -133,8 +136,6 @@ class TrainerNode(Node):
                 self.log(f"saving best model... with accuracy: {test_accuracy}")
                 torch.save(model.state_dict(), BEST_MODEL_PATH)
                 best_accuracy = test_accuracy
-
-            
 
 def main(args=None):
     rclpy.init(args=args)

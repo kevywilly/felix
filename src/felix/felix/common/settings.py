@@ -1,5 +1,4 @@
 from typing import List, Optional, Any, Dict
-import torchvision
 import os
 
 class CameraConfig:
@@ -43,16 +42,10 @@ class TrainingProfile:
         self.best_model_file = os.path.join(self.best_model_folder,self.filename+".pth")
         self.training_data_path = os.path.join(self.data_root, self.filename)
         self.num_categories = len(self.categories)
-
-
-    def load_model(self, *args, **kwargs):
-        if self.classifier.lower() == "alexnet":
-            return torchvision.models.alexnet(*args, **kwargs)
-        elif self.classifier.lower() == "resnet18":
-            return torchvision.models.resnet18(*args, **kwargs)
-        else:
-            raise Exception("Invalid model specified, please use 'alexnet' or 'resnet18")
-
+        self.onnx_folder = os.path.join(self.model_root,"onnx")
+        self.onnx_file = os.path.join(self.onnx_folder,self.filename+".onnx")
+        self.trt_folder = os.path.join(self.model_root, "trt")
+        self.trt_file = os.path.join(self.trt_folder,f"{self.filename}.trt")
       
 class AppSettings:
 
@@ -99,9 +92,9 @@ class AppSettings:
     Training: TrainingProfile = TrainingProfile(
             data_root="/felix/data",
             name="obstacle",
-            classifier="alexnet",
+            classifier="resnet18",
             categories=["free","blocked"],
-            velocity_map={"free": (1.0,0,0), "blocked": (0,0,1.0)}
+            velocity_map={"free": (1.0,0,0), "blocked": (0,0,-1.0)}
         )   
     
 

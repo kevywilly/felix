@@ -25,11 +25,6 @@ class DbNode(Node):
         self.create_subscription(MotionData, '/motion', self.got_motion_data, 10)
 
     def got_motion_data(self, msg: MotionData):
-        
-        #img = image_utils.sensor_image_to_cv2(msg.image)
-        #img = cv.resize(img, (240,240), interpolation = cv.INTER_AREA)
-        #j = {"image": img}
-        #encoded = json.dumps(j, cls=NumpyArrayEncoder)
 
         image = image_utils.sensor_image_to_jpeg_bytes(msg.image)
 

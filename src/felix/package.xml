@@ -11,7 +11,6 @@
   <depend>cv_bridge</depend>
   <depend>sensor_msgs</depend>
   <depend>geometry_msgs</depend>
-  <depend>std_srvs</depend>
   <depend>std_msgs</depend>
   <exec_depend>felix_interfaces</exec_depend>
 

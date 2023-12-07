@@ -6,5 +6,6 @@
          <param name="stereo" value="$(var stereo)"/>
     </node>
     <node pkg="felix" exec="motion_node" output="screen"/>
+    <node pkg="felix" exec="autodrive_node" output="screen"/>
     <node pkg="felix" exec="app" />
 </launch>

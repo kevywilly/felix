@@ -1,8 +1,11 @@
 FROM humble:r32.7.4 as stage1
 
+ENV CUDA_HOME=/usr/local/cuda
+
 WORKDIR /
 
-COPY ./felix.sh /
+COPY ./scripts/felix_entrypoint.sh /
+COPY ./scripts/felix.sh /
 
 RUN apt-get update && apt-get -y install sqlite3 \
     && rm -rf /var/lib/apt/lists/*
@@ -13,8 +16,18 @@ RUN pip3 install --no-cache-dir --verbose \
   flask \
   flask_cors \
   pandas \
-  setuptools==58.2.0
+  setuptools==58.2.0 
 
+RUN apt-get update && apt-get install -y nginx \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY ./config/nginx.conf /etc/nginx/sites-enabled/default
+
+RUN echo "INSTALL NANO-CONTROL"
+RUN git clone https://github.com/kevywilly/nano-control -b felix
+RUN ln -s /nano-control/build /var/www/build
+
+RUN echo "source /felix_entrypoint.sh" >> /root/.bashrc
 RUN echo "source /ros_entrypoint.sh" >> /root/.bashrc
 RUN echo "source /felix/install/setup.bash" >> /root/.bashrc
 
