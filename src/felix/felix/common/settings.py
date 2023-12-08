@@ -1,6 +1,10 @@
 from typing import List, Optional, Any, Dict
 import os
 
+class TrainingType:
+    OBSTACLE="OBSTACLE"
+    PATH="PATH"
+
 class CameraConfig:
 
     def __init__(self, 
@@ -24,6 +28,7 @@ class TrainingProfile:
         self, 
         data_root: str, 
         name: str, 
+        type: str,
         classifier: str, 
         categories: List[str], 
         velocity_map: Dict,
@@ -31,6 +36,7 @@ class TrainingProfile:
         learning_rate: float = 0.001, 
         momentum: float = 0.9
         ):
+        self.type = type
         self.name = name
         self.filename = name.lower().replace(" ","_")
         self.classifier = classifier
@@ -46,11 +52,38 @@ class TrainingProfile:
         self.onnx_file = os.path.join(self.onnx_folder,self.filename+".onnx")
         self.trt_folder = os.path.join(self.model_root, "trt")
         self.trt_file = os.path.join(self.trt_folder,f"{self.filename}.trt")
-      
+
+obstacle3d_profile= TrainingProfile(
+            data_root="/felix/data",
+            name="obstacle3e",
+            type=TrainingType.OBSTACLE,
+            classifier="alexnet",
+            categories=["forward","left","right"],
+            velocity_map={"forward": (0.5,0,0), "left": (0,0,0.3), "right": (0,0,-0.3)}
+
+obstacle_profile= TrainingProfile(
+            data_root="/felix/data",
+            name="obstacle",
+            type=TrainingType.OBSTACLE,
+            classifier="alexnet",
+            categories=["blocked","free"],
+            velocity_map={"blocked": (0,0,0.3), "free": (0.5,0,0), }
+        )  
+
+path_profile= TrainingProfile(
+            data_root="/felix/data",
+            name="path_planning",
+            type=TrainingType.PATH,
+            classifier="alexnet",
+            categories=[],
+            velocity_map={}
+        )   
 class AppSettings:
 
     class Topics:
         raw_video: str = "/left/image_raw"
+        cmd_vel: str = "/cmd_vel"
+        autodrive: str = "/autodrive"
         
     class Robot:
         wheel_radius: float = 65.00/2000.0
@@ -89,13 +122,7 @@ class AppSettings:
     class Db:
         path: str = "/felix/data/db/felix_db.sqlite"
 
-    Training: TrainingProfile = TrainingProfile(
-            data_root="/felix/data",
-            name="obstacle",
-            classifier="resnet18",
-            categories=["free","blocked"],
-            velocity_map={"free": (1.0,0,0), "blocked": (0,0,-1.0)}
-        )   
+    Training: TrainingProfile = path_profile
     
 
     Camera: CameraConfig = CameraConfig(

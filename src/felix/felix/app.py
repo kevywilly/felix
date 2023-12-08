@@ -13,7 +13,7 @@ from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
 from std_msgs.msg import Bool
 import felix.common.image_utils as image_utils
-from felix.common.settings import settings
+from felix.common.settings import settings, TrainingType
 from felix.common.image_collector import ImageCollector
 
 
@@ -33,8 +33,8 @@ class Api(Node):
         self.collector = ImageCollector()
 
         # publishers
-        self.motion_publisher = self.create_publisher(Twist, '/cmd_vel', 1)
-        self.autodrive_publisher = self.create_publisher(Bool, '/autodrive', 1)
+        self.motion_publisher = self.create_publisher(Twist, settings.Topics.cmd_vel, 1)
+        self.autodrive_publisher = self.create_publisher(Bool, settings.Topics.autodrive, 1)
 
         # subscribers
         self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 5)
@@ -81,7 +81,14 @@ class Api(Node):
         self.autodrive_publisher.publish(msg)
         
         return self.autodrive
-            
+
+    def collect_x_y(self, x: int, y: int, width:int, height: int):
+        try:
+            self.get_logger().info(f"received collect image request xy:{x},{y},{width},{height}")
+            img = self.get_jpeg()
+            return self.collector.collect_x_y(x, y, width, height, img)
+        except Exception as ex:
+            self.get_logger().error(str(ex))
 
 def ros2_thread(node: Api):
     print('entering ros2 thread')
@@ -155,14 +162,21 @@ def collect(category: str):
     except Exception as ex:
         return {'count': -1, 'error': str(ex)}
 
+@app.get('/api/training/type')
+def get_training_type():
+    return {"type": settings.Training.type}
+
 @app.get('/api/categories/counts')
 def category_counts():
-    results = app_node.collector.get_categories()
+    results = app_node.collector.get_categories() if settings.Training.type == TrainingType.OBSTACLE else {}
     return jsonify(results)
 
 @app.get('/api/categories/<category>/images')
 def category_images(category: str):
-    return {"images": app_node.collector.get_images(category)}
+    if settings.Training.type == TrainingType.OBSTACLE:
+        return {"images": app_node.collector.get_images(category)}
+    else:
+        return {"images": []}
 
 
 @app.get('/api/categories/<category>/images/<name>')
@@ -200,6 +214,23 @@ def _twist_to_json(twist):
             "angular": {"x": twist.angular.x, "y": twist.angular.y, "z": twist.angular.z},
         }
     
+@app.post('/api/collect-x-y')
+def collect_x_y():
+    if settings.Training.type == TrainingType.PATH:
+        data = request.get_json()
+
+        x = int(data["x"])
+        y = int(data["y"])
+
+        width = int(data["width"])
+        height = int(data["height"])
+
+
+        app_node.collect_x_y(x,y,width,height)
+
+        return {"status":True}
+    else:
+        return {"status":False}
 
 @app.post('/api/twist')
 def apply_twist():

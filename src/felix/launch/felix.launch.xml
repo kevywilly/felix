@@ -5,7 +5,7 @@
         <param name="undistort" value="$(var undistort)"/>
          <param name="stereo" value="$(var stereo)"/>
     </node>
-    <node pkg="felix" exec="motion_node" output="screen"/>
-    <node pkg="felix" exec="autodrive_node" output="screen"/>
+    <node pkg="felix_controller" exec="controller" output="screen"/>
+    <node pkg="felix_controller" exec="autodrive" output="screen"/>
     <node pkg="felix" exec="app" />
 </launch>

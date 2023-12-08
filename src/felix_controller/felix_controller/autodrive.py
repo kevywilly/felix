@@ -30,15 +30,19 @@ class DriveState(Enum):
 class AutoDriveNode(Node):
 
     def __init__(self):
-        super().__init__("autodrive_node", parameter_overrides=[])
+        super().__init__("autodrive", parameter_overrides=[])
 
         self.get_logger().info("Started autodrive node.")
         self.drive_state = DriveState.STOPPED
-        self.engine = self.prepare_engine()
+        try:
+            self.engine = self.prepare_engine()
+        except:
+            pass
         self.running = False
-        self.create_subscription(Bool, "autodrive", self.set_run_state, 10)
+        self.create_subscription(Bool, settings.Topics.autodrive, self.set_run_state, 10)
+
         # publishers
-        self.cmd_vel_publisher = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.cmd_vel_publisher = self.create_publisher(Twist, settings.Topics.cmd_vel, 10)
         self.image_subscription = self.create_subscription(Image, settings.Topics.raw_video, self.autodrive, 5)
         
         self.get_logger().info("Initialized autodrive node.")
@@ -109,7 +113,6 @@ class AutoDriveNode(Node):
 
     def autodrive(self, sensor_image: Image):
         
-        
         if not self.running:
             self.drive_state = DriveState.STOPPED
             return
@@ -129,14 +132,13 @@ class AutoDriveNode(Node):
 
                 t.linear.x, t.linear.y, t.angular.z = [v * settings.Motion.autodrive_speed for v in vel_vector]
                 self.get_logger().info(f"Autodrive: {t}")
-                #self.cmd_vel_publisher.publish(t)
+                self.cmd_vel_publisher.publish(t)
 
 def main(args=None):
     rclpy.init(args=args)
     node = AutoDriveNode()
     rclpy.spin(node=node)
     node.stop()
-    torch.cuda.empty_cache()
     rclpy.shutdown()
     
 

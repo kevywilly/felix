@@ -1,10 +1,10 @@
 import rclpy
 from typing import Optional
-from felix.common.rosmaster import Rosmaster
 from geometry_msgs.msg import Twist, Vector3
 from sensor_msgs.msg import Image
 from rclpy.node import Node
 from felix.common.settings import settings
+from felix_controller.scripts.rosmaster import Rosmaster
 
 import math
 import time
@@ -39,9 +39,9 @@ max_angular_z = 2.5
 def _limit_velocity(value, max_value) -> float:
     return value*min(value, max_value)/value if value != 0 else 0
 
-class MotionNode(Node):
+class ControllerNode(Node):
     def __init__(self):
-        super().__init__("motion_node", parameter_overrides=[])
+        super().__init__("controller", parameter_overrides=[])
         self.bot = Rosmaster(car_type=2, com="/dev/ttyUSB0")
         self.bot.create_receive_threading()
         self.create_subscription(Twist, "/cmd_vel", self.handle_cmd_vel, 10)
@@ -60,9 +60,6 @@ class MotionNode(Node):
         
         self.velocity = (0,0,0)
         self.target_velocity = (0,0,0)
-     
-        
-
 
         atexit.register(self.stop)
 
@@ -77,7 +74,6 @@ class MotionNode(Node):
     def stop(self):
         self.bot.set_motor(0,0,0,0)
 
-    
 
     def handle_cmd_vel(self, msg: Twist):
         
@@ -88,8 +84,6 @@ class MotionNode(Node):
         self.bot.set_car_motion(x,y,z)
         self.target_velocity = (x,y,z)
         
-       
-
     def ticks_callback(self, *args):
 
         ticks = np.array(self.bot.get_motor_encoder())
@@ -108,7 +102,7 @@ class MotionNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = MotionNode()
+    node = ControllerNode()
     rclpy.spin(node)
     rclpy.shutdown()
 

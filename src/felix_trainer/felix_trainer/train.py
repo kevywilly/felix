@@ -1,4 +1,3 @@
-import atexit
 import rclpy
 from rclpy.node import Node
 import torch
@@ -11,9 +10,9 @@ import torchvision.transforms as transforms
 from felix.common.settings import settings
 import os
 
+from src.felix.felix.common.settings import TrainingType
+
 torch.hub.set_dir(settings.Training.model_root)
-
-
         
 class TrainerNode(Node):
 
@@ -22,7 +21,7 @@ class TrainerNode(Node):
 
     def __init__(self):
 
-        super().__init__("trainer_node", parameter_overrides=[])
+        super().__init__("train", parameter_overrides=[])
         
         try:
             os.makedirs(settings.Training.best_model_folder)
@@ -33,19 +32,26 @@ class TrainerNode(Node):
             raise ex
             
         self.log(f"Trainer loaded for: {settings.Training.name}")
-         
-    def train(self):
-        
-        self.log("Starting trainer...")
 
-        epochs = 60
+        if settings.Training.type == TrainingType.OBSTACLE:
+            self.train_obstacle()
+        elif settings.Training.type == TrainingType.PATH:
+            self.train_path()
+    
+
+    def train_path(self):
+        self.log("Starting path trainer...")
+        self.log("Done")
+
+
+    def train_obstacle(self):
+        
+        self.log("Starting obstacle trainer...")
 
         datafolder = settings.Training.training_data_path
-
         train_pct: float = 0.6
         learning_rate: float = 0.001
         momentum: float = 0.9
-
 
         self.log(f"using path {datafolder} for training data.")
 
@@ -140,6 +146,6 @@ class TrainerNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = TrainerNode()
-    node.train()
+    rclpy.spin_once(node)
     torch.cuda.empty_cache()
     rclpy.shutdown()
