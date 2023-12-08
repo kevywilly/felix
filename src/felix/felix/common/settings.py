@@ -54,30 +54,33 @@ class TrainingProfile:
         self.trt_file = os.path.join(self.trt_folder,f"{self.filename}.trt")
 
 obstacle3d_profile= TrainingProfile(
-            data_root="/felix/data",
-            name="obstacle3e",
-            type=TrainingType.OBSTACLE,
-            classifier="alexnet",
-            categories=["forward","left","right"],
-            velocity_map={"forward": (0.5,0,0), "left": (0,0,0.3), "right": (0,0,-0.3)}
+    data_root="/felix/data",
+    name="obstacle3e",
+    type=TrainingType.OBSTACLE,
+    classifier="alexnet",
+    categories=["forward","left","right"],
+    velocity_map={"forward": (0.5,0,0), "left": (0,0,0.3), "right": (0,0,-0.3)}
+)
 
 obstacle_profile= TrainingProfile(
-            data_root="/felix/data",
-            name="obstacle",
-            type=TrainingType.OBSTACLE,
-            classifier="alexnet",
-            categories=["blocked","free"],
-            velocity_map={"blocked": (0,0,0.3), "free": (0.5,0,0), }
-        )  
+    data_root="/felix/data",
+    name="obstacle",
+    type=TrainingType.OBSTACLE,
+    classifier="alexnet",
+    categories=["blocked","free"],
+    velocity_map={"blocked": (0,0,0.3), "free": (0.5,0,0), }
+)  
 
 path_profile= TrainingProfile(
-            data_root="/felix/data",
-            name="path_planning",
-            type=TrainingType.PATH,
-            classifier="alexnet",
-            categories=[],
-            velocity_map={}
-        )   
+    data_root="/felix/data",
+    name="path_planning",
+    type=TrainingType.PATH,
+    classifier="alexnet",
+    categories=[],
+    velocity_map={}
+)   
+
+
 class AppSettings:
 
     class Topics:
