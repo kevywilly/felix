@@ -65,7 +65,7 @@ elif [ $ARCH = "x86_64" ]; then
 
 	set -x
 
-	$SUDO docker run --gpus all -it --rm --network=host \
+	$SUDO docker run --gpus all -it --rm --network=host --detach \
 		--shm-size=8g \
 		--ulimit memlock=-1 \
 		--ulimit stack=67108864 \

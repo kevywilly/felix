@@ -2,6 +2,8 @@ import rclpy
 from typing import Optional
 from geometry_msgs.msg import Twist, Vector3
 from sensor_msgs.msg import Image
+from std_msgs.msg import Int16
+from std_msgs.msg import Float32
 from rclpy.node import Node
 from felix.common.settings import settings
 from felix_controller.scripts.rosmaster import Rosmaster
@@ -42,19 +44,22 @@ def _limit_velocity(value, max_value) -> float:
 class ControllerNode(Node):
     def __init__(self):
         super().__init__("controller", parameter_overrides=[])
+        
         self.bot = Rosmaster(car_type=2, com="/dev/ttyUSB0")
         self.bot.create_receive_threading()
         self.create_subscription(Twist, "/cmd_vel", self.handle_cmd_vel, 10)
+        self.create_subscription(Vector3, "/cmd_turn", self.turn, 10)
+        self.create_subscription(Vector3, "/cmd_move", self.move, 10)
         self.tick_timer = self.create_timer(tick_delay, self.ticks_callback)
-        
         self.wheel_radius = settings.Robot.wheel_radius
         self.robot_radius = settings.Robot.wheel_base/2.0
         self.track_width = settings.Robot.track_width
         self.wheel_base = settings.Robot.wheel_base
         self.wheel_circumference = 2*math.pi*self.wheel_radius
         self.wheel_angles = [math.pi/4, 3*math.pi/4, 5*math.pi/4, 7*math.pi/4]
-        self.ticks_per_meter = 1000/self.wheel_circumference
-
+        self.ticks_per_meter: int = int(settings.Robot.encoder_resolution/self.wheel_circumference)
+        self.robot_circumference = math.pi*(self.wheel_base+self.track_width)
+        self.ticks_per_robot_rotation: int = int(settings.Robot.encoder_resolution/self.robot_circumference)
         
         self.prev_ticks = np.array(self.bot.get_motor_encoder())
         
@@ -63,12 +68,61 @@ class ControllerNode(Node):
 
         atexit.register(self.stop)
 
+    
+    
+    def move(self, msg: Vector3):
+        meters = msg.x
+        if meters == 0:
+            return
+        self.bot.set_car_motion(msg.y,0,0)
+        start_ticks, _, _, _ = self.bot.get_motor_encoder()
+        self.wait_ticks(start_ticks, int(self.ticks_per_meter/meters))
+        self.bot.set_car_motion(0,0,0)
+
+    def wait_ticks(self,start_ticks: int, ticks: int):
+        
+        ticks_count = 0
+        t=0
+        while ticks_count < ticks:
+            t,_,_,_ = self.bot.get_motor_encoder()
+            ticks_count = abs(t-start_ticks)
+            # self.get_logger().info(f"t: {t}")
+
+        # self.get_logger().info(f"ticks: {ticks}, ticks_count: {ticks_count}, start: {start}, t: {t}")
+        return
+    
+    def turn(self, msg: Vector3):
+        degrees = int(msg.x)
+        vel = msg.y
+        delta = 0
+        yaw = self.bot.get_imu_attitude_data()[2]
+        self.bot.set_car_motion(0,0,vel)
+      
+        self.get_logger().info(f"turning {degrees} degrees with angular_velocity {vel}.")
+        start_time = time.time()
+        while True:
+            time.sleep(0.01)
+            new_yaw = self.bot.get_imu_attitude_data()[2]
+            delta += abs(new_yaw-yaw)
+            
+            yaw = new_yaw
+
+            if delta >= degrees:
+                break
+
+            # stop if more than 10 seconds
+            if time.time() - start_time > 10:
+                self.get_logger().warning(f"turn time out - operation aborted.")
+                break
+
+        self.bot.set_car_motion(0,0,0)
+
     def calculate_robot_velocity(self, np_wheel_velocities):
      
         x = sum(np_wheel_velocities*mechanum_matrix[0])/4.0
         y = sum(np_wheel_velocities*mechanum_matrix[1])/4.0
         z = sum(np_wheel_velocities*mechanum_matrix[2])/(2*(self.wheel_base + self.track_width))
-        
+        # radians = z*seconds*57.2958
         return (x,y,z)
     
     def stop(self):
@@ -88,7 +142,7 @@ class ControllerNode(Node):
 
         ticks = np.array(self.bot.get_motor_encoder())
         ticks_offset = ticks - self.prev_ticks
-        rps = ticks_offset/(1000.0 * tick_delay)
+        rps = ticks_offset/(settings.Robot.encoder_resolution * tick_delay)
 
         wheel_velocities = rps*self.wheel_circumference
         
@@ -97,8 +151,6 @@ class ControllerNode(Node):
             self.get_logger().info(f"RPM: {self.velocity}") 
         
         self.prev_ticks = ticks
-        
-
 
 def main(args=None):
     rclpy.init(args=args)

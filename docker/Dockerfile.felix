@@ -7,7 +7,7 @@ WORKDIR /
 COPY ./scripts/felix_entrypoint.sh /
 COPY ./scripts/felix.sh /
 
-RUN apt-get update && apt-get -y install sqlite3 \
+RUN apt-get update && apt-get -y install sqlite3 nginx vim \
     && rm -rf /var/lib/apt/lists/*
 
 RUN python3 -m pip install --upgrade pip
@@ -18,8 +18,7 @@ RUN pip3 install --no-cache-dir --verbose \
   pandas \
   setuptools==58.2.0 
 
-RUN apt-get update && apt-get install -y nginx \
-    && rm -rf /var/lib/apt/lists/*
+FROM stage1 as stage2
 
 COPY ./config/nginx.conf /etc/nginx/sites-enabled/default
 

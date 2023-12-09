@@ -10,7 +10,7 @@ from typing import Optional
 
 # ros imports
 from sensor_msgs.msg import Image
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, Vector3
 from std_msgs.msg import Bool
 import felix.common.image_utils as image_utils
 from felix.common.settings import settings, TrainingType
@@ -35,6 +35,8 @@ class Api(Node):
         # publishers
         self.motion_publisher = self.create_publisher(Twist, settings.Topics.cmd_vel, 1)
         self.autodrive_publisher = self.create_publisher(Bool, settings.Topics.autodrive, 1)
+        self.move_publisher = self.create_publisher(Vector3, "/cmd_move",10)
+        self.turn_publisher = self.create_publisher(Vector3, "/cmd_turn",10)
 
         # subscribers
         self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 5)
@@ -235,6 +237,22 @@ def collect_x_y():
 @app.post('/api/twist')
 def apply_twist():
     return _twist_to_json(app_node.twist(_parse_twist(request.get_json())))
+
+@app.get('/api/move/<meters>/<velocity>')
+def move(meters, velocity):
+    msg = Vector3()
+    msg.x = float(meters)
+    msg.y = float(velocity)
+    app_node.move_publisher.publish(msg)
+    return {"status": True}
+
+@app.get('/api/turn/<degrees>/<velocity>')
+def turn(degrees,velocity):
+    msg = Vector3()
+    msg.x = float(degrees)
+    msg.y = float(velocity)
+    app_node.turn_publisher.publish(msg)
+    return {"status": True}
 
 
 def main(args=None):

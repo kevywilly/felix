@@ -95,6 +95,7 @@ class AppSettings:
         wheel_x_offset: float = 71.5/1000
         body_length: float = 152/1000
         body_width: float = 126.00/1000
+        encoder_resolution: int = int(1000/48)
 
 
     class Motion:
@@ -107,7 +108,7 @@ class AppSettings:
 
         see calibrate_speed.py
         """ 
-
+        
         rpm_min: float = 80.25
         rpm_max: float = 333.7
         vx_min: float = 0.127
@@ -125,7 +126,7 @@ class AppSettings:
     class Db:
         path: str = "/felix/data/db/felix_db.sqlite"
 
-    Training: TrainingProfile = path_profile
+    Training: TrainingProfile = obstacle3d_profile
     
 
     Camera: CameraConfig = CameraConfig(
