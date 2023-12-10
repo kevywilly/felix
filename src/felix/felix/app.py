@@ -57,6 +57,8 @@ class Api(Node):
     # publishers
 
     def twist(self, twist: Twist):
+        if self.autodrive:
+            self.toggle_autodrive(False)
         twist.linear.x = twist.linear.x * JOYSTICK_LINEAR_X_SCALE
         twist.linear.y = twist.linear.y * JOYSTICK_LINEAR_Y_SCALE
         twist.angular.z = twist.angular.z * JOYSTICK_ANGULAR_Z_SCALE
@@ -75,8 +77,8 @@ class Api(Node):
         except Exception as ex:
             self.get_logger().error(str(ex))
     
-    def toggle_autodrive(self):
-        self.autodrive = not self.autodrive
+    def toggle_autodrive(self, value: Optional[bool] = None):
+        self.autodrive = not self.autodrive if value is None else value
         self.twist(Twist())
         msg = Bool()
         msg.data = self.autodrive

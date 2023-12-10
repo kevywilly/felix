@@ -60,12 +60,12 @@ class ControllerNode(Node):
         self.ticks_per_meter: int = int(settings.Robot.encoder_resolution/self.wheel_circumference)
         self.robot_circumference = math.pi*(self.wheel_base+self.track_width)
         self.ticks_per_robot_rotation: int = int(settings.Robot.encoder_resolution/self.robot_circumference)
-        
         self.prev_ticks = np.array(self.bot.get_motor_encoder())
-        
         self.velocity = (0,0,0)
         self.target_velocity = (0,0,0)
 
+        self.abort_move_or_turn = False
+        
         atexit.register(self.stop)
 
     
@@ -84,8 +84,12 @@ class ControllerNode(Node):
         ticks_count = 0
         t=0
         while ticks_count < ticks:
+            if(self.abort_move_or_turn):
+                self.abort_move_or_turn = False
+                break
             t,_,_,_ = self.bot.get_motor_encoder()
             ticks_count = abs(t-start_ticks)
+            
             # self.get_logger().info(f"t: {t}")
 
         # self.get_logger().info(f"ticks: {ticks}, ticks_count: {ticks_count}, start: {start}, t: {t}")
@@ -101,6 +105,10 @@ class ControllerNode(Node):
         self.get_logger().info(f"turning {degrees} degrees with angular_velocity {vel}.")
         start_time = time.time()
         while True:
+            if(self.abort_move_or_turn):
+                self.abort_move_or_turn = False
+                break
+
             time.sleep(0.01)
             new_yaw = self.bot.get_imu_attitude_data()[2]
             delta += abs(new_yaw-yaw)
@@ -131,6 +139,8 @@ class ControllerNode(Node):
 
     def handle_cmd_vel(self, msg: Twist):
         
+        self.abort_move_or_turn = True
+
         x = msg.linear.x * max_linear_x
         y = msg.linear.y * max_linear_y
         z = msg.angular.z * max_angular_z
