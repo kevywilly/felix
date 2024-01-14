@@ -4,9 +4,7 @@ import atexit
 
 from felix.common.rosmaster import Rosmaster
 from felix.common.settings import settings
-from felix.common.kinematics import (
-    calc_velocity, calc_rpm, calc_rps
-)
+from felix.common.kinematics import Kinematics
 
 
 speed = 0
@@ -39,9 +37,9 @@ def calibrate_linear():
             time.sleep(1)
             tl1,tr1 = get_ticks()
             elapsed_time = time.time() - t0
-            rpm = calc_rpm(tl1-tl0, elapsed_time, 360)
+            rpm = Kinematics.calc_rpm(tl1-tl0, elapsed_time, 360)
             rps = rpm/60.0
-            vx,vy,vz = calc_velocity(rps,rps, settings.Robot.wheel_base, settings.Robot.wheel_radius)
+            vx,vy,vz = Kinematics.calc_velocity(rps,rps, settings.Robot.wheel_base, settings.Robot.wheel_radius)
             adj_factor = speed/vx if speed > 0 else 0
             if count > 0:
                 max_vel = vx if vx > max_vel else max_vel
@@ -73,12 +71,12 @@ def calibrate_angular():
             time.sleep(1)
             tl1,tr1 = get_ticks()
             elapsed_time = time.time() - t0
-            rpmL = calc_rpm(tl1-tl0, elapsed_time)
-            rpmR = calc_rpm(tr1-tr0, elapsed_time)
+            rpmL = Kinematics.calc_rpm(tl1-tl0, elapsed_time)
+            rpmR = Kinematics.calc_rpm(tr1-tr0, elapsed_time)
             rpsR = rpmR/60.0
             rpsL = rpmL/60.0
 
-            vx,vy,vz = calc_velocity(rpsL,rpsR, settings.Robot.wheel_base, settings.Robot.wheel_radius)
+            vx,vy,vz = Kinematics.calc_velocity(rpsL,rpsR, settings.Robot.wheel_base, settings.Robot.wheel_radius)
 
             adj_factor = speed/vz if vz > 0 else 1
 

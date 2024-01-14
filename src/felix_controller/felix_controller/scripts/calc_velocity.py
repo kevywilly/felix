@@ -2,6 +2,7 @@
 
 import time
 from rosmaster import Rosmaster
+from src.felix.felix.common.kinematics import Kinematics
 import numpy as np
 import math
 import atexit
@@ -13,29 +14,6 @@ bot.create_receive_threading()
 wheel_radius: float = 95.00/1000
 wheel_base: float = 150.00/1000
 
-def forward_kinematics(self, left_wheel_velocity, right_wheel_velocity):
-    # Calculate linear and angular velocity
-    x = (wheel_radius / 2) * (left_wheel_velocity + right_wheel_velocity)
-    z = (wheel_radius / wheel_base) * (right_wheel_velocity - left_wheel_velocity)
-
-def calculate_mecanum_velocities(wheel_velocities, wheel_radius, robot_width, robot_length):
-    # Assuming wheel_velocities is a list containing the velocities of all 4 wheels in m/s
-    # wheel_radius: Radius of the wheels in meters
-    # robot_width: Width of the robot in meters (distance between left and right wheels)
-    # robot_length: Length of the robot in meters (distance between front and rear wheels)
-
-    # Calculate linear velocity components in x and y directions
-    vx = (wheel_velocities[0] + wheel_velocities[1] + wheel_velocities[2] + wheel_velocities[3]) / 4
-    vy = (-wheel_velocities[0] + wheel_velocities[1] + wheel_velocities[2] - wheel_velocities[3]) / 4
-
-    # Calculate linear velocity magnitude
-    linear_velocity = math.sqrt(vx**2 + vy**2)
-
-    # Calculate angular velocity
-    angular_velocity = (wheel_velocities[0] - wheel_velocities[1] + wheel_velocities[2] - wheel_velocities[3]) \
-                       * wheel_radius / (2 * (robot_width + robot_length))
-
-    return linear_velocity, angular_velocity
 
 # Example usage
 wheel_velocities = [1.0, 2.0, 1.5, 2.5]  # Example wheel velocities in m/s
@@ -43,7 +21,7 @@ wheel_radius = 0.1  # Example wheel radius in meters
 robot_width = 0.6   # Example robot width in meters
 robot_length = 0.8  # Example robot length in meters
 
-linear_velocity, angular_velocity = calculate_mecanum_velocities(wheel_velocities, wheel_radius, robot_width, robot_length)
+linear_velocity, angular_velocity = Kinematics.calculate_mecanum_velocities(wheel_velocities, wheel_radius, robot_width, robot_length)
 print("Linear Velocity:", linear_velocity, "m/s")
 print("Angular Velocity:", angular_velocity, "rad/s")
 

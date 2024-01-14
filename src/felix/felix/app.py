@@ -16,6 +16,7 @@ from nav_msgs.msg import Odometry
 import felix.common.image_utils as image_utils
 from felix.common.settings import settings, TrainingType
 from felix.common.image_collector import ImageCollector
+from felix.common.kinematics import Kinematics
 
 
 JOYSTICK_LINEAR_X_SCALE = 1
@@ -59,20 +60,17 @@ class Api(Node):
 
     # publishers
 
-    def navigate2(self, x: int, y: int, w: int, h: int, captureMode=False, driveMode=False):
+    def navigate(self, x: int, y: int, w: int, h: int, captureMode=False, driveMode=False) -> Odometry:
+        odom = Kinematics.xywh_to_odom(x,y,w,h)
+
         if driveMode:
-            _x = x - w/2
-            _y = h - y
-            _vx = float(_y/h/2.0)
-            _vz = -float(_x/w)
-            odom = Odometry()
-            odom.twist.twist.linear.x = _vx
-            odom.twist.twist.angular.z = _vz
-            odom.pose.pose.orientation.z = _vz*60*0.0174533
             self.nav_publisher.publish(odom)
+
         if captureMode:
             self.collect_x_y(x,y,w,h)
 
+        return odom
+            
 
     def twist(self, twist: Twist):
         if self.autodrive:
@@ -295,9 +293,14 @@ def navigate():
         driveMode = data["driveMode"]
         captureMode = data["captureMode"]
 
-        app_node.navigate2(x=x, y=y, w=w, h=h, driveMode=driveMode, captureMode=captureMode)
+        odom: Odometry = app_node.navigate(x=x, y=y, w=w, h=h, driveMode=driveMode, captureMode=captureMode)
+        return {
+            'vx': odom.twist.twist.linear.x,
+            'vz': odom.twist.twist.angular.z,
+            'angle': odom.pose.pose.orientation.z * 57.2958
+            }
         
-    return data
+    return {}
 
 
 def main(args=None):
