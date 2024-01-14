@@ -12,6 +12,7 @@ from typing import Optional
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist, Vector3
 from std_msgs.msg import Bool
+from nav_msgs.msg import Odometry
 import felix.common.image_utils as image_utils
 from felix.common.settings import settings, TrainingType
 from felix.common.image_collector import ImageCollector
@@ -19,7 +20,8 @@ from felix.common.image_collector import ImageCollector
 
 JOYSTICK_LINEAR_X_SCALE = 1
 JOYSTICK_LINEAR_Y_SCALE = 1
-JOYSTICK_ANGULAR_Z_SCALE = 2.5
+JOYSTICK_ANGULAR_Z_SCALE = 1
+
 
 class Api(Node):
     def __init__(self, *args):
@@ -37,6 +39,7 @@ class Api(Node):
         self.autodrive_publisher = self.create_publisher(Bool, settings.Topics.autodrive, 1)
         self.move_publisher = self.create_publisher(Vector3, "/cmd_move",10)
         self.turn_publisher = self.create_publisher(Vector3, "/cmd_turn",10)
+        self.nav_publisher = self.create_publisher(Odometry, "/cmd_nav",10)
 
         # subscribers
         self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 5)
@@ -56,6 +59,21 @@ class Api(Node):
 
     # publishers
 
+    def navigate2(self, x: int, y: int, w: int, h: int, captureMode=False, driveMode=False):
+        if driveMode:
+            _x = x - w/2
+            _y = h - y
+            _vx = float(_y/h/2.0)
+            _vz = -float(_x/w)
+            odom = Odometry()
+            odom.twist.twist.linear.x = _vx
+            odom.twist.twist.angular.z = _vz
+            odom.pose.pose.orientation.z = _vz*60*0.0174533
+            self.nav_publisher.publish(odom)
+        if captureMode:
+            self.collect_x_y(x,y,w,h)
+
+
     def twist(self, twist: Twist):
         if self.autodrive:
             self.toggle_autodrive(False)
@@ -69,6 +87,10 @@ class Api(Node):
     def get_jpeg(self):
         return self.jpeg_image_bytes
 
+    def take_snapshot(self):
+        img = self.get_jpeg()
+        return self.collector.take_snapshot(img)
+    
     def collect_image(self, category):
         try:
             self.get_logger().info(f"received collect image request {category}")
@@ -222,19 +244,19 @@ def _twist_to_json(twist):
 def collect_x_y():
     if settings.Training.type == TrainingType.PATH:
         data = request.get_json()
+        if data:
+            x = int(data["x"])
+            y = int(data["y"])
 
-        x = int(data["x"])
-        y = int(data["y"])
-
-        width = int(data["width"])
-        height = int(data["height"])
+            width = int(data["width"])
+            height = int(data["height"])
 
 
-        app_node.collect_x_y(x,y,width,height)
+            app_node.collect_x_y(x,y,width,height)
 
-        return {"status":True}
-    else:
-        return {"status":False}
+            return {"status":True}
+    
+    return {"status":False}
 
 @app.post('/api/twist')
 def apply_twist():
@@ -255,6 +277,27 @@ def turn(degrees,velocity):
     msg.y = float(velocity)
     app_node.turn_publisher.publish(msg)
     return {"status": True}
+
+@app.get('/api/snapshot')
+def snapshot():
+    app_node.take_snapshot()
+    return {"status": True}
+
+
+@app.post('/api/navigate')
+def navigate():
+    data = request.get_json()
+    if data:
+        x = int(data["cmd"]["x"])
+        y = int(data["cmd"]["y"])
+        w = int(data["cmd"]["w"])
+        h = int(data["cmd"]["h"])
+        driveMode = data["driveMode"]
+        captureMode = data["captureMode"]
+
+        app_node.navigate2(x=x, y=y, w=w, h=h, driveMode=driveMode, captureMode=captureMode)
+        
+    return data
 
 
 def main(args=None):

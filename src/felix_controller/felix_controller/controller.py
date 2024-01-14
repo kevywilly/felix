@@ -1,9 +1,7 @@
 import rclpy
-from typing import Optional
+
 from geometry_msgs.msg import Twist, Vector3
-from sensor_msgs.msg import Image
-from std_msgs.msg import Int16
-from std_msgs.msg import Float32
+from nav_msgs.msg import Odometry
 from rclpy.node import Node
 from felix.common.settings import settings
 from felix_controller.scripts.rosmaster import Rosmaster
@@ -47,6 +45,7 @@ class ControllerNode(Node):
         
         self.bot = Rosmaster(car_type=2, com="/dev/ttyUSB0")
         self.bot.create_receive_threading()
+        self.create_subscription(Odometry, "/cmd_nav", self.handle_cmd_nav, 10)
         self.create_subscription(Twist, "/cmd_vel", self.handle_cmd_vel, 10)
         self.create_subscription(Vector3, "/cmd_turn", self.turn, 10)
         self.create_subscription(Vector3, "/cmd_move", self.move, 10)
@@ -95,8 +94,44 @@ class ControllerNode(Node):
         # self.get_logger().info(f"ticks: {ticks}, ticks_count: {ticks_count}, start: {start}, t: {t}")
         return
     
+    def handle_cmd_nav(self, msg: Odometry):
+        vx = msg.twist.twist.linear.x
+        vz = msg.twist.twist.angular.z
+        degrees = int(msg.pose.pose.orientation.z*57.2958)
+        if degrees == 0:
+            return
+        
+        delta = 0
+        yaw = self.bot.get_imu_attitude_data()[2]
+        self.bot.set_car_motion(vx,0,vz)
+        self.get_logger().info(f"turning {degrees} degrees with velocity ({vx},0,{vz}).")
+        start_time = time.time()
+
+        while True:
+            if(self.abort_move_or_turn):
+                self.abort_move_or_turn = False
+                break
+            time.sleep(0.01)
+            new_yaw = self.bot.get_imu_attitude_data()[2]
+            delta += abs(new_yaw-yaw)
+            
+            yaw = new_yaw
+
+            if delta >= abs(degrees):
+                break
+
+            # stop if more than 10 seconds
+            if time.time() - start_time > 10:
+                self.get_logger().warning(f"turn time out - operation aborted.")
+                break
+
+        self.bot.set_car_motion(0,0,0)
+        
+
     def turn(self, msg: Vector3):
         degrees = int(msg.x)
+        if degrees == 0:
+            return
         vel = msg.y
         delta = 0
         yaw = self.bot.get_imu_attitude_data()[2]

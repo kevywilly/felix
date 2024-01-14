@@ -43,6 +43,8 @@ class TrainingProfile:
         self.categories = categories
         self.velocity_map = velocity_map
         self.data_root = data_root
+        self.planning_path = os.path.join(data_root,"planning")
+        self.snapshot_path = os.path.join(data_root,"snapshots")
         self.model_root = os.path.join(data_root,"models")
         self.best_model_folder = os.path.join(self.model_root,"best")
         self.best_model_file = os.path.join(self.best_model_folder,self.filename+".pth")
@@ -55,7 +57,7 @@ class TrainingProfile:
 
 obstacle3d_profile= TrainingProfile(
     data_root="/felix/data",
-    name="obstacle3e",
+    name="obstacle3d",
     type=TrainingType.OBSTACLE,
     classifier="alexnet",
     categories=["forward","left","right"],

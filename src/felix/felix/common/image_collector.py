@@ -27,6 +27,16 @@ class ImageCollector:
     def _make_folders(self):
 
         try:
+            os.makedirs(settings.Training.snapshot_path)
+        except FileExistsError:
+            pass
+
+        try:
+            os.makedirs(settings.Training.planning_path)
+        except FileExistsError:
+            pass
+
+        try:
             os.makedirs(settings.Training.training_data_path)
         except FileExistsError:
             pass
@@ -44,21 +54,33 @@ class ImageCollector:
     def get_categories(self):
         return [{"name": k, "count": v} for k,v in self.counts.items()]
 
+    def _save_image(self, image, path) -> bool:
+        with open(path, 'wb') as f:
+            print(f"writing image to {path}")
+            try:
+                f.write(image)
+            except Exception as ex:
+                print(ex)
+                return False
+        
+        return True
+
+    def take_snapshot(self, image) -> bool:
+        print(f"taking snapshot")
+        name = f"{str(time.time()).replace('.','-')}.jpg"
+        pth = os.path.join(settings.Training.snapshot_path, name)
+        return self._save_image(image, pth)
+
     def collect_x_y(self, x: int, y:int, width:int, height: int, image) -> bool:
         print(f"collecting image for xy:{x},{y}")
         name = 'xy_%03d_%03d_%03d_%03d_%s.jpg' % (x, y, width, height, uuid4())
         
         pth = os.path.join(
-                settings.Training.training_data_path,
+                settings.Training.planning_path,
                 name
         )
-        with open(pth, 'wb') as f:
-                print(f"writing to {pth}")
-                try:
-                    f.write(image)
-                except Exception as ex:
-                    print(ex)
-        return True
+        return self._save_image(image, pth)
+        
     
     def collect(self, category: str, image) -> int:
         print(f"collecting image for {category}")
