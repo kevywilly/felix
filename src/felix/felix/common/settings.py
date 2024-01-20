@@ -5,23 +5,6 @@ class TrainingType:
     OBSTACLE="OBSTACLE"
     PATH="PATH"
 
-class CameraConfig:
-
-    def __init__(self, 
-        width: int = 1280, 
-        height: int = 720, 
-        fps: float = 30, 
-        capture_width: int = 1280, 
-        capture_height:int = 720,
-        stereo: bool = False):
-
-        self.width = width
-        self.height = height
-        self.fps = fps
-        self.capture_width = capture_width
-        self.capture_height = capture_height
-        self.stereo = stereo
-
 class TrainingProfile:
 
     def __init__(
@@ -128,12 +111,19 @@ class AppSettings:
     class Db:
         path: str = "/felix/data/db/felix_db.sqlite"
 
-    Training: TrainingProfile = obstacle3d_profile
+    
+    
+    class Camera:
+        width: int = 1640
+        height: int = 1232
+        fps: float = 30
+        capture_width: int = 1640
+        capture_height:int = 1232
+        stereo: bool = False
+        fov: int=160
     
 
-    Camera: CameraConfig = CameraConfig(
-        width = 1280, height=720, fps=30, capture_width=1280, capture_height=720, stereo=False
-    )
+    Training: TrainingProfile = obstacle3d_profile
 
     debug: bool = False
 

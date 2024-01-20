@@ -1,19 +1,28 @@
 from nav_msgs.msg import Odometry
 from typing import Tuple
 import math
+from felix.common.settings import settings
+
+cam_field_of_vision = 60.0
 
 class Kinematics:
 
     @staticmethod
     def xywh_to_odom(x: int, y: int, w: int, h: int) -> Odometry:
-        _x = x - w/2
-        _y = h - y
-        _vx = float(_y/h/2.0)*(w/h)/2.0
-        _vz = -float(_x/w)*2.0
+        _x = float((x - w/2)/(w/2))
+        _y = float((y - h/2)/(h/2))
+
+        # in our frame of robot motion x=y, y=x
+        _vx = math.tanh((1-_y)/4) # reverse _y since + is counter clockwise 
+        _vz = math.tanh(-_x) # reverse and shift positive since y=0 is top of image
+
+        angle = float(math.radians(_x*settings.Camera.fov/2.0))
+
+
         odom = Odometry()
         odom.twist.twist.linear.x = _vx
         odom.twist.twist.angular.z = _vz
-        odom.pose.pose.orientation.z = _vz*60*0.0174533
+        odom.pose.pose.orientation.z = angle
         return odom
 
     @staticmethod

@@ -10,7 +10,7 @@ import torchvision.transforms as transforms
 from felix.common.settings import settings
 import os
 
-from src.felix.felix.common.settings import TrainingType
+from felix.common.settings import TrainingType
 
 torch.hub.set_dir(settings.Training.model_root)
         
