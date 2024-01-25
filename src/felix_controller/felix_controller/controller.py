@@ -99,8 +99,9 @@ class ControllerNode(Node):
 
     def handle_nav(self, msg: Odometry):
 
-        vx = msg.twist.twist.linear.x
-        vz = msg.twist.twist.angular.z
+        vx = msg.twist.twist.linear.x * settings.Motion.max_robot_linear_velocity
+        vz = msg.twist.twist.angular.z * settings.Motion.max_robot_angular_velocity
+        
         degrees = int(math.degrees(msg.pose.pose.orientation.z))
 
         self.get_logger().info(f"Got nav request: deg: {degrees}, vx:{vx}, vz: {vz}")

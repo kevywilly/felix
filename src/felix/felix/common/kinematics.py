@@ -3,7 +3,6 @@ from typing import Tuple
 import math
 from felix.common.settings import settings
 
-cam_field_of_vision = 60.0
 
 class Kinematics:
 
@@ -13,8 +12,11 @@ class Kinematics:
         _y = float((y - h/2)/(h/2))
 
         # in our frame of robot motion x=y, y=x
-        _vx = math.tanh((1-_y)/4) # reverse _y since + is counter clockwise 
-        _vz = math.tanh(-_x) # reverse and shift positive since y=0 is top of image
+        #_vx = math.tanh((1-_y)/4) # reverse _y since + is counter clockwise 
+        #_vz = math.tanh(-_x) # reverse and shift positive since y=0 is top of image
+
+        _vx = math.tanh(1-_y)
+        _vz = -math.tanh(_x/2)  # dampen it a bit
 
         angle = float(math.radians(_x*settings.Camera.fov/2.0))
 

@@ -80,33 +80,12 @@ class AppSettings:
         wheel_x_offset: float = 71.5/1000
         body_length: float = 152/1000
         body_width: float = 126.00/1000
-        encoder_resolution: int = int(1000/48)
+        encoder_resolution: int = 48*2 # gear ratio * 2 #int(1000/48)
 
 
     class Motion:
-        """
-        calibrating linear velocity
-        rpm_min_max: 80.24951177174123,333.69585487749697, vel_min_max: 0.1270617269719236,0.5283517702227035, avg_adj_factor: 0.40684325290805
-
-        angular
-        rpm_min_max: -321.83081750356047,0.0, vel_min_max: 0.16695583936676953,3.4243431655481014, avg_adj_factor: 0.283714400265866
-
-        see calibrate_speed.py
-        """ 
-        
-        rpm_min: float = 80.25
-        rpm_max: float = 333.7
-        vx_min: float = 0.127
-        vx_max: float = 0.29
-        vx_adjustment_factor = 0.68
-
-        vz_min: float = 0.167
-        vz_max: float = 1.8
-        vz_adjustment_factor = 0.68
-      
-        linear_velocity_multiple: float = 0.2
-        angular_velocity_multiple: float = 0.4
-        autodrive_speed: float = 0.35
+        max_robot_linear_velocity: float = 0.24
+        max_robot_angular_velocity: float = 1.8
 
     class Db:
         path: str = "/felix/data/db/felix_db.sqlite"

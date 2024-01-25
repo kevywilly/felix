@@ -21,7 +21,8 @@ setup(
     entry_points={
         'console_scripts': [
             'controller = felix_controller.controller:main',
-            'autodrive = felix_controller.autodrive:main'
+            'autodrive = felix_controller.autodrive:main',
+            'calibration = felix_controller.calibration:main'
         ],
     },
 )
