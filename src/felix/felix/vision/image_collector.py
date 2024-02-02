@@ -2,7 +2,7 @@ import os
 import time
 from pathlib import Path
 import cv2
-from felix.common.settings import settings
+from felix.config.settings import settings
 from uuid import uuid4
 
 class ImageCollector:
@@ -71,7 +71,7 @@ class ImageCollector:
         pth = os.path.join(settings.Training.snapshot_path, name)
         return self._save_image(image, pth)
 
-    def collect_x_y(self, x: int, y:int, width:int, height: int, image) -> bool:
+    def collect_x_y(self, x: int, y:int, width:int, height: int, image) -> str:
         print(f"collecting image for xy:{x},{y}")
         name = 'xy_%03d_%03d_%03d_%03d_%s.jpg' % (x, y, width, height, uuid4())
         
@@ -79,7 +79,8 @@ class ImageCollector:
                 settings.Training.planning_path,
                 name
         )
-        return self._save_image(image, pth)
+        self._save_image(image, pth)
+        return pth
         
     
     def collect(self, category: str, image) -> int:

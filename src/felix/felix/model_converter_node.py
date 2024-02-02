@@ -1,8 +1,8 @@
 
 import rclpy
 from rclpy.node import Node
-from felix_trainer.scripts.trt_utils import TRTUtils
-from felix.common.settings import settings
+from felix.training.trt_utils import TRTUtils
+from felix.config.settings import settings
 
 class ConverterNode(Node):
 

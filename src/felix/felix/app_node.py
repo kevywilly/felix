@@ -6,18 +6,19 @@ import flask
 from flask_cors import CORS
 from flask import Flask, Response, jsonify, request
 from rclpy.node import Node
-from typing import Optional
+from typing import Dict, Optional
 
 # ros imports
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist, Vector3
 from std_msgs.msg import Bool
 from nav_msgs.msg import Odometry
-import felix.common.image_utils as image_utils
-from felix.common.settings import settings, TrainingType
-from felix.common.image_collector import ImageCollector
-from felix.common.kinematics import Kinematics
-
+import felix.vision.image_utils as image_utils
+from felix.config.settings import settings, TrainingType
+from felix.vision.image_collector import ImageCollector
+from felix.motion.kinematics import Kinematics
+from felix.motion.joystick import JoystickUpdateEvent
+from felix.motion.utils import twist_to_json
 
 JOYSTICK_LINEAR_X_SCALE = 1
 JOYSTICK_LINEAR_Y_SCALE = 1
@@ -28,7 +29,6 @@ class Api(Node):
     def __init__(self, *args):
 
         super().__init__(node_name='app', parameter_overrides=[])
-
         # properties
         self.autodrive = False
         self.image: Optional[Image] = None
@@ -36,51 +36,64 @@ class Api(Node):
         self.collector = ImageCollector()
 
         # publishers
-        self.motion_publisher = self.create_publisher(Twist, settings.Topics.cmd_vel, 1)
+        self.cmd_vel_publisher = self.create_publisher(Twist, settings.Topics.cmd_vel, 1)
         self.autodrive_publisher = self.create_publisher(Bool, settings.Topics.autodrive, 1)
-        self.move_publisher = self.create_publisher(Vector3, "/cmd_move",10)
-        self.turn_publisher = self.create_publisher(Vector3, "/cmd_turn",10)
-        self.nav_publisher = self.create_publisher(Odometry, "/cmd_nav",10)
+        self.nav_publisher = self.create_publisher(Odometry, settings.Topics.cmd_nav,10)
 
         # subscribers
         self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 5)
 
-        # clients
-        #self.autodrive_client = self.create_client(SetBool, "set_autodrive_state")
 
-        # wait for client to be ready
-        #while not self.autodrive_client.wait_for_service(timeout_sec=1.0):
-        #    self.get_logger().info('autodrive service not available, waiting again...')
-        
     # callbacks
-
     def image_callback(self, msg: Image):
         self.image = msg
         self.jpeg_image_bytes = image_utils.sensor_image_to_jpeg_bytes(msg)
 
     # publishers
 
-    def navigate(self, x: int, y: int, w: int, h: int, captureMode=False, driveMode=False) -> Odometry:
-        odom = Kinematics.xywh_to_odom(x,y,w,h)
+    def joystick(self, data: Optional[Dict]) -> Twist:
+        if not data:
+            return Twist()
+        
+        event: JoystickUpdateEvent = JoystickUpdateEvent(**data)
+        t: Twist = event.get_twist()
+        self.cmd_vel_publisher.publish(t)
+        return t
+        
+    def twist(self, data: Optional[Dict]) -> Twist:
+        if not data:
+            return Twist()
+        t = Twist()
+        t.linear.x = float(data["linear"]["x"])
+        t.linear.y = float(data["linear"]["y"])
+        t.angular.z = float(data["angular"]["z"])
+        self.cmd_vel_publisher.publish(t)
+        return t
 
+    def navigate(self, data: Optional[Dict]):
+
+        if not data:
+            return Odometry()
+        
+        x = int(data["cmd"]["x"])
+        y = int(data["cmd"]["y"])
+        w = int(data["cmd"]["w"])
+        h = int(data["cmd"]["h"])
+
+        driveMode = data["driveMode"]
+        captureMode = data["captureMode"]
+
+        odom = Kinematics.xywh_to_nav_target(x,y,w,h)
+        captured_image = None
+        
         if driveMode:
             self.nav_publisher.publish(odom)
 
         if captureMode:
-            self.collect_x_y(x,y,w,h)
-
-        return odom
+            captured_image = self.collect_x_y(x,y,w,h)
             
 
-    def twist(self, twist: Twist):
-        if self.autodrive:
-            self.toggle_autodrive(False)
-        twist.linear.x = twist.linear.x * JOYSTICK_LINEAR_X_SCALE
-        twist.linear.y = twist.linear.y * JOYSTICK_LINEAR_Y_SCALE
-        twist.angular.z = twist.angular.z * JOYSTICK_ANGULAR_Z_SCALE
-
-        self.motion_publisher.publish(twist)
-        return twist
+        return captured_image
     
     def get_jpeg(self):
         return self.jpeg_image_bytes
@@ -99,7 +112,7 @@ class Api(Node):
     
     def toggle_autodrive(self, value: Optional[bool] = None):
         self.autodrive = not self.autodrive if value is None else value
-        self.twist(Twist())
+        self.cmd_vel_publisher.publish(Twist())
         msg = Bool()
         msg.data = self.autodrive
         self.autodrive_publisher.publish(msg)
@@ -150,6 +163,8 @@ cors = CORS(app, resource={
 
 prev_sigint_handler = signal.signal(signal.SIGINT, sigint_handler)
 
+
+
 # API Methods
 def _get_stream():
     while True:
@@ -163,7 +178,7 @@ def _get_stream():
             pass
     
 @app.route('/')
-def hello():
+def index():
     return "hello"
 
 
@@ -177,6 +192,30 @@ def toggle_autodrive():
 @app.route('/api/stream')
 def stream():
     return Response(_get_stream(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+@app.post('/api/twist')
+def apply_twist():
+    data = request.get_json()
+    app_node.twist(request.get_json())
+    return data
+
+@app.post('/api/navigate')
+def navigate():
+    data = request.get_json()
+    captured = app_node.navigate(data)
+    return {'captured': captured}
+
+@app.get('/api/snapshot')
+def snapshot():
+    app_node.take_snapshot()
+    return {"status": True}
+
+
+@app.post('/api/joystick')
+def api_joystick():
+    resp = app_node.joystick(request.get_json())
+    return twist_to_json(resp)
 
 @app.route('/api/categories/<category>/collect')
 def collect(category: str):
@@ -221,86 +260,6 @@ def get_image2(category, name, cam_index):
 def delete_image(category, name):
     resp = app_node.collector.delete_image(category, name)
     return {"status": resp}
-
-def _parse_twist(json) -> Twist:
-    twist = Twist()
-    twist.linear.x = float(json['linear']['x'])
-    twist.linear.y = float(json['linear']['y'])
-    twist.linear.z = float(json['linear']['z'])
-    twist.angular.x = float(json['angular']['x'])
-    twist.angular.y = float(json['angular']['y'])
-    twist.angular.z = float(json['angular']['z'])
-    return twist
-
-def _twist_to_json(twist):
-    return {
-            "linear": {"x": twist.linear.x, "y": twist.linear.y, "z": twist.linear.z},
-            "angular": {"x": twist.angular.x, "y": twist.angular.y, "z": twist.angular.z},
-        }
-    
-@app.post('/api/collect-x-y')
-def collect_x_y():
-    if settings.Training.type == TrainingType.PATH:
-        data = request.get_json()
-        if data:
-            x = int(data["x"])
-            y = int(data["y"])
-
-            width = int(data["width"])
-            height = int(data["height"])
-
-
-            app_node.collect_x_y(x,y,width,height)
-
-            return {"status":True}
-    
-    return {"status":False}
-
-@app.post('/api/twist')
-def apply_twist():
-    return _twist_to_json(app_node.twist(_parse_twist(request.get_json())))
-
-@app.get('/api/move/<meters>/<velocity>')
-def move(meters, velocity):
-    msg = Vector3()
-    msg.x = float(meters)
-    msg.y = float(velocity)
-    app_node.move_publisher.publish(msg)
-    return {"status": True}
-
-@app.get('/api/turn/<degrees>/<velocity>')
-def turn(degrees,velocity):
-    msg = Vector3()
-    msg.x = float(degrees)
-    msg.y = float(velocity)
-    app_node.turn_publisher.publish(msg)
-    return {"status": True}
-
-@app.get('/api/snapshot')
-def snapshot():
-    app_node.take_snapshot()
-    return {"status": True}
-
-
-@app.post('/api/navigate')
-def navigate():
-    data = request.get_json()
-    if data:
-        x = int(data["cmd"]["x"])
-        y = int(data["cmd"]["y"])
-        w = int(data["cmd"]["w"])
-        h = int(data["cmd"]["h"])
-        driveMode = data["driveMode"]
-        captureMode = data["captureMode"]
-
-        odom: Odometry = app_node.navigate(x=x, y=y, w=w, h=h, driveMode=driveMode, captureMode=captureMode)
-        return {
-            'vx': odom.twist.twist.linear.x,
-            'vz': odom.twist.twist.angular.z,
-            'angle': odom.pose.pose.orientation.z * 57.2958
-            }
-        
-    return {}
 
 
 def main(args=None):

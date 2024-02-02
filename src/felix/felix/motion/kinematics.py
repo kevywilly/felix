@@ -1,13 +1,26 @@
 from nav_msgs.msg import Odometry
+
 from typing import Tuple
 import math
-from felix.common.settings import settings
+from felix.config.settings import settings
+import numpy as np
 
+# Wheel layout
+#  0 2
+#  1 3
+
+mechanum_matrix = np.array(
+            [
+                [1,1,1,1],
+                [-1,1,1,-1],
+                [-1,-1,1,1]
+            ]
+        )
 
 class Kinematics:
 
     @staticmethod
-    def xywh_to_odom(x: int, y: int, w: int, h: int) -> Odometry:
+    def xywh_to_nav_target(x: int, y: int, w: int, h: int) -> Odometry:
         _x = float((x - w/2)/(w/2))
         _y = float((y - h/2)/(h/2))
 
@@ -20,11 +33,11 @@ class Kinematics:
 
         angle = float(math.radians(_x*settings.Camera.fov/2.0))
 
-
         odom = Odometry()
         odom.twist.twist.linear.x = _vx
         odom.twist.twist.angular.z = _vz
         odom.pose.pose.orientation.z = angle
+
         return odom
 
     @staticmethod
@@ -70,3 +83,11 @@ class Kinematics:
                         * wheel_radius / (2 * (robot_width + robot_length))
 
         return linear_velocity, angular_velocity
+
+    @staticmethod
+    def calculate_robot_velocity(np_wheel_velocities, wheel_base, track_width):
+        x = sum(np_wheel_velocities*mechanum_matrix[0])/4.0
+        y = sum(np_wheel_velocities*mechanum_matrix[1])/4.0
+        z = sum(np_wheel_velocities*mechanum_matrix[2])/(2*(wheel_base + track_width))
+        # degrees = z*seconds*57.2958
+        return (x,y,z)

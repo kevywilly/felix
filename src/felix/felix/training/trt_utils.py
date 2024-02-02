@@ -3,8 +3,8 @@
 import torch
 from torchvision.models.alexnet import alexnet
 import tensorrt as trt
-from felix.common.settings import settings
-from felix.common.settings import TrainingProfile
+from felix.config.settings import settings
+from felix.config.settings import TrainingProfile
 import os
 import logging
 

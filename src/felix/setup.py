@@ -23,7 +23,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'app = felix.app:main'
+            'app = felix.app_node:main',
+            'controller = felix.controller_node:main',
+            'camera = felix.camera_node:main'
         ],
     },
 )

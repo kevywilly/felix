@@ -4,8 +4,8 @@ from std_srvs.srv import SetBool, Trigger
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Image
 from std_msgs.msg import Bool
-from felix.common.settings import settings
-from felix.common.image_utils import sensor_image_to_cv2
+from felix.config.settings import settings
+from felix.vision.image_utils import sensor_image_to_cv2
 import cv2
 import time
 import numpy as np
@@ -14,7 +14,7 @@ import pycuda.autoinit
 import pycuda.driver as cuda
 from enum import Enum
 
-TRT_LOGGER = trt.Logger()
+TRT_LOGGER = trt.Logger() # type: ignore
 
 host_inputs  = []
 cuda_inputs  = []

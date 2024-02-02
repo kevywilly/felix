@@ -7,6 +7,9 @@ bridge = CvBridge()
 def sensor_image_to_cv2(sensor_image: SensorImage):
     return bridge.imgmsg_to_cv2(sensor_image, "bgr8")
 
+def cv2_to_msg(cv2_img):
+    return bridge.cv2_to_imgmsg(cv2_img)
+
 def cv2_to_jpeg(cv2_img):
     return cv2.imencode('.jpg', cv2_img)
 

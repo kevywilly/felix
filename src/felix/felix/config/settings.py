@@ -1,5 +1,8 @@
-from typing import List, Optional, Any, Dict
 import os
+import numpy as np
+import math
+from typing import List, Optional, Any, Dict
+from felix.vision.sensor_mode import CameraSensorMode
 
 class TrainingType:
     OBSTACLE="OBSTACLE"
@@ -65,6 +68,32 @@ path_profile= TrainingProfile(
     velocity_map={}
 )   
 
+class Orin:
+    yaboom_port: str = '/dev/myserial'
+    wheel_radius: float = 0.0485
+    wheel_base: float = 0.15
+    track_width: float = 0.229
+    wheel_x_offset: float = .075
+    body_length: float = 0.208
+    body_width: float = 0.135
+    encoder_resolution: int = 56*2 # gear ratio 1:56 * 2 #int(1000/48)
+    max_linear_velocity: float = 0.7
+    max_angular_velocity: float = 1.0
+
+class Nano:
+    yaboom_port: str = '/dev/myserial'
+    wheel_radius: float = 65.00/2000.0
+    wheel_base: float = 140.0/1000.0
+    track_width: float = 130.00/1000
+    wheel_x_offset: float = 71.5/1000
+    body_length: float = 152/1000
+    body_width: float = 126.00/1000
+    encoder_resolution: int = 48*2 # gear ratio * 2 #int(1000/48)
+    max_linear_velocity: float = 0.20
+    max_angular_velocity: float = 0.85
+    robot_radius = wheel_base/2.0
+    
+RobotType = Nano
 
 class AppSettings:
 
@@ -72,25 +101,20 @@ class AppSettings:
         raw_video: str = "/left/image_raw"
         cmd_vel: str = "/cmd_vel"
         autodrive: str = "/autodrive"
+        cmd_nav: str = "/cmd_nav"
         
-    class Robot:
-        wheel_radius: float = 65.00/2000.0
-        wheel_base: float = 140.0/1000.0
-        track_width: float = 130.00/1000
-        wheel_x_offset: float = 71.5/1000
-        body_length: float = 152/1000
-        body_width: float = 126.00/1000
-        encoder_resolution: int = 48*2 # gear ratio * 2 #int(1000/48)
-
+    
+    class Robot(RobotType):
+        def __init__(self):
+            self.wheel_circumference = 2*math.pi*self.wheel_radius
+            self.wheel_angles = [math.pi/4, 3*math.pi/4, 5*math.pi/4, 7*math.pi/4]
+            self.ticks_per_meter: int = int(self.encoder_resolution/self.wheel_circumference)
+            self.robot_circumference = math.pi*(self.wheel_base+self.track_width)
+            self.ticks_per_robot_rotation: int = int(self.encoder_resolution/self.robot_circumference)
 
     class Motion:
         max_robot_linear_velocity: float = 0.24
         max_robot_angular_velocity: float = 1.8
-
-    class Db:
-        path: str = "/felix/data/db/felix_db.sqlite"
-
-    
     
     class Camera:
         width: int = 1640
@@ -101,9 +125,30 @@ class AppSettings:
         stereo: bool = False
         fov: int=160
     
+    DEFAULT_SENSOR_MODE = CameraSensorMode(3,1640,1232,29)
+
+    SENSOR_MODES = [
+        CameraSensorMode(0,3264,2464,21),
+        CameraSensorMode(1,3264,1848,28),
+        CameraSensorMode(2,1928,1080,29),
+        CameraSensorMode(3,1640,1232,29),
+        CameraSensorMode(4,1280,720,59),
+        CameraSensorMode(5,1280,720,120),
+    ]
 
     Training: TrainingProfile = obstacle3d_profile
 
+    CAMERA_MATRIX = np.array([
+        [848.721379, 0.000000, 939.509142],
+        [0.000000, 848.967602, 596.153547], 
+        [0.000000, 0.000000, 1.000000]
+    ])
+
+    DISTORTION_COEFFICIENTS = np.array(
+        [
+            [-0.296850, 0.061372, 0.002562, -0.002645, 0.000000]
+        ]
+    )
     debug: bool = False
 
 settings = AppSettings
