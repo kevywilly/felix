@@ -38,17 +38,13 @@ class JoystickUpdateEvent:
                 angle = math.degrees(math.atan2(self.x,self.y))
                 x = self.x * dist
                 y = self.y * dist
-                if abs(angle) <= 10 or abs(angle) >=170:
+                if abs(angle) <= 5 or abs(angle) >=175:
                     # forward / backward
                     t.linear.x = y
-                elif abs(angle) <= 85 or abs(angle) >=95:
+                else: 
                     # turn
                     t.linear.x = y
                     t.angular.z = -x
-                else:
-                    # slide
-                    # t.linear.x = y
-                    t.linear.y = -x
             except Exception as ex:
                 t = Twist()
                 print(ex.__str__())

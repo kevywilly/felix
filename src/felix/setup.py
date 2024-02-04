@@ -12,7 +12,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*')))
+        (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[py][xml]*')))
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -25,7 +25,8 @@ setup(
         'console_scripts': [
             'app = felix.app_node:main',
             'controller = felix.controller_node:main',
-            'camera = felix.camera_node:main'
+            'camera = felix.camera_node:main',
+            'road_follower = felix.road_follower:main'
         ],
     },
 )

@@ -93,7 +93,7 @@ class Nano:
     max_angular_velocity: float = 0.85
     robot_radius = wheel_base/2.0
     
-RobotType = Nano
+RobotType = Orin 
 
 class AppSettings:
 

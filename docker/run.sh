@@ -53,8 +53,8 @@ if [ $ARCH = "aarch64" ]; then
 		--volume /etc/enctune.conf:/etc/enctune.conf \
 		--volume /etc/nv_tegra_release:/etc/nv_tegra_release \
 		--volume /tmp/nv_jetson_model:/tmp/nv_jetson_model \
-		--volume /home/nano/projects/felix:/felix \
-		--volume /home/nano/projects/felix/data:/data \
+		--volume /home/orin/projects/felix:/felix \
+		--volume /home/orin/projects/felix/data:/data \
 		--device /dev/snd \
 		--device /dev/bus/usb \
 		--device /dev/myserial \

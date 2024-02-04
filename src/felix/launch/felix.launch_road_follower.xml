@@ -1,0 +1,14 @@
+<launch>
+    <arg name="undistort" default="true"/>
+    <arg name="stereo" default="false"/>
+    <arg name="sensor_mode" default="3"/>
+    <!--node pkg="robot_argus_camera" exec="camera" output="screen">
+        <param name="undistort" value="$(var undistort)"/>
+        <param name="stereo" value="$(var stereo)"/>
+        <param name="sensor_mode" value="$(var sensor_mode)"/>
+    </node-->
+    <node pkg="felix" exec="camera" output="screen"/>
+    <node pkg="felix" exec="controller" output="screen"/>
+    <node pkg="felix" exec="road_follower" />
+    <node pkg="felix" exec="app" />
+</launch>
