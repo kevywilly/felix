@@ -2,7 +2,6 @@ from nav_msgs.msg import Odometry
 
 from typing import Tuple
 import math
-from felix.config.settings import settings
 import numpy as np
 
 # Wheel layout
@@ -17,10 +16,17 @@ mechanum_matrix = np.array(
             ]
         )
 
+
+RPS_TO_RPM = 60/(2*math.pi)
+     
+
+
+
+
 class Kinematics:
 
     @staticmethod
-    def xywh_to_nav_target(x: int, y: int, w: int, h: int) -> Odometry:
+    def xywh_to_nav_target(x: int, y: int, w: int, h: int, fov: int = 160) -> Odometry:
         _x = float((x - w/2)/(w/2))
         _y = float((y - h/2)/(h/2))
 
@@ -31,7 +37,7 @@ class Kinematics:
         _vx = math.tanh(1-_y)
         _vz = -math.tanh(_x/2)  # dampen it a bit
 
-        angle = float(math.radians(_x*settings.Camera.fov/2.0))
+        angle = float(math.radians(_x*fov))
 
         odom = Odometry()
         odom.twist.twist.linear.x = _vx
@@ -40,54 +46,83 @@ class Kinematics:
 
         return odom
 
-    @staticmethod
-    def ddr_ik(v_x, omega, L=0.5, R=0.1) -> Tuple[float, float]:
-        """DDR inverse kinematics: calculate wheel rps from desired velocity."""
-        return ((v_x - (L/2)*omega)/R, (v_x + (L/2)*omega)/R)
-
-    @staticmethod
-    def calc_velocity(wl, wr, L=0.5, R=0.1) -> Tuple[float,float,float]:
-        """DDR inverse kinematics: calculate robot velocity from wheel rps"""
-        return (R*(wr+wl)/2.0, 0, (R/2)*(wr-wl)/L)
 
     @staticmethod
     def calc_rpm(ticks: int, time_elapsed: float, ticks_per_rev: int = 360) -> float:
         return (ticks / ticks_per_rev)/(time_elapsed/60.0)
 
+
     @staticmethod
     def calc_rps(ticks: int, time_elapsed: float, ticks_per_rev: int = 360) -> float:
         return Kinematics.calc_rpm(ticks=ticks, time_elapsed=time_elapsed, ticks_per_rev=ticks_per_rev)/60.0
     
-    @staticmethod
-    def forward_kinematics(left_wheel_velocity, right_wheel_velocity, wheel_base, wheel_radius):
-        # Calculate linear and angular velocity
-        x = (wheel_radius / 2) * (left_wheel_velocity + right_wheel_velocity)
-        z = (wheel_radius / wheel_base) * (right_wheel_velocity - left_wheel_velocity)
 
     @staticmethod
-    def calculate_mecanum_velocities(wheel_velocities, wheel_radius, robot_width, robot_length):
-        # Assuming wheel_velocities is a list containing the velocities of all 4 wheels in m/s
-        # wheel_radius: Radius of the wheels in meters
-        # robot_width: Width of the robot in meters (distance between left and right wheels)
-        # robot_length: Length of the robot in meters (distance between front and rear wheels)
+    def calculate_robot_velocity(
+        rpm_front_left, 
+        rpm_front_right, 
+        rpm_rear_left, 
+        rpm_rear_right, 
+        R, 
+        L, 
+        W
+    ):
 
-        # Calculate linear velocity components in x and y directions
-        vx = (wheel_velocities[0] + wheel_velocities[1] + wheel_velocities[2] + wheel_velocities[3]) / 4
-        vy = (-wheel_velocities[0] + wheel_velocities[1] + wheel_velocities[2] - wheel_velocities[3]) / 4
+        """
+        Calculate linear and angular velocity of the robot from the RPMs of its four wheels.
 
-        # Calculate linear velocity magnitude
-        linear_velocity = math.sqrt(vx**2 + vy**2)
+        Args:
+        - rpm_front_left: RPM of the front-left wheel
+        - rpm_front_right: RPM of the front-right wheel
+        - rpm_rear_left: RPM of the rear-left wheel
+        - rpm_rear_right: RPM of the rear-right wheel
+        - R: radius of the wheels (m)
+        - L: distance between the front and rear wheels (m)
+        - W: distance between the left and right wheels (m)
+
+        Returns:
+        - V: linear velocity of the robot (m/s)
+        - omega: angular velocity of the robot (rad/s)
+        """
+        # Calculate linear velocity
+        V = ((rpm_front_left + rpm_front_right + rpm_rear_left + rpm_rear_right) * 2 * math.pi * R) / (4 * 60)
 
         # Calculate angular velocity
-        angular_velocity = (wheel_velocities[0] - wheel_velocities[1] + wheel_velocities[2] - wheel_velocities[3]) \
-                        * wheel_radius / (2 * (robot_width + robot_length))
+        omega = ((rpm_front_right + rpm_rear_right - rpm_front_left - rpm_rear_left) * 2 * math.pi * R) / (4 * L)
 
-        return linear_velocity, angular_velocity
+        return V, omega
+        
+
 
     @staticmethod
-    def calculate_robot_velocity(np_wheel_velocities, wheel_base, track_width):
-        x = sum(np_wheel_velocities*mechanum_matrix[0])/4.0
-        y = sum(np_wheel_velocities*mechanum_matrix[1])/4.0
-        z = sum(np_wheel_velocities*mechanum_matrix[2])/(2*(wheel_base + track_width))
-        # degrees = z*seconds*57.2958
-        return (x,y,z)
+    def calculate_motor_speeds(
+        V,
+        omega, 
+        R, 
+        L, 
+        W
+    ):
+       
+        f1 = L*omega/2
+        f2 = omega*W/(2*R)
+        f3 = 60/(2*math.pi)
+
+        # Calculate linear and angular velocities for each wheel
+        fl = (V-f1)/R + f2
+        fr = (V+f1)/R - f2
+        rl = (V-f1)/R - f2 
+        rr = (V+f1)/R + f2
+        
+        return (
+            fl*RPS_TO_RPM,
+            fr*RPS_TO_RPM,
+            rl*RPS_TO_RPM,
+            rr*RPS_TO_RPM
+        )
+    
+    
+
+
+# Wheel layout
+#  0 2
+#  1 3

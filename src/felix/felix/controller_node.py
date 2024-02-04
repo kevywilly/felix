@@ -1,3 +1,4 @@
+from felix.motion.mecanum_robot import MecanumRobot
 import rclpy
 
 from geometry_msgs.msg import Twist, Vector3
@@ -5,6 +6,7 @@ from nav_msgs.msg import Odometry
 from rclpy.node import Node
 from felix.config.settings import settings
 from felix.motion.rosmaster import Rosmaster
+from felix.motion.kinematics import Kinematics
 
 import math
 import time
@@ -13,7 +15,7 @@ import numpy as np
 
 TWIST_ZERO = Twist()
 
-velocity_factor = 2*settings.Robot.wheel_radius*math.pi
+velocity_factor = 2*settings.robot.wheel_radius*math.pi
 tick_delay = 1.0
 max_wheel_velocity = 0.29
 LEFT=0
@@ -22,11 +24,22 @@ RIGHT=2
 
 NAV_FREQUENCY = 100 #HZ
 
+
 class ControllerNode(Node):
     def __init__(self):
         super().__init__("controller", parameter_overrides=[])
         
-        self.bot = Rosmaster(car_type=2, com=settings.Robot.yaboom_port)
+        self.mecanum = MecanumRobot(
+            wheel_radius=settings.robot.wheel_radius, 
+            L = settings.robot.wheel_base,
+            W = settings.robot.track_width,
+            max_rpm = settings.robot.max_rpm
+        )
+
+        self.max_linear = self.mecanum.max_linear_velocity()
+        self.max_angular = self.mecanum.max_angular_velocity()
+
+        self.bot = Rosmaster(car_type=2, com=settings.robot.yaboom_port)
         self.bot.create_receive_threading()
 
         # Subscriptions
@@ -49,6 +62,22 @@ class ControllerNode(Node):
         self._reset_nav()
         
         atexit.register(self.stop)
+
+        self.get_logger().info("Controller is UP!")
+        self.get_logger().info(f"MAX Linear: {self.max_linear}")
+        self.get_logger().info(f"MAX Angular: {self.max_angular}")
+
+    def _apply_velocity(self,x,y,z):
+
+        wheel_velocities = np.array(self.mecanum.forward_kinematics(x*self.max_linear, y*self.max_linear, math.tanh(z)*self.max_angular))
+        
+        
+        fl,fr,rl,rr = self.mecanum.mps_to_motor_power(wheel_velocities)*100
+
+        self.get_logger().info(f'{fl},{fr},{rl},{rr}')
+
+        
+        self.bot.set_motor(fl,rl,fr,rr)
 
     def _motion_timer_callback(self, *args):
         t = Twist()
@@ -77,7 +106,7 @@ class ControllerNode(Node):
         self.nav_delta_target = 0
         self.nav_yaw = self.bot.get_imu_attitude_data()[2]
         self.nav_start_time = time.time()
-        self.bot.set_car_motion(0,0,0)
+        
         
     def _start_nav(self, target):
         self.nav_delta = 0
@@ -91,16 +120,16 @@ class ControllerNode(Node):
     
         self.abort_move = True
 
-        x = msg.linear.x * settings.Robot.max_linear_velocity
-        y = msg.linear.y * settings.Robot.max_linear_velocity
-        z = msg.angular.z * settings.Robot.max_angular_velocity
+        x = msg.linear.x 
+        y = msg.linear.y 
+        z = msg.angular.z
 
-        self.bot.set_car_motion(x,y,z)
+        self._apply_velocity(x,y,z)
 
     def _handle_nav(self, msg: Odometry):
 
-        vx = msg.twist.twist.linear.x * settings.Motion.max_robot_linear_velocity
-        vz = msg.twist.twist.angular.z * settings.Motion.max_robot_angular_velocity
+        vx = msg.twist.twist.linear.x 
+        vz = msg.twist.twist.angular.z
         
         degrees = int(math.degrees(msg.pose.pose.orientation.z))
 
@@ -112,14 +141,12 @@ class ControllerNode(Node):
             return
         
         self._start_nav(degrees)
-        self.bot.set_car_motion(vx,0,vz)
+        self._apply_velocity(vx,0,vz)
     
     def stop(self):
         self.bot.set_motor(0,0,0,0)
 
    
-        
-    
 
 def main(args=None):
     rclpy.init(args=args)
