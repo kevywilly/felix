@@ -69,15 +69,14 @@ class ControllerNode(Node):
 
     def _apply_velocity(self,x,y,z):
 
-        wheel_velocities = np.array(self.mecanum.forward_kinematics(x*self.max_linear, y*self.max_linear, math.tanh(z)*self.max_angular))
+        wheel_velocities: np.ndarray = self.mecanum.forward_kinematics(x*self.max_linear, y*self.max_linear, math.tanh(z)*self.max_angular)
         
-        
-        fl,fr,rl,rr = self.mecanum.mps_to_motor_power(wheel_velocities)*100
+        fl,fr,rl,rr = np.array(self.mecanum.mps_to_motor_power(wheel_velocities)*100).astype(int)
 
         self.get_logger().info(f'{fl},{fr},{rl},{rr}')
 
         
-        self.bot.set_motor(fl,rl,fr,rr)
+        self.bot.set_motor(fl,fl,fl,fl)
 
     def _motion_timer_callback(self, *args):
         t = Twist()

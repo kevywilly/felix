@@ -72,23 +72,24 @@ path_profile= TrainingProfile(
 )   
   
 
-class Orin(Robot):
-    yaboom_port: str = '/dev/myserial'
-    wheel_radius: float = 0.0485
-    wheel_base: float = 0.15
-    track_width: float = 0.229
-    max_rpm: int = 205
-    gear_ratio: float = 1/56
+ORIN = Robot(
+    wheel_radius=0.0485,
+    wheel_base=0.15,
+    track_width=0.229,
+    max_rpm=205,
+    gear_ratio=1/56,
+    yaboom_port='/dev/myserial'
+    )
 
-class Nano(Robot):
-    yaboom_port: str = '/dev/myserial'
-    wheel_radius: float = 65.00/2000.0 # R
-    wheel_base: float = 140.0/1000.0 # :
-    track_width: float = 130.00/1000 # W
-    max_rpm: int = 200
-    gear_ratio: float = 1/48
-      
-RobotType = Orin 
+NANO = Robot(
+    wheel_radius=65.00/2000.0,
+    wheel_base=140.0/1000.0,
+    track_width=155.00/1000,
+    max_rpm=90,
+    gear_ratio=1/48,
+    yaboom_port='/dev/myserial'
+    )
+
 
 class AppSettings:
 
@@ -137,7 +138,7 @@ class AppSettings:
     )
     debug: bool = False
 
-    robot: Robot = Orin()
+    robot: Robot = NANO
 
 settings = AppSettings
 

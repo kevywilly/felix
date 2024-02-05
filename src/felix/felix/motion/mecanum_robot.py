@@ -1,5 +1,9 @@
+from typing import Any
 import numpy as np
 import math
+
+
+
 class MecanumRobot:
     def __init__(self, wheel_radius, L, W, max_rpm):
         """
@@ -15,9 +19,17 @@ class MecanumRobot:
         self.W = W
         self.meters_per_rotation = 2*wheel_radius*math.pi
         self.max_rpm = max_rpm
+
+        self.IK_MATRIX = np.array([
+            [1,1,1,1],
+            [-1,1,1,-1],
+            [-1,1,-1,1]
+        ])
+
+        self.IK_DIVISOR = np.array([4,4,4*(self.L+self.W)])
         
 
-    def forward_kinematics(self, v_x, v_y, omega):
+    def forward_kinematics(self, v_x, v_y, omega) -> np.ndarray:
         """
         Perform forward kinematics to calculate wheel velocities given desired robot velocities.
 
@@ -37,38 +49,30 @@ class MecanumRobot:
         v_rl = v_x + v_y - (self.L + self.W) * omega
         v_rr = v_x - v_y + (self.L + self.W) * omega
 
-        return v_fl, v_fr, v_rl, v_rr
+        return np.array([v_fl, v_fr, v_rl, v_rr])
 
     
-    def inverse_kinematics(self, v_fl, v_fr, v_rl, v_rr):
+    def inverse_kinematics(self, wheel_velocities: np.ndarray):
         """
         Perform inverse kinematics to calculate robot velocities given wheel velocities.
 
         Args:
-        - v_fl: Velocity of the front-left wheel (m/s)
-        - v_fr: Velocity of the front-right wheel (m/s)
-        - v_rl: Velocity of the rear-left wheel (m/s)
-        - v_rr: Velocity of the rear-right wheel (m/s)
+        - ndarray [v_fl, v_fr, v_rl, v_rr] (m/s)
 
         Returns:
-        - v_x: Linear velocity along the x-axis (m/s)
-        - v_y: Linear velocity along the y-axis (m/s)
-        - omega: Angular velocity about the z-axis (rad/s)
+        - ndarray [v_x (m/s), v_y (m/s), omega (rad/s)] 
         """
-        v_x = (v_fl + v_fr + v_rl + v_rr) / 4
-        v_y = (-v_fl + v_fr + v_rl - v_rr) / 4
-        omega = (-v_fl + v_fr - v_rl + v_rr) / (4 * (self.L + self.W))
 
-        return v_x, v_y, omega
+        return self.IK_MATRIX.dot(wheel_velocities)/self.IK_DIVISOR
     
     def max_linear_velocity(self)-> float:
         v_all = self.rpm_to_mps(self.max_rpm)
-        v, _, _ = self.inverse_kinematics(v_all, v_all, v_all, v_all)
+        v, _, _ = self.inverse_kinematics(np.array([v_all, v_all, v_all, v_all]))
         return v
     
     def max_angular_velocity(self) -> float:
         v_all = self.rpm_to_mps(self.max_rpm)
-        _, _, omega = self.inverse_kinematics(-v_all, v_all, -v_all, v_all)
+        _, _, omega = self.inverse_kinematics(np.array([-v_all, v_all, -v_all, v_all]))
         return omega
 
     def rpm_to_mps(self, rpm: float):
@@ -82,7 +86,7 @@ class MecanumRobot:
         rpm = rps*60
         return rpm
     
-    def mps_to_motor_power(self, mps):
+    def mps_to_motor_power(self, mps) -> Any:
         return self.mps_to_rpms(mps)/self.max_rpm
         
 
