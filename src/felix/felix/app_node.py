@@ -7,10 +7,11 @@ from flask_cors import CORS
 from flask import Flask, Response, jsonify, request
 from rclpy.node import Node
 from typing import Dict, Optional
-
+from cv_bridge import CvBridge
 # ros imports
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist, Vector3
+from felix.vision.camera import ArgusCamera
 from std_msgs.msg import Bool
 from nav_msgs.msg import Odometry
 import felix.vision.image_utils as image_utils
@@ -19,6 +20,8 @@ from felix.vision.image_collector import ImageCollector
 from felix.motion.kinematics import Kinematics
 from felix.motion.joystick import JoystickUpdateEvent
 from felix.motion.utils import twist_to_json
+from std_msgs.msg import Header
+
 
 JOYSTICK_LINEAR_X_SCALE = 1
 JOYSTICK_LINEAR_Y_SCALE = 1
@@ -34,6 +37,10 @@ class Api(Node):
         self.image: Optional[Image] = None
         self.jpeg_bytes: Optional[bytes] = None
         self.collector = ImageCollector()
+        self._sensor_mode = settings.DEFAULT_SENSOR_MODE
+        self._sensor_id = 0
+        self._camera = ArgusCamera(sensor_id=self._sensor_id, sensor_mode=self._sensor_mode)
+        self.bridge = CvBridge()
 
         # publishers
         self.cmd_vel_publisher = self.create_publisher(Twist, settings.Topics.cmd_vel, 1)
@@ -41,11 +48,26 @@ class Api(Node):
         self.nav_publisher = self.create_publisher(Odometry, settings.Topics.cmd_nav,10)
 
         # subscribers
-        self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 5)
+        #self.create_subscription(Image, settings.Topics.raw_video, self.image_callback, 5)
+        self.create_timer(1.0/self._sensor_mode.framerate,self.video_timer)
+        self._image_publisher = self.create_publisher(Image,settings.Topics.raw_video,5)
 
+    def video_timer(self, *args):
+        if self._camera.read():
+            header = Header()
+            header.stamp = self.get_clock().now().to_msg()
+            header.frame_id = "camera"
+            msg = self.bridge.cv2_to_imgmsg(self._camera.value, encoding="rgb8", header=header)
+            self._image_publisher.publish(msg)
+            self.jpeg_image_bytes =self._camera.jpeg
+            
+        else:
+            self.get_logger().warn(f"Can't receive frame for cap{self._sensor_id}")
+            
 
     # callbacks
     def image_callback(self, msg: Image):
+        
         self.image = msg
         self.jpeg_image_bytes = image_utils.sensor_image_to_jpeg_bytes(msg)
 

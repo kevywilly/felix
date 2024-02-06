@@ -1,4 +1,4 @@
-FROM humble:r32.7.4 as stage1
+FROM ai-ros2:latest as stage1
 #FROM ai-ros2:l4t-r35.4.1 as stage1
 
 ENV CUDA_HOME=/usr/local/cuda
@@ -16,9 +16,7 @@ RUN pip3 install --no-cache-dir --verbose \
   pyserial \
   flask \
   flask_cors \
-  pandas \
-  pydantic #\
-  #pydantic-settings
+  pandas 
 
 FROM stage1 as stage2
 

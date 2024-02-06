@@ -1,3 +1,4 @@
+from felix.config.settings import settings
 from nav_msgs.msg import Odometry
 
 from typing import Tuple
@@ -37,12 +38,22 @@ class Kinematics:
         _vx = math.tanh(1-_y)
         _vz = -math.tanh(_x/2)  # dampen it a bit
 
+        degrees = _x*fov/2
+        radians = math.radians(degrees)
+
+        max_x = 0.1
+        max_z = 0.2
+        
+        turn_factor = (degrees/(fov/2.0))
+        _vx = float((1-abs(turn_factor)))*settings.NAV_LINEAR_VELOCITY
+        _vz = float(turn_factor*-1)*settings.NAV_ANGULAR_VELOCITY
+
         angle = float(math.radians(_x*fov))
 
         odom = Odometry()
         odom.twist.twist.linear.x = _vx
         odom.twist.twist.angular.z = _vz
-        odom.pose.pose.orientation.z = angle
+        odom.pose.pose.orientation.z = radians
 
         return odom
 

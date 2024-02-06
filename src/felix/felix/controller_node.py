@@ -24,6 +24,9 @@ RIGHT=2
 
 NAV_FREQUENCY = 100 #HZ
 
+def scale(x, in_min, in_max, out_min, out_max):
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+
 
 class ControllerNode(Node):
     def __init__(self):
@@ -67,33 +70,57 @@ class ControllerNode(Node):
         self.get_logger().info(f"MAX Linear: {self.max_linear}")
         self.get_logger().info(f"MAX Angular: {self.max_angular}")
 
+    def _power_cap(self, power):
+        return min(power,100)*settings.robot.motor_power_factor
+    
     def _apply_velocity(self,x,y,z):
 
-        wheel_velocities: np.ndarray = self.mecanum.forward_kinematics(x*self.max_linear, y*self.max_linear, math.tanh(z)*self.max_angular)
+        vx = scale(x, -1.0, 1.0, -self.max_linear, self.max_linear)
+        vy = scale(y, -1.0, 1.0, -self.max_linear, self.max_linear)
+        omega = scale(z, -1.0, 1.0, -self.max_angular, self.max_angular)
+
+        self.get_logger().info(f'Scaled Velocity: {vx},{vy},{omega}')
+        self.bot.set_car_motion(vx,vy,omega)
+        return
+        vx = x*self.max_linear
+        vy = y*self.max_linear
+        omega = math.tanh(z*self.max_angular/2.0)
+
+        V: np.ndarray = self.mecanum.forward_kinematics(vx,vy,omega)
         
-        fl,fr,rl,rr = np.array(self.mecanum.mps_to_motor_power(wheel_velocities)*100).astype(int)
+        fl,fr,rl,rr = (self.mecanum.mps_to_motor_power(V) * 100 * settings.robot.motor_power_factor).astype(int)
 
         self.get_logger().info(f'{fl},{fr},{rl},{rr}')
-
         
-        self.bot.set_motor(fl,fl,fl,fl)
+        self.bot.set_motor(
+            self._power_cap(fl),
+            self._power_cap(rl),
+            self._power_cap(fr),
+            self._power_cap(rr)
+        )
 
     def _motion_timer_callback(self, *args):
         t = Twist()
-        x,y,z = self.bot.get_motion_data()
-        t.linear.x = x
-        t.linear.y = y
-        t.angular.z = z
+        try:
+            x,y,z = self.bot.get_motion_data()
+            t.linear.x = x
+            t.linear.y = y
+            t.angular.z = z
+        except:
+            pass
+        
         self.motion_publisher.publish(t)
 
     def _nav_timer_callback(self, *args):
         if not self.nav_running:
             return
         
-        if self.abort_move or (self.nav_delta >= self.nav_delta_target) or ((time.time() - self.nav_start_time) > 5):
+        # self.get_logger().info(f'delta: {self.nav_delta} target:{self.nav_delta_target}')
+        if self.abort_move: # or ((time.time() - self.nav_start_time) > 5):
             self.abort_move = False
             self._reset_nav()
-            
+        elif (self.nav_delta >= self.nav_delta_target):
+            self._apply_velocity(settings.NAV_LINEAR_VELOCITY,0,0)
         else:
             new_yaw = self.bot.get_imu_attitude_data()[2]
             self.nav_delta += abs(new_yaw-self.nav_yaw)
@@ -105,8 +132,9 @@ class ControllerNode(Node):
         self.nav_delta_target = 0
         self.nav_yaw = self.bot.get_imu_attitude_data()[2]
         self.nav_start_time = time.time()
+        self._apply_velocity(0,0,0)
         
-        
+
     def _start_nav(self, target):
         self.nav_delta = 0
         self.nav_delta_target = abs(target)
@@ -136,13 +164,14 @@ class ControllerNode(Node):
 
         self._reset_nav()
 
-        if degrees == 0:
-            return
+        #if degrees == 0:
+        #    return
         
         self._start_nav(degrees)
         self._apply_velocity(vx,0,vz)
     
     def stop(self):
+        self.abort_move = True
         self.bot.set_motor(0,0,0,0)
 
    
@@ -151,5 +180,6 @@ def main(args=None):
     rclpy.init(args=args)
     node = ControllerNode()
     rclpy.spin(node)
+    node.stop()
     rclpy.shutdown()
 

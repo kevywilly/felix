@@ -81,13 +81,15 @@ class MecanumRobot:
         
         return mps
     
-    def mps_to_rpms(self, mps: float):
+    def mps_to_rpms(self, mps: np.ndarray) -> np.ndarray:
         rps = mps/self.meters_per_rotation
         rpm = rps*60
         return rpm
     
-    def mps_to_motor_power(self, mps) -> Any:
-        return self.mps_to_rpms(mps)/self.max_rpm
+    def mps_to_motor_power(self, mps: np.ndarray) -> np.ndarray:
+        power = self.mps_to_rpms(mps)/self.max_rpm
+        power[power > 1.0]=1.0
+        return power
         
 
 """
