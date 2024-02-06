@@ -92,20 +92,47 @@ JUNIOR = Robot(
     motor_voltage=5
 )
 
+CAMERA_MATRIX_NANO = np.array([
+        [848.721379, 0.000000, 939.509142],
+        [0.000000, 848.967602, 596.153547], 
+        [0.000000, 0.000000, 1.000000]
+    ])
+
+DISTORTION_COEFFICIENTS_NANO = np.array(
+    [
+        [-0.296850, 0.061372, 0.002562, -0.002645, 0.000000]
+    ]
+)
+
+CAMERA_MATRIX_POPPA = np.array(
+   [804.43002,   0.     , 840.24672,
+           0.     , 803.05029, 635.00151,
+           0.     ,   0.     ,   1.     ]
+).reshape(3,3)
+
+DISTORTION_COEFFICIENTS_POPPA = np.array(
+    [
+        [-0.296054, 0.064942, -0.001960, -0.001250, 0.000000]
+    ]
+)
 
 SYS_USER = os.getenv('ROBOT_PLATFORM','JUNIOR').upper()
 
 if SYS_USER == 'POPPA':
     curr_robot = POPPA
+    dist_coefficients = DISTORTION_COEFFICIENTS_POPPA
+    camera_matrix = CAMERA_MATRIX_POPPA
 else:
     curr_robot = JUNIOR
+    dist_coefficients = DISTORTION_COEFFICIENTS_NANO
+    camera_matrix = CAMERA_MATRIX_NANO
 
 
 class AppSettings:
     
     OBSTACLE_PATH=''
     class Topics:
-        raw_video: str = "/left/image_raw"
+        raw_video: str = "/camera/image_raw"
         cmd_vel: str = "/cmd_vel"
         autodrive: str = "/autodrive"
         cmd_nav: str = "/cmd_nav"
@@ -135,17 +162,9 @@ class AppSettings:
 
     Training: TrainingProfile = obstacle3d_profile
 
-    CAMERA_MATRIX = np.array([
-        [848.721379, 0.000000, 939.509142],
-        [0.000000, 848.967602, 596.153547], 
-        [0.000000, 0.000000, 1.000000]
-    ])
+    DISTORTION_COEFFICIENTS = dist_coefficients
+    CAMERA_MATRIX = camera_matrix
 
-    DISTORTION_COEFFICIENTS = np.array(
-        [
-            [-0.296850, 0.061372, 0.002562, -0.002645, 0.000000]
-        ]
-    )
     debug: bool = False
 
     SYS_USER = os.getenv('USER','NANO')
