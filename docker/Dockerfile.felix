@@ -1,7 +1,11 @@
 FROM ai-ros2:latest as stage1
 #FROM ai-ros2:l4t-r35.4.1 as stage1
 
+ARG PLATFORM
 ENV CUDA_HOME=/usr/local/cuda
+ENV ROBOT_PLATFORM=${PLATFORM}
+
+RUN echo ${PLATFORM}
 
 WORKDIR /
 

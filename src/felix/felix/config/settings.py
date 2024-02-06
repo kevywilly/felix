@@ -31,8 +31,8 @@ class TrainingProfile:
         self.categories = categories
         self.velocity_map = velocity_map
         self.data_root = data_root
-        self.planning_path = os.path.join(data_root,"planning")
-        self.snapshot_path = os.path.join(data_root,"snapshots")
+        self.navigation_path = os.path.join(data_root,"training/navigation")
+        self.obstacle_path = os.path.join(data_root,"training/obstacles")
         self.model_root = os.path.join(data_root,"models")
         self.best_model_folder = os.path.join(self.model_root,"best")
         self.best_model_file = os.path.join(self.best_model_folder,self.filename+".pth")
@@ -72,16 +72,17 @@ path_profile= TrainingProfile(
 )   
 
 
-ORIN = Robot(
+POPPA = Robot(
     wheel_radius=0.0485,
     wheel_base=0.15,
     track_width=0.229,
     max_rpm=205,
     gear_ratio=1/56,
-    yaboom_port='/dev/myserial'
+    yaboom_port='/dev/myserial',
+    motor_voltage=12
 )
 
-NANO = Robot(
+JUNIOR = Robot(
     wheel_radius=65.00/2000.0,
     wheel_base=140.0/1000.0,
     track_width=155.00/1000,
@@ -92,16 +93,17 @@ NANO = Robot(
 )
 
 
-SYS_USER = os.getenv('USER','NANO').upper()
+SYS_USER = os.getenv('ROBOT_PLATFORM','JUNIOR').upper()
 
-if SYS_USER == 'ORIN':
-    curr_robot = ORIN
+if SYS_USER == 'POPPA':
+    curr_robot = POPPA
 else:
-    curr_robot = NANO
+    curr_robot = JUNIOR
 
 
 class AppSettings:
     
+    OBSTACLE_PATH=''
     class Topics:
         raw_video: str = "/left/image_raw"
         cmd_vel: str = "/cmd_vel"
@@ -117,8 +119,8 @@ class AppSettings:
         stereo: bool = False
         fov: int=160
 
-    NAV_LINEAR_VELOCITY: float = 0.12
-    NAV_ANGULAR_VELOCITY: float = 0.24
+    NAV_LINEAR_VELOCITY: float = .16
+    NAV_ANGULAR_VELOCITY: float = .32
     
     DEFAULT_SENSOR_MODE = CameraSensorMode(3,1640,1232,29)
 

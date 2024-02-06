@@ -1,5 +1,6 @@
 import math
 from abc import ABC
+from felix.motion.mecanum_robot import MecanumRobot
 class Robot(ABC):
     def __init__(self,
         wheel_radius: float,
@@ -27,5 +28,7 @@ class Robot(ABC):
         self.ticks_per_robot_rotation = int(self.encoder_resolution/self.robot_circumference)
         self.max_wheel_angular_velocity = self.max_rpm*(2*math.pi)/60
         self.motor_power_factor = motor_voltage/12.0
+        self.mecanum = MecanumRobot(wheel_radius=self.wheel_radius, L = self.wheel_base, W = self.track_width, max_rpm=self.max_rpm)
+        
         
 

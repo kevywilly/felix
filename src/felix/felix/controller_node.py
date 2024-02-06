@@ -7,6 +7,7 @@ from rclpy.node import Node
 from felix.config.settings import settings
 from felix.motion.rosmaster import Rosmaster
 from felix.motion.kinematics import Kinematics
+from felix.utils.system import SystemUtils
 
 import math
 import time
@@ -31,16 +32,9 @@ def scale(x, in_min, in_max, out_min, out_max):
 class ControllerNode(Node):
     def __init__(self):
         super().__init__("controller", parameter_overrides=[])
-        
-        self.mecanum = MecanumRobot(
-            wheel_radius=settings.robot.wheel_radius, 
-            L = settings.robot.wheel_base,
-            W = settings.robot.track_width,
-            max_rpm = settings.robot.max_rpm
-        )
 
-        self.max_linear = self.mecanum.max_linear_velocity()
-        self.max_angular = self.mecanum.max_angular_velocity()
+        self.max_linear = settings.robot.mecanum.max_linear_velocity
+        self.max_angular = settings.robot.mecanum.max_angular_velocity
 
         self.bot = Rosmaster(car_type=2, com=settings.robot.yaboom_port)
         self.bot.create_receive_threading()
@@ -60,8 +54,7 @@ class ControllerNode(Node):
         # Vars
         self.nav_delta = 0
         self.nav_delta_target = 0
-        self.abort_move = False
-
+        self.stop()
         self._reset_nav()
         
         atexit.register(self.stop)
@@ -112,14 +105,15 @@ class ControllerNode(Node):
         self.motion_publisher.publish(t)
 
     def _nav_timer_callback(self, *args):
+
+        if not SystemUtils.wifi_up():
+            self._reset_nav()
+            return
+
         if not self.nav_running:
             return
         
-        # self.get_logger().info(f'delta: {self.nav_delta} target:{self.nav_delta_target}')
-        if self.abort_move: # or ((time.time() - self.nav_start_time) > 5):
-            self.abort_move = False
-            self._reset_nav()
-        elif (self.nav_delta >= self.nav_delta_target):
+        if (self.nav_delta >= self.nav_delta_target):
             self._apply_velocity(settings.NAV_LINEAR_VELOCITY,0,0)
         else:
             new_yaw = self.bot.get_imu_attitude_data()[2]
@@ -132,7 +126,6 @@ class ControllerNode(Node):
         self.nav_delta_target = 0
         self.nav_yaw = self.bot.get_imu_attitude_data()[2]
         self.nav_start_time = time.time()
-        self._apply_velocity(0,0,0)
         
 
     def _start_nav(self, target):
@@ -145,7 +138,7 @@ class ControllerNode(Node):
          
     def _handle_cmd_vel(self, msg: Twist):
     
-        self.abort_move = True
+        self._reset_nav()
 
         x = msg.linear.x 
         y = msg.linear.y 
@@ -171,7 +164,7 @@ class ControllerNode(Node):
         self._apply_velocity(vx,0,vz)
     
     def stop(self):
-        self.abort_move = True
+        self._reset_nav()
         self.bot.set_motor(0,0,0,0)
 
    

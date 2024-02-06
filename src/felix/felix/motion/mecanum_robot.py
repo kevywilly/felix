@@ -27,6 +27,9 @@ class MecanumRobot:
         ])
 
         self.IK_DIVISOR = np.array([4,4,4*(self.L+self.W)])
+
+        self.max_linear_velocity = self._calc_max_linear_velocity()
+        self.max_angular_velocity = self._calc_max_angular_velocity()
         
 
     def forward_kinematics(self, v_x, v_y, omega) -> np.ndarray:
@@ -65,12 +68,12 @@ class MecanumRobot:
 
         return self.IK_MATRIX.dot(wheel_velocities)/self.IK_DIVISOR
     
-    def max_linear_velocity(self)-> float:
+    def _calc_max_linear_velocity(self)-> float:
         v_all = self.rpm_to_mps(self.max_rpm)
         v, _, _ = self.inverse_kinematics(np.array([v_all, v_all, v_all, v_all]))
         return v
     
-    def max_angular_velocity(self) -> float:
+    def _calc_max_angular_velocity(self) -> float:
         v_all = self.rpm_to_mps(self.max_rpm)
         _, _, omega = self.inverse_kinematics(np.array([-v_all, v_all, -v_all, v_all]))
         return omega

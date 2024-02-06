@@ -112,25 +112,13 @@ class Api(Node):
             self.nav_publisher.publish(odom)
 
         if captureMode:
-            captured_image = self.collect_x_y(x,y,w,h)
+            captured_image = self.save_navigation_image(x,y,w,h)
             
 
         return captured_image
     
     def get_jpeg(self):
         return self.jpeg_image_bytes
-
-    def take_snapshot(self):
-        img = self.get_jpeg()
-        return self.collector.take_snapshot(img)
-    
-    def collect_image(self, category):
-        try:
-            self.get_logger().info(f"received collect image request {category}")
-            img = self.get_jpeg()
-            return self.collector.collect(category, img)
-        except Exception as ex:
-            self.get_logger().error(str(ex))
     
     def toggle_autodrive(self, value: Optional[bool] = None):
         self.autodrive = not self.autodrive if value is None else value
@@ -141,11 +129,27 @@ class Api(Node):
         
         return self.autodrive
 
-    def collect_x_y(self, x: int, y: int, width:int, height: int):
+
+    def save_obstacle_image(self):
+        img = self.get_jpeg()
+        return self.collector.save_obstacle_image(img)
+    
+
+    def collect_image(self, category):
+        try:
+            self.get_logger().info(f"received collect image request {category}")
+            img = self.get_jpeg()
+            return self.collector.collect(category, img)
+        except Exception as ex:
+            self.get_logger().error(str(ex))
+    
+
+
+    def save_navigation_image(self, x: int, y: int, width:int, height: int):
         try:
             self.get_logger().info(f"received collect image request xy:{x},{y},{width},{height}")
             img = self.get_jpeg()
-            return self.collector.collect_x_y(x, y, width, height, img)
+            return self.collector.save_navigation_image(x, y, width, height, img)
         except Exception as ex:
             self.get_logger().error(str(ex))
 
@@ -228,9 +232,9 @@ def navigate():
     captured = app_node.navigate(data)
     return {'captured': captured}
 
-@app.get('/api/snapshot')
+@app.get('/api/obstacle')
 def snapshot():
-    app_node.take_snapshot()
+    app_node.save_obstacle()
     return {"status": True}
 
 

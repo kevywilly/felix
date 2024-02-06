@@ -27,12 +27,12 @@ class ImageCollector:
     def _make_folders(self):
 
         try:
-            os.makedirs(settings.Training.snapshot_path)
+            os.makedirs(settings.Training.obstacle_path)
         except FileExistsError:
             pass
 
         try:
-            os.makedirs(settings.Training.planning_path)
+            os.makedirs(settings.Training.navigation_path)
         except FileExistsError:
             pass
 
@@ -54,53 +54,37 @@ class ImageCollector:
     def get_categories(self):
         return [{"name": k, "count": v} for k,v in self.counts.items()]
 
-    def _save_image(self, image, path) -> bool:
-        with open(path, 'wb') as f:
-            print(f"writing image to {path}")
+    def save_image(self, image, path, filename) -> bool:
+        save_path = os.path.join(path,filename)
+        with open(save_path, 'wb') as f:
+            print(f"writing image to {save_path}")
             try:
                 f.write(image)
             except Exception as ex:
                 print(ex)
                 return False
         
-        return True
+        return save_path
 
-    def take_snapshot(self, image) -> bool:
-        print(f"taking snapshot")
-        name = f"{str(time.time()).replace('.','-')}.jpg"
-        pth = os.path.join(settings.Training.snapshot_path, name)
-        return self._save_image(image, pth)
+    def _jpeg_timestamp(self) -> bool:
+        return f"{str(time.time()).replace('.','-')}.jpg"
+    
+    def save_obstacle_image(self, image) -> bool:
+        return self.save_image(image, settings.Training.data_root, self._jpeg_timestamp())
+    
 
-    def collect_x_y(self, x: int, y:int, width:int, height: int, image) -> str:
-        print(f"collecting image for xy:{x},{y}")
+    def save_navigation_image(self, x: int, y:int, width:int, height: int, image) -> str:
         name = 'xy_%03d_%03d_%03d_%03d_%s.jpg' % (x, y, width, height, uuid4())
-        
-        pth = os.path.join(
-                settings.Training.planning_path,
-                name
+        return self.save_image(
+            image=image,
+            path=settings.Training.navigation_path,
+            filename=name
         )
-        self._save_image(image, pth)
-        return pth
         
     
     def collect(self, category: str, image) -> int:
-        print(f"collecting image for {category}")
-        
         if category in settings.Training.categories:
-            name = str(time.time()) + ".jpg"
-            
-            pth = os.path.join(
-                self.category_path(category),
-                name
-            )
-            
-            with open(pth, 'wb') as f:
-                print(f"writing to {pth}")
-                try:
-                    f.write(image)
-                except Exception as ex:
-                    print(ex)
-
+            pth = self.save_image(image, self.category_path, self._jpeg_timestamp())
             return self.get_count(category)
 
         return -1

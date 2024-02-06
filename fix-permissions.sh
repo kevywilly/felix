@@ -1,1 +1,1 @@
-sudo chown -R nano:nano *
+sudo chown -R orin:orin *
