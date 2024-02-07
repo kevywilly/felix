@@ -130,9 +130,13 @@ class Api(Node):
         return self.autodrive
 
 
-    def save_obstacle_image(self):
+    def save_tag(self, tag):
         img = self.get_jpeg()
-        return self.collector.save_obstacle_image(img)
+        return self.collector.save_tag(img, tag)
+
+
+    def get_tags(self):
+        return self.collector.get_tags()
     
 
     def collect_image(self, category):
@@ -232,10 +236,19 @@ def navigate():
     captured = app_node.navigate(data)
     return {'captured': captured}
 
-@app.get('/api/obstacle')
-def snapshot():
-    app_node.save_obstacle()
-    return {"status": True}
+
+@app.post('/api/tags')
+def add_tag():
+    data = request.get_json()
+    if data['tag']:
+        return app_node.save_tag(data['tag'])
+    else:
+        return app_node.get_tags()
+
+
+@app.get('/api/tags')
+def get_tags():
+    return app_node.get_tags()
 
 
 @app.post('/api/joystick')

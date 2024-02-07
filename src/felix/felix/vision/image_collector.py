@@ -27,7 +27,7 @@ class ImageCollector:
     def _make_folders(self):
 
         try:
-            os.makedirs(settings.Training.obstacle_path)
+            os.makedirs(settings.Training.tags_path)
         except FileExistsError:
             pass
 
@@ -54,8 +54,14 @@ class ImageCollector:
     def get_categories(self):
         return [{"name": k, "count": v} for k,v in self.counts.items()]
 
+    
     def save_image(self, image, path, filename) -> bool:
-        save_path = os.path.join(path,filename)
+        
+        if not os.path.exists(path=path):
+            os.makedirs(path)
+
+        save_path = os.path.join(path, filename)
+
         with open(save_path, 'wb') as f:
             print(f"writing image to {save_path}")
             try:
@@ -69,10 +75,17 @@ class ImageCollector:
     def _jpeg_timestamp(self) -> bool:
         return f"{str(time.time()).replace('.','-')}.jpg"
     
-    def save_obstacle_image(self, image) -> bool:
-        return self.save_image(image, settings.Training.data_root, self._jpeg_timestamp())
+    def save_tag(self, image, tag) -> int:
+        self.save_image(image, os.path.join(settings.Training.tags_path,tag.lower()), self._jpeg_timestamp())
+        return self.get_tags()
     
 
+    def get_tags(self):
+        d = {}
+        for p in os.listdir(settings.Training.tags_path):
+            d[p.lower()] = len(os.listdir(os.path.join(settings.Training.tags_path,p)))
+        return d
+            
     def save_navigation_image(self, x: int, y:int, width:int, height: int, image) -> str:
         name = 'xy_%03d_%03d_%03d_%03d_%s.jpg' % (x, y, width, height, uuid4())
         return self.save_image(

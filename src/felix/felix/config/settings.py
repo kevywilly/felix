@@ -32,7 +32,7 @@ class TrainingProfile:
         self.velocity_map = velocity_map
         self.data_root = data_root
         self.navigation_path = os.path.join(data_root,"training/navigation")
-        self.obstacle_path = os.path.join(data_root,"training/obstacles")
+        self.tags_path = os.path.join(data_root,"training/tags")
         self.model_root = os.path.join(data_root,"models")
         self.best_model_folder = os.path.join(self.model_root,"best")
         self.best_model_file = os.path.join(self.best_model_folder,self.filename+".pth")
